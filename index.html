@@ -14,24 +14,24 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
   <style>
-    /* ── Palette ── */
+    /* ── Palette: purple aesthetic ── */
     :root {
-      --bg-color: #fdfefa;
-      --bg-variant: #e8e5ea;
-      --primary: #3C5100;
-      --primary-variant: #3C5100;
-      --secondary: #704C8F;
-      --font-color: #210439;
-      --selection-color: #DDF2A1;
+      --bg-color:        #faf8ff;
+      --bg-variant:      #ede8f8;
+      --primary:         #5b21b6;
+      --primary-variant: #6d28d9;
+      --secondary:       #7c3aed;
+      --font-color:      #1e0a3c;
+      --selection-color: #ddd6fe;
     }
     .dark {
-      --bg-color: #291e2e;
-      --bg-variant: #221825;
-      --primary: #a6f7b8;
-      --primary-variant: #bdf5c4;
-      --secondary: #fa89e7;
-      --font-color: #f3f3f3;
-      --selection-color: black;
+      --bg-color:        #0d0b14;
+      --bg-variant:      #1a1525;
+      --primary:         #a78bfa;
+      --primary-variant: #c4b5fd;
+      --secondary:       #8a3ffc;
+      --font-color:      #f0eeff;
+      --selection-color: #4c1d95;
     }
 
     /* ── Base ── */
@@ -97,10 +97,10 @@
     }
     @media (max-width: 575.98px) { .page-hero-wrap { height: 6rem; } }
 
-    /* PCIe trace bar between nav and hero */
+    /* PCIe trace bar — purple gradient */
     .page-hero-pcie {
-      position: absolute; z-index: 1; pointer-events: none; opacity: .5;
-      background: linear-gradient(90deg, #72c08c 0%, #789eba 32%, #ac72c0 66%, #c46e8b 100%);
+      position: absolute; z-index: 1; pointer-events: none; opacity: .55;
+      background: linear-gradient(90deg, #4c1d95 0%, #7c3aed 32%, #8a3ffc 66%, #c4b5fd 100%);
       mask-image:
         linear-gradient(to bottom, transparent calc(100% - 1px), black calc(100% - 1px)),
         linear-gradient(to bottom, black 0 1px, transparent 1px),
@@ -174,7 +174,7 @@
       border-radius: 50%;
     }
     .icon-linkedin {
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23a6f7b8' d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/%3E%3C/svg%3E") 50%/contain no-repeat;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23a78bfa' d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/%3E%3C/svg%3E") 50%/contain no-repeat;
     }
     .timeline-date { font-family: 'Red Hat Mono', monospace; font-size: .75rem; opacity: .6; align-self: flex-end; }
     .timeline-title { font-weight: 700; font-size: 1.1rem; }
@@ -351,10 +351,10 @@
     function themeColors() {
       const s = getComputedStyle(document.body);
       return {
-        bg:      s.getPropertyValue('--bg-color').trim()   || '#291e2e',
-        bgVar:   s.getPropertyValue('--bg-variant').trim() || '#221825',
-        primary: s.getPropertyValue('--primary').trim()    || '#a6f7b8',
-        secondary:s.getPropertyValue('--secondary').trim() || '#fa89e7',
+        bg:        s.getPropertyValue('--bg-color').trim()        || '#0d0b14',
+        bgVar:     s.getPropertyValue('--bg-variant').trim()      || '#1a1525',
+        primary:   s.getPropertyValue('--primary').trim()         || '#a78bfa',
+        secondary: s.getPropertyValue('--secondary').trim()       || '#8a3ffc',
       };
     }
 
@@ -424,7 +424,6 @@
 
       /* draw each block */
       blocks.forEach(b => {
-        const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
         /* fill */
         ctx.fillStyle = col.bgVar;
         ctx.globalAlpha = 0.2 + R() * 0.2;
@@ -477,7 +476,7 @@
         ctx.globalAlpha = 1;
       });
 
-      /* routing wires between blocks */
+      /* routing wires */
       ctx.globalAlpha = 0.18;
       ctx.lineWidth = 0.7;
       for (let i = 0; i < blocks.length; i++) {
@@ -491,7 +490,6 @@
         ctx.lineTo(bx, (ay + by) / 2);
         ctx.lineTo(bx, by);
         ctx.stroke();
-        /* wire endpoints */
         ctx.fillStyle = col.primary;
         ctx.globalAlpha = 0.4;
         ctx.fillRect(ax - 1, ay - 1, 2, 2);
@@ -534,8 +532,10 @@
       sizePcie();
       window.addEventListener('resize', () => { drawHero(); sizePcie(); });
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizePcie);
-      new MutationObserver(() => { drawHero(); document.querySelectorAll('.timeline-bg').forEach((c, i) => drawChip(c, i * 17 + 1)); })
-        .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      new MutationObserver(() => {
+        drawHero();
+        document.querySelectorAll('.timeline-bg').forEach((c, i) => drawChip(c, i * 17 + 1));
+      }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
     }
 
     document.readyState === 'loading'
