@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Alex Kurkar — CS student at UoN, focused on compilers, interpreters, and language design." />
+  <meta property="og:title" content="Alex Kurkar" />
+  <meta property="og:description" content="CS student at UoN focused on compilers, interpreters, and language design." />
+  <meta property="og:type" content="website" />
+  <title>Alex Kurkar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <style>
+    /* ── Variables ── */
+    :root {
+      --bg: #0d0d0d;
+      --bg-card: #141414;
+      --fg: #e8e8e8;
+      --fg-muted: #888;
+      --accent: #8a3ffc;
+      --accent2: #3ffcb0;
+      --border: #2a2a2a;
+      --code-bg: #1a1a1a;
+      --font-mono: "Fira Code", "Cascadia Code", "JetBrains Mono", ui-monospace, monospace;
+    }
+    body.light {
+      --bg: #fafafa;
+      --bg-card: #f0f0f0;
+      --fg: #111;
+      --fg-muted: #555;
+      --border: #ddd;
+      --code-bg: #e8e8e8;
+    }
+
+    /* ── Base ── */
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent2); text-decoration: underline; }
+    hr { border-color: var(--border); opacity: 1; margin: 2rem 0; }
+    code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      border-radius: 4px;
+      padding: 0.1em 0.45em;
+      font-size: 0.88em;
+      font-family: var(--font-mono);
+    }
+    strong { color: var(--fg); }
+
+    /* ── Nav breadcrumb ── */
+    .breadcrumb { background: transparent; padding: 0; }
+    .breadcrumb-item + .breadcrumb-item::before { color: var(--fg-muted); content: "/"; }
+    .breadcrumb-item a { color: var(--fg-muted); font-size: 0.85rem; }
+    .breadcrumb-item a:hover { color: var(--accent2); }
+    .breadcrumb-item.active a { color: var(--fg); text-decoration: underline; }
+
+    /* ── Theme toggle ── */
+    .theme-toggler {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      border-radius: 4px;
+      padding: 0.2rem 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .theme-toggler:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Hero ── */
+    .page-hero-wrap { position: relative; margin: 2.5rem 0 1rem; }
+    .page-hero {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; opacity: 0.18;
+    }
+    .chip-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      padding: 1.2rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .chip-title span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Lead underline ── */
+    .underline { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+    .lead { color: var(--fg-muted); font-size: 0.9rem; }
+
+    /* ── Blockquote ── */
+    .blockquote-custom {
+      border-left: 3px solid var(--accent);
+      padding: 0.6rem 1rem;
+      background: var(--bg-card);
+      border-radius: 0 6px 6px 0;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .quote-footer {
+      color: var(--fg-muted);
+      font-size: 0.85rem;
+      border-left: 3px solid var(--border);
+      padding-left: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Projects grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.2rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .project-lang {
+      font-size: 0.72rem;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      border-radius: 3px;
+      padding: 0.05rem 0.4rem;
+      opacity: 0.8;
+    }
+    .project-link { color: var(--fg-muted); transition: color 0.2s; }
+    .project-link:hover { color: var(--accent2); text-decoration: none; }
+    .project-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--fg); }
+    .project-desc { font-size: 0.82rem; color: var(--fg-muted); margin-bottom: 0.8rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .tag {
+      font-size: 0.72rem;
+      background: var(--code-bg);
+      color: var(--fg-muted);
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
+    }
+
+    /* ── Skills grid ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .skill-item code {
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      cursor: default;
+      transition: border-color 0.2s;
+    }
+    .skill-item code:hover { border-color: var(--accent); }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body class="dark">
+  <main>
+    <div class="container pt-5">
+      <div class="row mt-5 pt-5">
+        <div class="col-md-12">
+
+          <!-- Nav -->
+          <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg align-items-start">
+            <div class="collapse navbar-collapse mt-3 mt-md-0 align-items-md-start" id="collapsibleMenu">
+              <ol class="breadcrumb fw-bold mb-0">
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="/" class="text-decoration-underline link-offset-3">home</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer">github</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="https://linkedin.com/in/alex-kurkar" target="_blank" rel="noopener noreferrer">linkedin</a>
+                </li>
+              </ol>
+              <button class="theme-toggler ms-md-auto mt-2 mt-md-0 align-self-md-start" type="button"
+                aria-label="Toggle theme" onclick="toggleTheme()">
+                <span id="theme-label">light mode</span>
+              </button>
+            </div>
+          </nav>
+
+          <!-- Hero -->
+          <div class="page-hero-wrap">
+            <div class="page-hero-pcie" aria-hidden="true"></div>
+            <canvas id="page-hero" class="page-hero" aria-hidden="true"></canvas>
+            <h1 class="page-hero-title chip-title"><span>Alex Kurkar</span></h1>
+          </div>
+
+          <p class="lead pb-2"><span class="underline">Projects &amp; interests</span></p>
+
+          <!-- Intro -->
+          <div class="lh-lg">
+            <p><code>Hi — I'm Alex Kurkar, welcome to my site!</code></p>
+
+            <p>I'm a <strong>Computer Science student</strong> at the <strong>University of Nottingham</strong>.</p>
+
+            <p>
+              I'm focused on <code>compilers</code>, <code>interpreters</code>, and <code>language design</code>,
+              with a strong interest in <strong>mathematics</strong> and <strong>low-level systems</strong>.
+              I build projects from first principles — no frameworks where avoidable.
+            </p>
+
+            <blockquote class="blockquote-custom">
+              🎯 <strong>Current focus:</strong> designing and implementing language runtimes from scratch<br />
+              <span class="text-muted">(parsing → AST construction → evaluation → optimisation)</span><br />
+              👉 <a href="https://github.com/akurkar07/Interpreter" target="_blank" rel="noopener noreferrer">Interpreter Repo</a>
+            </blockquote>
+
+            <hr />
+
+            <!-- Projects -->
+            <h2 class="section-heading">Projects</h2>
+            <div class="projects-grid">
+
+              <div class="project-card">
+                <div class="project-header">
+                  <span class="project-lang">Python</span>
+                  <a href="https://github.com/akurkar07/Interpreter" target="_blank" rel="noopener noreferrer"
+                    class="project-link" aria-label="Interpreter GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                  </a>
+                </div>
+                <h3 class="project-title">Interpreter</h3>
+                <p class="project-desc">Pascal interpreter &amp; custom bytecode VM with an interactive shell.
+                  Hand-written lexer, parser, AST evaluator, and stack-based VM.</p>
+                <div class="project-tags">
+                  <span class="tag">compilers</span>
+                  <span class="tag">bytecode</span>
+                  <span class="tag">Pascal</span>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-header">
+                  <span class="project-lang">Python</span>
+                  <a href="https://github.com/akurkar07/Neural-Network" target="_blank" rel="noopener noreferrer"
+                    class="project-link" aria-label="Neural Network GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                  </a>
+                </div>
+                <h3 class="project-title">Neural Network</h3>
+                <p class="project-desc">MNIST digit classifier built entirely from scratch — no ML libraries.
+                  Forward pass, backpropagation, and gradient descent implemented manually.</p>
+                <div class="project-tags">
+                  <span class="tag">ML</span>
+                  <span class="tag">mathematics</span>
+                  <span class="tag">from scratch</span>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-header">
+                  <span class="project-lang">Python</span>
+                  <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer"
+                    class="project-link" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                  </a>
+                </div>
+                <h3 class="project-title">Discord Bots</h3>
+                <p class="project-desc">Admin and trading bots for a Discord server built during COVID.
+                  Automated moderation, market simulation, and user economy.</p>
+                <div class="project-tags">
+                  <span class="tag">automation</span>
+                  <span class="tag">bots</span>
+                  <span class="tag">Discord API</span>
+                </div>
+              </div>
+
+            </div>
+
+            <hr />
+
+            <!-- Skills -->
+            <h2 class="section-heading">Tools &amp; Languages</h2>
+            <div class="skills-grid">
+              <div class="skill-item"><code>C</code></div>
+              <div class="skill-item"><code>C++</code></div>
+              <div class="skill-item"><code>Haskell</code></div>
+              <div class="skill-item"><code>Java</code></div>
+              <div class="skill-item"><code>Python</code></div>
+              <div class="skill-item"><code>Bash</code></div>
+              <div class="skill-item"><code>Linux</code></div>
+              <div class="skill-item"><code>ARM</code></div>
+            </div>
+
+            <hr />
+
+            <!-- Quote -->
+            <blockquote class="quote-footer">
+              <em>"Talk is cheap. Show me the code."</em> — Linus Torvalds
+            </blockquote>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script>
+    /* ── Theme ── */
+    function applyTheme(t) {
+      document.body.classList.remove('dark', 'light');
+      document.body.classList.add(t);
+      const lbl = document.getElementById('theme-label');
+      if (lbl) lbl.textContent = t === 'dark' ? 'light mode' : 'dark mode';
+    }
+    function toggleTheme() {
+      const cur = document.body.classList.contains('dark') ? 'dark' : 'light';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    }
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      applyTheme(saved || preferred);
+    })();
+
+    /* ── Hero canvas particle animation ── */
+    (function heroCanvas() {
+      const canvas = document.getElementById('page-hero');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [];
+
+      function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const COUNT = 40;
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 1.5 + 0.5
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const isDark = document.body.classList.contains('dark');
+        const col = isDark ? '138,63,252' : '80,20,180';
+
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 120) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(${col},${0.15 * (1 - d / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${col},0.6)`;
+          ctx.fill();
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        });
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
