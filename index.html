@@ -5,192 +5,207 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Alex Kurkar — CS student at UoN, focused on compilers, interpreters, and language design." />
   <meta property="og:title" content="Alex Kurkar" />
-  <meta property="og:description" content="CS student at UoN focused on compilers, interpreters, and language design." />
   <meta property="og:type" content="website" />
   <title>Alex Kurkar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
   <style>
-    /* ── Variables ── */
+    /* ── Palette ── */
     :root {
-      --bg: #0d0d0d;
-      --bg-card: #141414;
-      --fg: #e8e8e8;
-      --fg-muted: #888;
-      --accent: #8a3ffc;
-      --accent2: #3ffcb0;
-      --border: #2a2a2a;
-      --code-bg: #1a1a1a;
-      --font-mono: "Fira Code", "Cascadia Code", "JetBrains Mono", ui-monospace, monospace;
+      --bg-color: #fdfefa;
+      --bg-variant: #e8e5ea;
+      --primary: #3C5100;
+      --primary-variant: #3C5100;
+      --secondary: #704C8F;
+      --font-color: #210439;
+      --selection-color: #DDF2A1;
     }
-    body.light {
-      --bg: #fafafa;
-      --bg-card: #f0f0f0;
-      --fg: #111;
-      --fg-muted: #555;
-      --border: #ddd;
-      --code-bg: #e8e8e8;
+    .dark {
+      --bg-color: #291e2e;
+      --bg-variant: #221825;
+      --primary: #a6f7b8;
+      --primary-variant: #bdf5c4;
+      --secondary: #fa89e7;
+      --font-color: #f3f3f3;
+      --selection-color: black;
     }
 
     /* ── Base ── */
-    body {
-      background-color: var(--bg);
-      color: var(--fg);
-      font-family: var(--font-mono);
-      font-size: 0.92rem;
-      line-height: 1.7;
-      transition: background-color 0.2s, color 0.2s;
+    body { background-color: var(--bg-color) !important; }
+    body, main {
+      font-family: Literata, serif !important;
+      font-optical-sizing: auto;
+      font-size: .95em;
+      font-weight: 400;
+      color: var(--font-color) !important;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent2); text-decoration: underline; }
-    hr { border-color: var(--border); opacity: 1; margin: 2rem 0; }
+    ::selection { background: var(--secondary); color: var(--selection-color); }
+    a { color: var(--primary-variant) !important; text-decoration: underline !important; text-underline-offset: .375em !important; }
+    a:hover { color: var(--primary) !important; }
+    strong, b { color: var(--primary-variant); }
     code {
-      background: var(--code-bg);
-      color: var(--accent2);
-      border-radius: 4px;
-      padding: 0.1em 0.45em;
-      font-size: 0.88em;
-      font-family: var(--font-mono);
+      font-family: 'Red Hat Mono', monospace !important;
+      color: var(--secondary);
+      font-weight: 600;
+      padding-left: .3em;
+      padding-right: .3em;
     }
-    strong { color: var(--fg); }
+    @media (min-width: 1200px) { .container { max-width: 720px !important; } }
 
-    /* ── Nav breadcrumb ── */
-    .breadcrumb { background: transparent; padding: 0; }
-    .breadcrumb-item + .breadcrumb-item::before { color: var(--fg-muted); content: "/"; }
-    .breadcrumb-item a { color: var(--fg-muted); font-size: 0.85rem; }
-    .breadcrumb-item a:hover { color: var(--accent2); }
-    .breadcrumb-item.active a { color: var(--fg); text-decoration: underline; }
+    /* ── HR hatched ── */
+    hr {
+      border: 0 !important;
+      height: 10px;
+      color: var(--secondary) !important;
+      background-image: linear-gradient(-45deg, transparent, transparent 25%, currentColor 25%, currentColor 50%, transparent 50%, transparent 75%, currentColor 75%);
+      background-size: 4px 4px;
+    }
 
-    /* ── Theme toggle ── */
+    /* ── Underline decoration ── */
+    .underline {
+      background-image: linear-gradient(to right, var(--secondary), var(--secondary));
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      background-size: 100% 2px;
+      text-decoration: none !important;
+    }
+
+    /* ── Theme toggler ── */
     .theme-toggler {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--fg-muted);
-      border-radius: 4px;
-      padding: 0.2rem 0.7rem;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      background: none; border: none; padding: 0;
+      font: inherit; color: var(--font-color);
+      opacity: 30%; cursor: pointer; font-weight: 700;
     }
-    .theme-toggler:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggler:hover { text-decoration: underline; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb-item + .breadcrumb-item::before { color: #6c757d !important; }
+    @media (max-width: 767px) {
+      .breadcrumb { flex-direction: column !important; --bs-breadcrumb-item-padding-x: 0rem !important; }
+      .breadcrumb-item::before { display: none !important; }
+    }
 
     /* ── Hero ── */
-    .page-hero-wrap { position: relative; margin: 2.5rem 0 1rem; }
-    .page-hero {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none; opacity: 0.18;
+    .page-hero-wrap {
+      position: relative; width: 100%; height: 8rem;
+      margin-top: .5rem; margin-bottom: 1rem;
+      pointer-events: none; overflow: visible;
     }
-    .chip-title {
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      padding: 1.2rem 0;
-      position: relative;
-      z-index: 1;
-    }
-    .chip-title span {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    @media (max-width: 575.98px) { .page-hero-wrap { height: 6rem; } }
 
-    /* ── Lead underline ── */
-    .underline { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
-    .lead { color: var(--fg-muted); font-size: 0.9rem; }
+    /* PCIe trace bar between nav and hero */
+    .page-hero-pcie {
+      position: absolute; z-index: 1; pointer-events: none; opacity: .5;
+      background: linear-gradient(90deg, #72c08c 0%, #789eba 32%, #ac72c0 66%, #c46e8b 100%);
+      mask-image:
+        linear-gradient(to bottom, transparent calc(100% - 1px), black calc(100% - 1px)),
+        linear-gradient(to bottom, black 0 1px, transparent 1px),
+        repeating-linear-gradient(to right, black 0 1px, transparent 1px 3px);
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent calc(100% - 1px), black calc(100% - 1px)),
+        linear-gradient(to bottom, black 0 1px, transparent 1px),
+        repeating-linear-gradient(to right, black 0 1px, transparent 1px 3px);
+      mask-repeat: no-repeat; -webkit-mask-repeat: no-repeat;
+      mask-size: 100% 100%, var(--menu-width, 100%) 100%, var(--menu-width, 100%) 100%;
+      -webkit-mask-size: 100% 100%, var(--menu-width, 100%) 100%, var(--menu-width, 100%) 100%;
+      mask-position: 0 0, var(--menu-offset-x, 0px) 0, var(--menu-offset-x, 0px) 0;
+      -webkit-mask-position: 0 0, var(--menu-offset-x, 0px) 0, var(--menu-offset-x, 0px) 0;
+      mask-composite: add; -webkit-mask-composite: source-over;
+    }
+    @media (max-width: 767.98px) { .page-hero-pcie { display: none; } }
+
+    .page-hero { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+
+    .chip-title { margin: 0 0 .75rem; }
+    .chip-title span {
+      display: inline-block; padding: .5em .4em;
+      font-family: 'Red Hat Mono', monospace;
+      font-weight: 500; font-size: clamp(1rem, 3.2vw, 1.9rem);
+      letter-spacing: .08em; color: var(--primary);
+      text-transform: uppercase; line-height: 1.1;
+      position: relative; z-index: 2;
+    }
+    .page-hero-title {
+      position: absolute; inset: 0; padding: 0 1rem;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; pointer-events: none;
+    }
+    .page-hero-title span { max-width: 100%; white-space: normal; overflow-wrap: anywhere; line-height: 1.1; }
+
+    /* ── Timeline ── */
+    .timeline-year { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .timeline-year aside {
+      font-family: 'Red Hat Mono', monospace;
+      font-size: 1.5rem; font-weight: 700; color: var(--primary);
+      min-width: 2rem; writing-mode: vertical-rl; text-orientation: mixed;
+      transform: rotate(180deg);
+      border-left: 2px solid color-mix(in srgb, var(--secondary) 30%, transparent);
+      padding-left: 1rem; padding-top: .5rem;
+    }
+    .timeline-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; flex: 1; }
+    .timeline-item {
+      flex: 0 1 calc(50% - .375rem);
+      border: 2px solid color-mix(in srgb, var(--secondary) 50%, transparent);
+      padding: .75rem 1rem;
+      display: flex; flex-direction: column;
+      position: relative; isolation: isolate; overflow: hidden;
+    }
+    .timeline-item.span-2 { flex: 0 1 100%; }
+    .timeline-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: -1; opacity: .15; pointer-events: none; display: block;
+    }
+    .dark .timeline-bg { opacity: .22; }
+    .timeline-icons { position: absolute; top: .5rem; left: .5rem; display: flex; gap: .25rem; }
+    .timeline-icons a {
+      display: inline-block; width: 1rem; height: 1rem;
+      opacity: .5; transition: opacity .2s; text-decoration: none !important;
+    }
+    .timeline-icons a:hover { opacity: 1; }
+    .timeline-icons a::after { content: none !important; }
+    .icon-github {
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='black'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") 50%/contain no-repeat,
+        #fff;
+      border-radius: 50%;
+    }
+    .icon-linkedin {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23a6f7b8' d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/%3E%3C/svg%3E") 50%/contain no-repeat;
+    }
+    .timeline-date { font-family: 'Red Hat Mono', monospace; font-size: .75rem; opacity: .6; align-self: flex-end; }
+    .timeline-title { font-weight: 700; font-size: 1.1rem; }
+    .timeline-desc { font-size: .9rem; opacity: .8; }
+
+    @media (max-width: 600px) {
+      .timeline-year { flex-direction: column; gap: .5rem; }
+      .timeline-year aside {
+        writing-mode: horizontal-tb; transform: none; text-align: left;
+        border-left: none;
+        border-bottom: 2px solid color-mix(in srgb, var(--secondary) 30%, transparent);
+        padding-left: 0; padding-bottom: .5rem;
+      }
+      .timeline-item { flex: 0 1 100%; }
+    }
 
     /* ── Blockquote ── */
-    .blockquote-custom {
-      border-left: 3px solid var(--accent);
-      padding: 0.6rem 1rem;
-      background: var(--bg-card);
-      border-radius: 0 6px 6px 0;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
+    blockquote {
+      padding-left: 3rem !important;
+      position: relative; overflow: hidden;
     }
-    .quote-footer {
-      color: var(--fg-muted);
-      font-size: 0.85rem;
-      border-left: 3px solid var(--border);
-      padding-left: 1rem;
-      margin-top: 2rem;
+    blockquote::before {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23777777'%3E%3Cpath d='M9.983 3v7.391C9.983 16.095 6.252 19.961 1 21l-.995-2.151C2.437 17.932 4 15.211 4 13H0V3h9.983zM24 3v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151C16.437 17.932 18 15.211 18 13h-3.983V3H24z'/%3E%3C/svg%3E");
+      position: absolute; color: #777; left: 15px;
     }
-
-    /* ── Section headings ── */
-    .section-heading {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--fg-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 1.2rem;
+    blockquote::after {
+      content: ""; position: absolute; color: #777;
+      left: 20px; top: 25px; width: 1px; height: 100%;
+      background-color: currentColor;
     }
-
-    /* ── Projects grid ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.1rem 1.2rem;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .project-lang {
-      font-size: 0.72rem;
-      color: var(--accent2);
-      border: 1px solid var(--accent2);
-      border-radius: 3px;
-      padding: 0.05rem 0.4rem;
-      opacity: 0.8;
-    }
-    .project-link { color: var(--fg-muted); transition: color 0.2s; }
-    .project-link:hover { color: var(--accent2); text-decoration: none; }
-    .project-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--fg); }
-    .project-desc { font-size: 0.82rem; color: var(--fg-muted); margin-bottom: 0.8rem; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    .tag {
-      font-size: 0.72rem;
-      background: var(--code-bg);
-      color: var(--fg-muted);
-      border-radius: 3px;
-      padding: 0.1rem 0.4rem;
-    }
-
-    /* ── Skills grid ── */
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .skill-item code {
-      font-size: 0.85rem;
-      border: 1px solid var(--border);
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      cursor: default;
-      transition: border-color 0.2s;
-    }
-    .skill-item code:hover { border-color: var(--accent); }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    blockquote p { margin: 0; }
   </style>
 </head>
 <body class="dark">
@@ -204,7 +219,7 @@
             <div class="collapse navbar-collapse mt-3 mt-md-0 align-items-md-start" id="collapsibleMenu">
               <ol class="breadcrumb fw-bold mb-0">
                 <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
-                  <a href="/" class="text-decoration-underline link-offset-3">home</a>
+                  <a href="/">home</a>
                 </li>
                 <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
                   <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer">github</a>
@@ -227,9 +242,8 @@
             <h1 class="page-hero-title chip-title"><span>Alex Kurkar</span></h1>
           </div>
 
-          <p class="lead pb-2"><span class="underline">Projects &amp; interests</span></p>
+          <p class="lead pb-2"><span class="underline">Personal projects/interests</span></p>
 
-          <!-- Intro -->
           <div class="lh-lg">
             <p><code>Hi — I'm Alex Kurkar, welcome to my site!</code></p>
 
@@ -241,75 +255,54 @@
               I build projects from first principles — no frameworks where avoidable.
             </p>
 
-            <blockquote class="blockquote-custom">
-              🎯 <strong>Current focus:</strong> designing and implementing language runtimes from scratch<br />
-              <span class="text-muted">(parsing → AST construction → evaluation → optimisation)</span><br />
-              👉 <a href="https://github.com/akurkar07/Interpreter" target="_blank" rel="noopener noreferrer">Interpreter Repo</a>
-            </blockquote>
+            <p>The common thread through all my work is <em>understanding things from the ground up</em>.</p>
 
             <hr />
 
-            <!-- Projects -->
-            <h2 class="section-heading">Projects</h2>
-            <div class="projects-grid">
+            <div class="timeline">
 
-              <div class="project-card">
-                <div class="project-header">
-                  <span class="project-lang">Python</span>
-                  <a href="https://github.com/akurkar07/Interpreter" target="_blank" rel="noopener noreferrer"
-                    class="project-link" aria-label="Interpreter GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
-                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-                    </svg>
-                  </a>
-                </div>
-                <h3 class="project-title">Interpreter</h3>
-                <p class="project-desc">Pascal interpreter &amp; custom bytecode VM with an interactive shell.
-                  Hand-written lexer, parser, AST evaluator, and stack-based VM.</p>
-                <div class="project-tags">
-                  <span class="tag">compilers</span>
-                  <span class="tag">bytecode</span>
-                  <span class="tag">Pascal</span>
+              <div class="timeline-year">
+                <aside>2026</aside>
+                <div class="timeline-grid">
+                  <div class="timeline-item span-2">
+                    <canvas class="timeline-bg" aria-hidden="true"></canvas>
+                    <span class="timeline-date">Current | University</span>
+                    <span class="timeline-title">University of Nottingham</span>
+                    <span class="timeline-desc">Computer Science — compilers, language runtimes, mathematics &amp; low-level systems</span>
+                  </div>
+                  <div class="timeline-item span-2">
+                    <canvas class="timeline-bg" aria-hidden="true"></canvas>
+                    <span class="timeline-icons">
+                      <a href="https://github.com/akurkar07/Interpreter" target="_blank" rel="noopener noreferrer" class="icon-github" title="Github"></a>
+                    </span>
+                    <span class="timeline-date">Active | Project</span>
+                    <span class="timeline-title">Interpreter</span>
+                    <span class="timeline-desc">Pascal interpreter &amp; custom bytecode VM with interactive shell — hand-written lexer, parser, AST evaluator &amp; stack-based VM<br /><em style="opacity:.7">(parsing → AST construction → evaluation → optimisation)</em></span>
+                  </div>
                 </div>
               </div>
 
-              <div class="project-card">
-                <div class="project-header">
-                  <span class="project-lang">Python</span>
-                  <a href="https://github.com/akurkar07/Neural-Network" target="_blank" rel="noopener noreferrer"
-                    class="project-link" aria-label="Neural Network GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
-                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-                    </svg>
-                  </a>
-                </div>
-                <h3 class="project-title">Neural Network</h3>
-                <p class="project-desc">MNIST digit classifier built entirely from scratch — no ML libraries.
-                  Forward pass, backpropagation, and gradient descent implemented manually.</p>
-                <div class="project-tags">
-                  <span class="tag">ML</span>
-                  <span class="tag">mathematics</span>
-                  <span class="tag">from scratch</span>
-                </div>
-              </div>
-
-              <div class="project-card">
-                <div class="project-header">
-                  <span class="project-lang">Python</span>
-                  <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer"
-                    class="project-link" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
-                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-                    </svg>
-                  </a>
-                </div>
-                <h3 class="project-title">Discord Bots</h3>
-                <p class="project-desc">Admin and trading bots for a Discord server built during COVID.
-                  Automated moderation, market simulation, and user economy.</p>
-                <div class="project-tags">
-                  <span class="tag">automation</span>
-                  <span class="tag">bots</span>
-                  <span class="tag">Discord API</span>
+              <div class="timeline-year">
+                <aside>2025</aside>
+                <div class="timeline-grid">
+                  <div class="timeline-item">
+                    <canvas class="timeline-bg" aria-hidden="true"></canvas>
+                    <span class="timeline-icons">
+                      <a href="https://github.com/akurkar07/Neural-Network" target="_blank" rel="noopener noreferrer" class="icon-github" title="Github"></a>
+                    </span>
+                    <span class="timeline-date">Project</span>
+                    <span class="timeline-title">Neural Network</span>
+                    <span class="timeline-desc">MNIST digit classifier from scratch — no ML libraries. Manual forward pass, backpropagation &amp; gradient descent.</span>
+                  </div>
+                  <div class="timeline-item">
+                    <canvas class="timeline-bg" aria-hidden="true"></canvas>
+                    <span class="timeline-icons">
+                      <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer" class="icon-github" title="Github"></a>
+                    </span>
+                    <span class="timeline-date">Project</span>
+                    <span class="timeline-title">Discord Bots</span>
+                    <span class="timeline-desc">Admin &amp; trading bots built during COVID. Automated moderation, market simulation, and user economy.</span>
+                  </div>
                 </div>
               </div>
 
@@ -317,24 +310,15 @@
 
             <hr />
 
-            <!-- Skills -->
-            <h2 class="section-heading">Tools &amp; Languages</h2>
-            <div class="skills-grid">
-              <div class="skill-item"><code>C</code></div>
-              <div class="skill-item"><code>C++</code></div>
-              <div class="skill-item"><code>Haskell</code></div>
-              <div class="skill-item"><code>Java</code></div>
-              <div class="skill-item"><code>Python</code></div>
-              <div class="skill-item"><code>Bash</code></div>
-              <div class="skill-item"><code>Linux</code></div>
-              <div class="skill-item"><code>ARM</code></div>
-            </div>
+            <p>
+              <span style="opacity:60%;font-size:.9em">
+                Tools &amp; languages: <code>C</code> <code>C++</code> <code>Haskell</code>
+                <code>Java</code> <code>Python</code> <code>Bash</code> <code>Linux</code> <code>ARM</code>
+              </span>
+            </p>
 
-            <hr />
-
-            <!-- Quote -->
-            <blockquote class="quote-footer">
-              <em>"Talk is cheap. Show me the code."</em> — Linus Torvalds
+            <blockquote>
+              <p><em>"Talk is cheap. Show me the code."</em> — Linus Torvalds</p>
             </blockquote>
 
           </div>
@@ -346,84 +330,217 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+
   <script>
     /* ── Theme ── */
     function applyTheme(t) {
-      document.body.classList.remove('dark', 'light');
-      document.body.classList.add(t);
+      document.body.classList.toggle('dark', t === 'dark');
       const lbl = document.getElementById('theme-label');
       if (lbl) lbl.textContent = t === 'dark' ? 'light mode' : 'dark mode';
     }
     function toggleTheme() {
-      const cur = document.body.classList.contains('dark') ? 'dark' : 'light';
-      const next = cur === 'dark' ? 'light' : 'dark';
+      const next = document.body.classList.contains('dark') ? 'light' : 'dark';
       localStorage.setItem('theme', next);
       applyTheme(next);
+      drawHero();
+      document.querySelectorAll('.timeline-bg').forEach((c, i) => drawChip(c, i * 17));
     }
-    (function initTheme() {
-      const saved = localStorage.getItem('theme');
-      const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      applyTheme(saved || preferred);
-    })();
+    applyTheme(localStorage.getItem('theme') || 'dark');
 
-    /* ── Hero canvas particle animation ── */
-    (function heroCanvas() {
-      const canvas = document.getElementById('page-hero');
-      if (!canvas) return;
+    /* ── Shared colour helper ── */
+    function themeColors() {
+      const s = getComputedStyle(document.body);
+      return {
+        bg:      s.getPropertyValue('--bg-color').trim()   || '#291e2e',
+        bgVar:   s.getPropertyValue('--bg-variant').trim() || '#221825',
+        primary: s.getPropertyValue('--primary').trim()    || '#a6f7b8',
+        secondary:s.getPropertyValue('--secondary').trim() || '#fa89e7',
+      };
+    }
+
+    /* ── Seeded PRNG (mulberry32) ── */
+    function prng(seed) {
+      return function() {
+        seed = (seed + 0x6D2B79F5) >>> 0;
+        let z = seed;
+        z = Math.imul(z ^ (z >>> 15), z | 1);
+        z ^= z + Math.imul(z ^ (z >>> 7), z | 61);
+        return ((z ^ (z >>> 14)) >>> 0) / 0xFFFFFFFF;
+      };
+    }
+
+    /* ── Draw a chip-die layout on a canvas ── */
+    function drawChip(canvas, seed) {
+      const dpr = window.devicePixelRatio || 1;
+      const W = canvas.offsetWidth  || canvas.parentElement.offsetWidth  || 200;
+      const H = canvas.offsetHeight || canvas.parentElement.offsetHeight || 80;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
       const ctx = canvas.getContext('2d');
-      let W, H, particles = [];
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      function resize() {
-        W = canvas.width = canvas.offsetWidth;
-        H = canvas.height = canvas.offsetHeight;
+      const R = prng(seed ^ 0xDEAD);
+      const col = themeColors();
+
+      /* grid background */
+      ctx.fillStyle = col.bgVar;
+      ctx.globalAlpha = 0.25;
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 0.06;
+      ctx.strokeStyle = col.bgVar;
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < W; x += 6) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 6) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+
+      /* outer seal ring */
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = col.secondary;
+      ctx.globalAlpha = 0.4;
+      ctx.strokeRect(2.5, 2.5, W - 5, H - 5);
+      ctx.strokeRect(4.5, 4.5, W - 9, H - 9);
+      ctx.globalAlpha = 1;
+
+      /* subdivide into blocks */
+      const minSz = Math.max(12, Math.min(W, H) * 0.18);
+      const blocks = [];
+      function split(x, y, w, h, depth) {
+        if (depth <= 0 || w < minSz * 2 || h < minSz * 2) {
+          if (w >= minSz && h >= minSz) blocks.push({ x, y, w, h });
+          return;
+        }
+        if (R() < 0.45) {
+          const cut = Math.round(w * (0.3 + R() * 0.4));
+          split(x, y, cut, h, depth - 1);
+          split(x + cut, y, w - cut, h, depth - 1);
+        } else {
+          const cut = Math.round(h * (0.3 + R() * 0.4));
+          split(x, y, w, cut, depth - 1);
+          split(x, y + cut, w, h - cut, depth - 1);
+        }
       }
-      window.addEventListener('resize', resize);
-      resize();
+      const pad = 6;
+      split(pad, pad, W - pad * 2, H - pad * 2, 4);
 
-      const COUNT = 40;
-      for (let i = 0; i < COUNT; i++) {
-        particles.push({
-          x: Math.random() * W, y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 1.5 + 0.5
-        });
-      }
+      /* draw each block */
+      blocks.forEach(b => {
+        const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+        /* fill */
+        ctx.fillStyle = col.bgVar;
+        ctx.globalAlpha = 0.2 + R() * 0.2;
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        ctx.globalAlpha = 1;
+        /* border */
+        ctx.strokeStyle = col.secondary;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 0.7;
+        ctx.strokeRect(b.x + 0.5, b.y + 0.5, b.w - 1, b.h - 1);
+        ctx.globalAlpha = 1;
 
-      function draw() {
-        ctx.clearRect(0, 0, W, H);
-        const isDark = document.body.classList.contains('dark');
-        const col = isDark ? '138,63,252' : '80,20,180';
-
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const d = Math.sqrt(dx * dx + dy * dy);
-            if (d < 120) {
-              ctx.beginPath();
-              ctx.strokeStyle = `rgba(${col},${0.15 * (1 - d / 120)})`;
-              ctx.lineWidth = 0.5;
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
-            }
+        const kind = R();
+        if (kind < 0.3 && b.w > 20 && b.h > 20) {
+          /* horizontal scan lines */
+          ctx.strokeStyle = col.secondary;
+          ctx.globalAlpha = 0.2;
+          ctx.lineWidth = 0.5;
+          for (let ly = b.y + 3; ly < b.y + b.h - 2; ly += 2) {
+            ctx.beginPath(); ctx.moveTo(b.x + 2, ly + 0.5); ctx.lineTo(b.x + b.w - 2, ly + 0.5); ctx.stroke();
           }
+          ctx.globalAlpha = 1;
+        } else if (kind < 0.55 && b.w > 16 && b.h > 16) {
+          /* dot array */
+          ctx.fillStyle = col.primary;
+          ctx.globalAlpha = 0.4;
+          const step = 3 + Math.floor(R() * 2);
+          for (let dy = b.y + 4; dy < b.y + b.h - 3; dy += step)
+            for (let dx = b.x + 4; dx < b.x + b.w - 3; dx += step)
+              ctx.fillRect(dx, dy, 1.2, 1.2);
+          ctx.globalAlpha = 1;
+        } else if (kind < 0.75) {
+          /* nested rects */
+          ctx.globalAlpha = 0.25;
+          for (let off = 3; off < Math.min(b.w, b.h) / 2 - 2; off += 4) {
+            ctx.strokeStyle = col.secondary;
+            ctx.lineWidth = 0.5;
+            ctx.strokeRect(b.x + off + 0.5, b.y + off + 0.5, b.w - off * 2 - 1, b.h - off * 2 - 1);
+          }
+          ctx.globalAlpha = 1;
         }
 
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${col},0.6)`;
-          ctx.fill();
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0 || p.x > W) p.vx *= -1;
-          if (p.y < 0 || p.y > H) p.vy *= -1;
+        /* corner pads */
+        ctx.fillStyle = col.primary;
+        ctx.globalAlpha = 0.5;
+        [[b.x + 2, b.y + 2], [b.x + b.w - 4, b.y + 2],
+         [b.x + 2, b.y + b.h - 4], [b.x + b.w - 4, b.y + b.h - 4]].forEach(([px, py]) => {
+          ctx.fillRect(px, py, 1.5, 1.5);
         });
+        ctx.globalAlpha = 1;
+      });
 
-        requestAnimationFrame(draw);
+      /* routing wires between blocks */
+      ctx.globalAlpha = 0.18;
+      ctx.lineWidth = 0.7;
+      for (let i = 0; i < blocks.length; i++) {
+        const a = blocks[i], b2 = blocks[(i + 1 + Math.floor(R() * 2)) % blocks.length];
+        const ax = a.x + a.w / 2, ay = a.y + a.h;
+        const bx = b2.x + b2.w / 2, by = b2.y;
+        ctx.strokeStyle = col.secondary;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(ax, (ay + by) / 2);
+        ctx.lineTo(bx, (ay + by) / 2);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+        /* wire endpoints */
+        ctx.fillStyle = col.primary;
+        ctx.globalAlpha = 0.4;
+        ctx.fillRect(ax - 1, ay - 1, 2, 2);
+        ctx.fillRect(bx - 1, by - 1, 2, 2);
+        ctx.globalAlpha = 0.18;
       }
-      draw();
-    })();
+      ctx.globalAlpha = 1;
+    }
+
+    /* ── Hero canvas ── */
+    function drawHero() {
+      const canvas = document.getElementById('page-hero');
+      if (!canvas) return;
+      drawChip(canvas, 0xC0FFEE);
+    }
+
+    /* ── PCIe trace bar sizing ── */
+    function sizePcie() {
+      const pcie = document.querySelector('.page-hero-pcie');
+      const wrap = document.querySelector('.page-hero-wrap');
+      const nav  = document.querySelector('.breadcrumb');
+      if (!pcie || !wrap || !nav) return;
+      const wRect = wrap.getBoundingClientRect();
+      const nRect = nav.getBoundingClientRect();
+      const gap = wRect.top - nRect.bottom;
+      if (nRect.width === 0 || gap < 6) { pcie.style.display = 'none'; return; }
+      pcie.style.display = '';
+      pcie.style.left   = '0';
+      pcie.style.width  = wRect.width + 'px';
+      pcie.style.top    = (nRect.bottom - wRect.top + 5) + 'px';
+      pcie.style.height = (gap - 5) + 'px';
+      pcie.style.setProperty('--menu-offset-x', (nRect.left - wRect.left) + 'px');
+      pcie.style.setProperty('--menu-width', nRect.width + 'px');
+    }
+
+    /* ── Init ── */
+    function init() {
+      drawHero();
+      document.querySelectorAll('.timeline-bg').forEach((c, i) => drawChip(c, i * 17 + 1));
+      sizePcie();
+      window.addEventListener('resize', () => { drawHero(); sizePcie(); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizePcie);
+      new MutationObserver(() => { drawHero(); document.querySelectorAll('.timeline-bg').forEach((c, i) => drawChip(c, i * 17 + 1)); })
+        .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', init, { once: true })
+      : init();
   </script>
 </body>
 </html>
