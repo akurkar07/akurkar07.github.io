@@ -449,6 +449,200 @@ hr {
   transition: color 420ms ease;
 }
 
+.interpreter-demo {
+  --interpreter-editor-height: 28rem;
+  border: 2px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  margin: 1.25rem 0 3rem;
+  padding: 1rem;
+  transition: border-color 420ms ease;
+}
+
+.interpreter-toolbar,
+.interpreter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.interpreter-tabs {
+  align-items: center;
+}
+
+.interpreter-toolbar {
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.interpreter-field {
+  display: grid;
+  flex: 1 1 11rem;
+  gap: 0.3rem;
+}
+
+.interpreter-field span,
+.interpreter-panel-title {
+  color: var(--primary);
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: color 420ms ease;
+}
+
+.interpreter-field select,
+.interpreter-button,
+.interpreter-editor-wrap textarea,
+.interpreter-panel {
+  background: color-mix(in srgb, var(--bg-variant) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  color: var(--font-color);
+  font: inherit;
+  transition:
+    background-color 420ms ease,
+    border-color 420ms ease,
+    color 420ms ease;
+}
+
+.interpreter-field select {
+  min-height: 2.35rem;
+  padding: 0.35rem 0.55rem;
+}
+
+.interpreter-button {
+  cursor: pointer;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.75rem;
+  text-transform: uppercase;
+}
+
+.interpreter-button:hover,
+.interpreter-button:focus-visible,
+.interpreter-tab[aria-pressed="true"] {
+  background: var(--secondary);
+  color: var(--selection-color);
+}
+
+.interpreter-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.interpreter-button.secondary {
+  opacity: 0.78;
+}
+
+.interpreter-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.interpreter-editor-wrap {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.interpreter-editor-wrap textarea {
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  height: var(--interpreter-editor-height);
+  min-height: 18rem;
+  padding: 0.85rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.interpreter-result {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: calc(var(--interpreter-editor-height) + 1.6rem);
+}
+
+.interpreter-tab {
+  align-items: center;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  color: var(--font-color);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1;
+  min-height: 1.9rem;
+  padding: 0.35rem 0.55rem;
+  text-transform: uppercase;
+  transition:
+    background-color 420ms ease,
+    border-color 420ms ease,
+    color 420ms ease;
+}
+
+.interpreter-panel {
+  height: 100%;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.interpreter-status {
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  margin: 0.85rem 0 0;
+  opacity: 0.7;
+}
+
+.interpreter-notes {
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  transition: border-color 420ms ease;
+}
+
+.interpreter-notes summary {
+  color: var(--primary);
+  cursor: pointer;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: color 420ms ease;
+}
+
+.interpreter-notes summary:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 0.25rem;
+}
+
+.interpreter-notes-body {
+  margin-top: 0.75rem;
+}
+
+.interpreter-notes-body p {
+  margin-bottom: 0.85rem;
+}
+
+@media (min-width: 900px) {
+  .interpreter-demo {
+    margin-left: calc((720px - 94vw) / 2);
+    margin-right: calc((720px - 94vw) / 2);
+  }
+
+  .interpreter-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body,
   main,
@@ -463,7 +657,17 @@ hr {
   .timeline-item,
   .section-title,
   .detail-list li,
-  .detail-label {
+  .detail-label,
+  .interpreter-demo,
+  .interpreter-field span,
+  .interpreter-panel-title,
+  .interpreter-field select,
+  .interpreter-button,
+  .interpreter-editor-wrap textarea,
+  .interpreter-panel,
+  .interpreter-tab,
+  .interpreter-notes,
+  .interpreter-notes summary {
     transition-duration: 0ms;
   }
 }
