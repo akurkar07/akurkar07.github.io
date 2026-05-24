@@ -14,7 +14,8 @@
   }
 
   function toggleTheme() {
-    const nextTheme = document.body.classList.contains("dark") ? "light" : "dark";
+    const currentTheme = document.body.classList.contains("dark") ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
     localStorage.setItem("theme", nextTheme);
     applyTheme(nextTheme);
     drawHero();

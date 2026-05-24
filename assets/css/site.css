@@ -20,6 +20,7 @@
 
 body {
   background-color: var(--bg-color) !important;
+  transition: background-color 420ms ease;
 }
 
 body,
@@ -29,6 +30,7 @@ main {
   font-size: 0.95em;
   font-weight: 400;
   color: var(--font-color) !important;
+  transition: background-color 420ms ease, color 420ms ease;
 }
 
 ::selection {
@@ -40,6 +42,7 @@ a {
   color: var(--primary-variant) !important;
   text-decoration: underline !important;
   text-underline-offset: 0.375em !important;
+  transition: color 420ms ease;
 }
 
 a:hover {
@@ -49,6 +52,7 @@ a:hover {
 strong,
 b {
   color: var(--primary-variant);
+  transition: color 420ms ease;
 }
 
 code {
@@ -57,6 +61,7 @@ code {
   font-weight: 600;
   padding-left: 0.3em;
   padding-right: 0.3em;
+  transition: color 420ms ease;
 }
 
 @media (min-width: 1200px) {
@@ -80,6 +85,7 @@ hr {
     currentColor 75%
   );
   background-size: 4px 4px;
+  transition: color 420ms ease;
 }
 
 .underline {
@@ -88,6 +94,7 @@ hr {
   background-repeat: no-repeat;
   background-size: 100% 2px;
   text-decoration: none !important;
+  transition: background-image 420ms ease;
 }
 
 .theme-toggler {
@@ -99,6 +106,7 @@ hr {
   opacity: 30%;
   cursor: pointer;
   font-weight: 700;
+  transition: color 420ms ease, opacity 180ms ease;
 }
 
 .theme-toggler:hover {
@@ -191,6 +199,7 @@ hr {
   line-height: 1.1;
   position: relative;
   z-index: 2;
+  transition: color 420ms ease;
 }
 
 .steam-trigger {
@@ -275,6 +284,7 @@ hr {
   border-left: 2px solid color-mix(in srgb, var(--secondary) 30%, transparent);
   padding-left: 1rem;
   padding-top: 0.5rem;
+  transition: border-color 420ms ease, color 420ms ease;
 }
 
 .timeline-grid {
@@ -294,6 +304,7 @@ hr {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  transition: border-color 420ms ease;
 }
 
 .timeline-item.span-2 {
@@ -412,6 +423,7 @@ hr {
   letter-spacing: 0.08em;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
+  transition: color 420ms ease;
 }
 
 .detail-list {
@@ -425,6 +437,7 @@ hr {
   border-left: 2px solid color-mix(in srgb, var(--secondary) 45%, transparent);
   list-style: none;
   padding-left: 1rem;
+  transition: border-color 420ms ease;
 }
 
 .detail-label {
@@ -433,6 +446,26 @@ hr {
   font-family: "Red Hat Mono", monospace;
   font-size: 0.78rem;
   font-weight: 700;
+  transition: color 420ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  main,
+  a,
+  strong,
+  b,
+  code,
+  hr,
+  .theme-toggler,
+  .chip-title span,
+  .timeline-year aside,
+  .timeline-item,
+  .section-title,
+  .detail-list li,
+  .detail-label {
+    transition-duration: 0ms;
+  }
 }
 
 .architecture-page {

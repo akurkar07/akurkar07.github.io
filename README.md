@@ -2,6 +2,8 @@
 
 Static personal website for Alex Kurkar, hosted with GitHub Pages.
 
+Live site: <https://akurkar07.github.io>
+
 The site presents my Computer Science background, project timeline, hackathon work, and interests in compilers, interpreters, language design, mathematics, and low-level systems. It is intentionally lightweight: plain HTML, shared CSS, and a small JavaScript file for theme handling, canvas decoration, and interactive page behavior.
 
 ## Pages
