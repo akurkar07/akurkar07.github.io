@@ -85,6 +85,23 @@
         "The Seville reference begins with Almohad architecture, where surface, structure, and climate work together rather than competing for attention. Brick massing gives the tower its gravity, while repeated geometric ornament breaks the surface into rhythm and shadow. The aesthetic here uses warm masonry tones, restrained patterning, and a sense of vertical composure, taking cues from the Giralda without reducing Islamic architecture to decorative tiling alone.",
       note: "Introduced here through Seville's late-12th-century mosque minaret, later adapted as the cathedral bell tower.",
       details: ["courtyard logic", "geometric repetition", "brick massing", "filtered shade"],
+      images: [
+        {
+          src: "./assets/img/architecture/islamic-seville.jpg",
+          building: "La Giralda, Seville",
+          source: "https://commons.wikimedia.org/wiki/File:Sevilla_Cathedral_-_Giralda.jpg",
+        },
+        {
+          src: "./assets/img/architecture/islamic-seville-alcazar.jpg",
+          building: "Patio de las Doncellas, Real Alcazar of Seville",
+          source: "https://commons.wikimedia.org/wiki/File:Patio_de_las_Doncellas,_Real_Alcázar_de_Sevilla.jpg",
+        },
+        {
+          src: "./assets/img/architecture/islamic-seville-torre-oro.jpg",
+          building: "Torre del Oro, Seville",
+          source: "https://commons.wikimedia.org/wiki/File:Canal_de_Alfonso_XIII_Torre_del_Oro_Sevilla.jpg",
+        },
+      ],
     },
     {
       id: "renaissance",
@@ -98,6 +115,23 @@
         "Renaissance architecture is treated as an argument for proportion and legibility. The Tempietto is small, but it feels complete because each part has a measured relationship to the whole: column, drum, dome, and stair all belong to the same geometric order. The page treatment uses calm spacing, clear axes, and stone-paper colour rather than theatrical ornament, aiming for a composed surface that feels drawn from humanist planning and classical revival.",
       note: "The Tempietto is a compact reference for High Renaissance balance and antique revival.",
       details: ["central axis", "classical order", "mathematical spacing", "quiet symmetry"],
+      images: [
+        {
+          src: "./assets/img/architecture/renaissance.jpg",
+          building: "Tempietto del Bramante, Rome",
+          source: "https://commons.wikimedia.org/wiki/File:02_Bramante_Tempietto_Exterior.jpg",
+        },
+        {
+          src: "./assets/img/architecture/renaissance-villa-rotonda.jpg",
+          building: "Villa La Rotonda, Vicenza",
+          source: "https://commons.wikimedia.org/wiki/File:Villa_%22La_Rotonda%22_di_Andrea_Palladio.JPG",
+        },
+        {
+          src: "./assets/img/architecture/renaissance-palazzo-farnese.jpg",
+          building: "Palazzo Farnese, Rome",
+          source: "https://commons.wikimedia.org/wiki/File:Palazzo_Farnese_Fassade.jpg",
+        },
+      ],
     },
     {
       id: "baroque",
@@ -111,6 +145,23 @@
         "Baroque architecture keeps the classical vocabulary but sets it in motion. Borromini's San Carlo alle Quattro Fontane turns facade into pressure and release, using curves, deep shadow, and compressed space to make stone feel almost elastic. The visual treatment therefore leans into contrast, layered borders, and directional light, but keeps the palette disciplined so the result suggests theatrical depth rather than becoming a caricature of luxury.",
       note: "Borromini's church is used for its restless concave-convex facade and spatial tension.",
       details: ["compressed depth", "curved pressure", "shadow theatre", "layered ornament"],
+      images: [
+        {
+          src: "./assets/img/architecture/baroque.jpg",
+          building: "San Carlo alle Quattro Fontane, Rome",
+          source: "https://commons.wikimedia.org/wiki/File:Rome_S._Carlo_alle_Quattro_Fontane_facade.jpg",
+        },
+        {
+          src: "./assets/img/architecture/baroque-versailles.jpg",
+          building: "Palace of Versailles, garden facade",
+          source: "https://commons.wikimedia.org/wiki/File:Garden_facade_of_the_Palace_of_Versailles,_April_2011.jpg",
+        },
+        {
+          src: "./assets/img/architecture/baroque-st-peters.jpg",
+          building: "St Peter's Basilica, Rome",
+          source: "https://commons.wikimedia.org/wiki/File:Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg",
+        },
+      ],
     },
     {
       id: "neoclassical",
@@ -124,6 +175,23 @@
         "Neoclassicism returns to antiquity through a more civic and rational lens. The Panthéon uses the temple front, dome, and disciplined stone facade to project order, public seriousness, and Enlightenment confidence. Here the interface cools into pale stone, measured columns, and crisp division lines, favouring clarity and restraint over expressive movement. It should feel institutional, balanced, and slightly austere.",
       note: "The Panthéon anchors this style through its Enlightenment-era classical revival.",
       details: ["temple front", "civic restraint", "pale stone", "regular bays"],
+      images: [
+        {
+          src: "./assets/img/architecture/neoclassical.jpg",
+          building: "Pantheon, Paris",
+          source: "https://commons.wikimedia.org/wiki/File:F6362_Paris_5e_Pantheon_facade_rwk.jpg",
+        },
+        {
+          src: "./assets/img/architecture/neoclassical-british-museum.jpg",
+          building: "British Museum, London",
+          source: "https://commons.wikimedia.org/wiki/File:British_Museum_London_2016_Facade_01.JPG",
+        },
+        {
+          src: "./assets/img/architecture/neoclassical-brandenburg-gate.jpg",
+          building: "Brandenburg Gate, Berlin",
+          source: "https://commons.wikimedia.org/wiki/File:Brandenburg_Gate_-_Brandenburger_Tor_-_Berlin_-_Germany_-_01.jpg",
+        },
+      ],
     },
     {
       id: "romantic",
@@ -137,6 +205,23 @@
         "Romantic architecture is less a single formal system than a mood: historical memory, landscape, drama, and national imagination. Using the Gothic Revival Palace of Westminster as a reference, this treatment favours vertical rhythm, pointed framing, shadowed atmosphere, and a slightly weathered palette. The aim is not fantasy-gothic exaggeration, but the nineteenth-century taste for emotional association, silhouette, and architecture as a vessel for memory.",
       note: "The Palace of Westminster stands in for the Romantic-era return to Gothic language.",
       details: ["vertical silhouette", "historic memory", "picturesque asymmetry", "weathered atmosphere"],
+      images: [
+        {
+          src: "./assets/img/architecture/romantic.jpg",
+          building: "Palace of Westminster, London",
+          source: "https://commons.wikimedia.org/wiki/File:Palace.of.westminster.arp.jpg",
+        },
+        {
+          src: "./assets/img/architecture/romantic-neuschwanstein.jpg",
+          building: "Neuschwanstein Castle, Bavaria",
+          source: "https://commons.wikimedia.org/wiki/File:Exterior_of_Neuschwanstein_Castle_01.jpg",
+        },
+        {
+          src: "./assets/img/architecture/romantic-strawberry-hill.jpg",
+          building: "Strawberry Hill House, Twickenham",
+          source: "https://commons.wikimedia.org/wiki/File:Exterior_of_Strawberry_Hill_House_01.jpg",
+        },
+      ],
     },
     {
       id: "brutalism",
@@ -150,6 +235,23 @@
         "Brutalism is handled through mass, repetition, and constructional honesty. The Unité d'Habitation reference brings concrete, modular units, exposed structure, and a social-housing scale that is both severe and humane. The page becomes heavier and plainer here: strong edges, visible grid, muted concrete colour, and little decorative softness. The goal is to communicate weight and system, not to turn Brutalism into generic grey minimalism.",
       note: "Le Corbusier's housing block is used as the mid-century reference point.",
       details: ["raw concrete", "modular cells", "structural legibility", "social scale"],
+      images: [
+        {
+          src: "./assets/img/architecture/brutalism.jpg",
+          building: "Unite d'Habitation, Marseille",
+          source: "https://en.wikivoyage.org/wiki/File:Unite_d%27Habitation,_Marseille.jpg",
+        },
+        {
+          src: "./assets/img/architecture/brutalism-boston-city-hall.jpg",
+          building: "Boston City Hall",
+          source: "https://commons.wikimedia.org/wiki/File:Boston_City_Hall,_with_Faneuil_Hall_(8615888189).jpg",
+        },
+        {
+          src: "./assets/img/architecture/brutalism-barbican.jpg",
+          building: "Barbican Estate, London",
+          source: "https://commons.wikimedia.org/wiki/File:Barbican_Estate_Frobisher_Crescent_City_of_London_2026_06.jpg",
+        },
+      ],
     },
     {
       id: "ecobrutalism",
@@ -163,6 +265,23 @@
         "Ecobrutalism keeps the hard frame of late-modern concrete architecture but allows planting, weather, and ecological systems to become part of the composition. Bosco Verticale is not Brutalist in the strict historical sense, but it is useful here as a contemporary reference for structure and vegetation interlocking at urban scale. The page keeps the grid and mass, then softens it with layered greens, quieter contrast, and organic patterning.",
       note: "Bosco Verticale is a contemporary reference for dense urban greenery grafted onto high-rise structure.",
       details: ["living facade", "green shade", "concrete frame", "biodiversity layer"],
+      images: [
+        {
+          src: "./assets/img/architecture/ecobrutalism.jpg",
+          building: "Bosco Verticale, Milan",
+          source: "https://unsplash.com/photos/low-angle-photography-of-buildings-with-plants-on-it-Y7ufx8R8PM0",
+        },
+        {
+          src: "./assets/img/architecture/ecobrutalism-bosco-detail.jpg",
+          building: "Bosco Verticale detail, Milan",
+          source: "https://unsplash.com/photos/a-very-tall-building-with-lots-of-plants-growing-on-it-mcd_HrUrJHw",
+        },
+        {
+          src: "./assets/img/architecture/ecobrutalism-oasia.jpg",
+          building: "Oasia Hotel Downtown, Singapore",
+          source: "https://commons.wikimedia.org/wiki/File:Oasia_Hotel_Downtown,_Singapore.jpg",
+        },
+      ],
     },
   ];
 
@@ -181,15 +300,33 @@
     const description = document.getElementById("architecture-description");
     const note = document.getElementById("architecture-note");
     const details = document.getElementById("architecture-details");
+    const previousImage = document.getElementById("architecture-prev");
+    const nextImage = document.getElementById("architecture-next");
+    const imageCount = document.getElementById("architecture-image-count");
+    let activeStyle = architectureStyles[0];
+    let activeImageIndex = 0;
+
+    function renderImage() {
+      const imageSet = activeStyle.images || [
+        { src: activeStyle.image, building: activeStyle.building, source: activeStyle.source },
+      ];
+      const activeImage = imageSet[activeImageIndex];
+      image.removeAttribute("data-load-error");
+      image.src = `${activeImage.src}?v=3`;
+      image.alt = activeImage.building;
+      building.textContent = activeImage.building;
+      source.href = activeImage.source;
+      imageCount.textContent = `${activeImageIndex + 1}/${imageSet.length}`;
+      previousImage.disabled = imageSet.length < 2;
+      nextImage.disabled = imageSet.length < 2;
+    }
 
     function renderStyle(style) {
+      activeStyle = style;
+      activeImageIndex = 0;
       sampler.dataset.style = style.id;
       document.body.dataset.style = style.id;
-      image.removeAttribute("data-load-error");
-      image.src = `${style.image}?v=2`;
-      image.alt = style.building;
-      building.textContent = style.building;
-      source.href = style.source;
+      renderImage();
       era.textContent = style.era;
       title.textContent = style.title;
       description.textContent = style.description;
@@ -206,6 +343,18 @@
         button.setAttribute("aria-pressed", String(button.dataset.style === style.id));
       });
     }
+
+    previousImage.addEventListener("click", () => {
+      const imageSet = activeStyle.images || [];
+      activeImageIndex = (activeImageIndex - 1 + imageSet.length) % imageSet.length;
+      renderImage();
+    });
+
+    nextImage.addEventListener("click", () => {
+      const imageSet = activeStyle.images || [];
+      activeImageIndex = (activeImageIndex + 1) % imageSet.length;
+      renderImage();
+    });
 
     architectureStyles.forEach((style) => {
       const button = document.createElement("button");

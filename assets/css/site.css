@@ -796,6 +796,7 @@ hr {
 }
 
 .architecture-figure figcaption {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   font-family: "Red Hat Mono", monospace;
@@ -804,6 +805,37 @@ hr {
   justify-content: space-between;
   margin-top: 0.55rem;
   opacity: 0.82;
+}
+
+.architecture-gallery-controls {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.architecture-gallery-controls button {
+  align-items: center;
+  aspect-ratio: 1;
+  background: transparent;
+  border: 1px solid var(--arch-accent);
+  color: var(--arch-accent);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  height: 1.55rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.architecture-gallery-controls button:hover {
+  background: var(--arch-accent);
+  color: var(--arch-paper);
+}
+
+.architecture-gallery-controls button:disabled {
+  cursor: default;
+  opacity: 0.35;
 }
 
 .architecture-figure a {
