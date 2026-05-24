@@ -482,6 +482,25 @@ hr {
   margin-bottom: 1rem;
 }
 
+.interpreter-inputs {
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+  padding-top: 0.85rem;
+  transition: border-color 420ms ease;
+}
+
+.interpreter-inputs[hidden] {
+  display: none;
+}
+
+.interpreter-input-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+
 .interpreter-field {
   display: grid;
   flex: 1 1 11rem;
@@ -516,6 +535,19 @@ hr {
 .interpreter-field select {
   min-height: 2.35rem;
   padding: 0.35rem 0.55rem;
+}
+
+.interpreter-field input {
+  background: color-mix(in srgb, var(--bg-variant) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  color: var(--font-color);
+  font: inherit;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.55rem;
+  transition:
+    background-color 420ms ease,
+    border-color 420ms ease,
+    color 420ms ease;
 }
 
 .interpreter-button {
@@ -751,9 +783,11 @@ hr {
   .detail-list li,
   .detail-label,
   .interpreter-demo,
+  .interpreter-inputs,
   .interpreter-field span,
   .interpreter-panel-title,
   .interpreter-field select,
+  .interpreter-field input,
   .interpreter-button,
   .interpreter-source-shell,
   .interpreter-source-lines,

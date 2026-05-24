@@ -2,6 +2,7 @@
   const PYODIDE_VERSION = "0.26.4";
   const PYODIDE_BASE = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
   const SOURCE_BASE = "https://raw.githubusercontent.com/akurkar07/Interpreter/main/src/";
+  const SAMPLE_BASE = "samples/pascal/";
   const MODULES = [
     "tokens.py",
     "nodes.py",
@@ -13,66 +14,6 @@
     "bytecode.py",
     "vm.py",
   ];
-
-  const samples = {
-    triangle: `PROGRAM triangle;
-
-VAR
-    n, r, limit, spaces : INTEGER;
-
-FUNCTION factorial(n : INTEGER) : INTEGER;
-BEGIN
-    IF n <= 1 THEN
-        factorial := 1
-    ELSE
-        factorial := n * factorial(n - 1);
-END;
-
-FUNCTION choose(n, r : INTEGER) : INTEGER;
-BEGIN
-    choose := factorial(n) DIV (factorial(n - r) * factorial(r));
-END;
-
-BEGIN
-    limit := 7;
-    FOR n := 0 TO limit - 1 DO
-    BEGIN
-        FOR spaces := 0 TO limit - n - 1 DO
-            WRITE(' ');
-        FOR r := 0 TO n DO
-        BEGIN
-            WRITE(choose(n, r));
-            WRITE(' ');
-        END;
-        WRITELN('');
-    END;
-END.`,
-    factorial: `PROGRAM recursion;
-
-FUNCTION Factorial(n : INTEGER) : INTEGER;
-BEGIN
-    IF n = 1 THEN
-        Factorial := 1
-    ELSE
-        Factorial := n * Factorial(n - 1);
-END;
-
-BEGIN
-    WRITELN(Factorial(5));
-END.`,
-    strings: `PROGRAM string_recursion;
-
-PROCEDURE Recurse(str : STRING; depth : INTEGER);
-BEGIN
-    WRITELN(str + 'a');
-    IF depth > 0 THEN
-        Recurse(str + 'a', depth - 1);
-END;
-
-BEGIN
-    Recurse('', 5);
-END.`,
-  };
 
   const demo = document.getElementById("interpreter-demo");
   if (!demo) {
@@ -87,6 +28,8 @@ END.`,
   const resetButton = document.getElementById("interpreter-reset");
   const downloadSourceButton = document.getElementById("interpreter-download-source");
   const downloadResultButton = document.getElementById("interpreter-download-result");
+  const inputsPanel = document.getElementById("interpreter-inputs");
+  const inputGrid = document.getElementById("interpreter-input-grid");
   const status = document.getElementById("interpreter-status");
   const output = document.getElementById("interpreter-output");
   const bytecode = document.getElementById("interpreter-bytecode");
@@ -95,6 +38,7 @@ END.`,
   let pyodidePromise = null;
   let runtimeReady = false;
   let activePanel = "output";
+  let demoInputs = [];
 
   function setStatus(message) {
     status.textContent = message;
@@ -105,6 +49,9 @@ END.`,
     resetButton.disabled = isBusy;
     sample.disabled = isBusy;
     mode.disabled = isBusy;
+    inputGrid.querySelectorAll("input").forEach((input) => {
+      input.disabled = isBusy;
+    });
     runButton.textContent = isBusy ? "Running..." : "Run";
   }
 
@@ -233,10 +180,11 @@ def run_pascal_demo(source, mode):
     scope.textContent = "";
 
     try {
+      const preparedSource = prepareSourceForRun();
       const pyodide = await prepareRuntime();
       setStatus("Executing program...");
       const resultJson = await pyodide.runPythonAsync(
-        `run_pascal_demo(${JSON.stringify(source.value)}, ${JSON.stringify(mode.value)})`
+        `run_pascal_demo(${JSON.stringify(preparedSource)}, ${JSON.stringify(mode.value)})`
       );
       const result = JSON.parse(resultJson);
       output.textContent = result.ok ? result.output || "(no output)" : `${result.output}${result.error}`;
@@ -253,12 +201,33 @@ def run_pascal_demo(source, mode):
     }
   }
 
-  function resetSample() {
-    source.value = samples[sample.value];
+  async function loadSampleProgram() {
+    const response = await fetch(`${SAMPLE_BASE}${sample.value}`, { cache: "force-cache" });
+    if (!response.ok) {
+      throw new Error(`Could not load ${sample.value}`);
+    }
+    return response.text();
+  }
+
+  async function resetSample() {
+    sample.disabled = true;
+    resetButton.disabled = true;
+    setStatus(`Loading ${sample.value}...`);
+    try {
+      source.value = await loadSampleProgram();
+      setStatus("Sample loaded.");
+    } catch (error) {
+      source.value = "";
+      setStatus(error.message);
+    } finally {
+      sample.disabled = false;
+      resetButton.disabled = false;
+    }
     output.textContent = "";
     setBytecode("");
     scope.textContent = "";
     updateSourceLineNumbers();
+    renderInputControls();
   }
 
   function setBytecode(text) {
@@ -277,6 +246,140 @@ def run_pascal_demo(source, mode):
   function updateSourceLineNumbers() {
     const lineCount = Math.max(1, source.value.split("\n").length);
     sourceLines.textContent = Array.from({ length: lineCount }, (_, index) => index + 1).join("\n");
+  }
+
+  function inferVariableTypes(text) {
+    const types = new Map();
+    const declarationPattern = /(?:^|\n)\s*([A-Za-z_][\w]*(?:\s*,\s*[A-Za-z_][\w]*)*)\s*:\s*(INTEGER|REAL|BOOLEAN|STRING)\s*;/gi;
+    let match = declarationPattern.exec(text);
+    while (match) {
+      const type = match[2].toUpperCase();
+      match[1].split(",").forEach((name) => {
+        types.set(name.trim().toUpperCase(), type);
+      });
+      match = declarationPattern.exec(text);
+    }
+    return types;
+  }
+
+  function readCalls(text) {
+    const types = inferVariableTypes(text);
+    const seen = new Set();
+    const reads = [];
+    const readPattern = /\bREADLN\s*\(\s*([A-Za-z_][\w]*)\s*\)/gi;
+    let match = readPattern.exec(text);
+    while (match) {
+      const name = match[1].toUpperCase();
+      if (!seen.has(name)) {
+        seen.add(name);
+        reads.push({
+          name,
+          type: types.get(name) || "STRING",
+        });
+      }
+      match = readPattern.exec(text);
+    }
+    return reads;
+  }
+
+  function defaultInputValue(input) {
+    if (input.name === "LIMIT") {
+      return "7";
+    }
+    if (input.name === "COUNT") {
+      return "3";
+    }
+    if (input.name === "START") {
+      return "5";
+    }
+    if (input.type === "STRING") {
+      return "Alex";
+    }
+    if (input.type === "BOOLEAN") {
+      return "TRUE";
+    }
+    return "1";
+  }
+
+  function renderInputControls() {
+    demoInputs = readCalls(source.value);
+    inputGrid.replaceChildren();
+    inputsPanel.hidden = demoInputs.length === 0;
+
+    demoInputs.forEach((input) => {
+      const label = document.createElement("label");
+      label.className = "interpreter-field";
+
+      const caption = document.createElement("span");
+      caption.textContent = `${input.name.toLowerCase()} : ${input.type}`;
+
+      const control = document.createElement("input");
+      control.id = `interpreter-input-${input.name}`;
+      control.dataset.name = input.name;
+      control.dataset.type = input.type;
+      control.value = defaultInputValue(input);
+
+      if (input.type === "INTEGER" || input.type === "REAL") {
+        control.type = "number";
+        control.step = input.type === "INTEGER" ? "1" : "any";
+      } else if (input.type === "BOOLEAN") {
+        control.setAttribute("list", "interpreter-boolean-options");
+      } else {
+        control.type = "text";
+      }
+
+      label.append(caption, control);
+      inputGrid.appendChild(label);
+    });
+  }
+
+  function literalFromInputValue(input, rawValue) {
+    const value = rawValue.trim();
+    if (input.type === "INTEGER") {
+      if (!/^-?\d+$/.test(value)) {
+        throw new Error(`${input.name.toLowerCase()} must be an integer`);
+      }
+      return value;
+    }
+
+    if (input.type === "REAL") {
+      if (!/^-?(?:\d+\.?\d*|\.\d+)$/.test(value)) {
+        throw new Error(`${input.name.toLowerCase()} must be a real number`);
+      }
+      return value;
+    }
+
+    if (input.type === "BOOLEAN") {
+      const upper = value.toUpperCase();
+      if (upper !== "TRUE" && upper !== "FALSE") {
+        throw new Error(`${input.name.toLowerCase()} must be TRUE or FALSE`);
+      }
+      return upper;
+    }
+
+    if (value.includes("'")) {
+      throw new Error(`${input.name.toLowerCase()} cannot contain apostrophes`);
+    }
+    return `'${value}'`;
+  }
+
+  function panelInputLiteral(input) {
+    const control = document.getElementById(`interpreter-input-${input.name}`);
+    return literalFromInputValue(input, control ? control.value : "");
+  }
+
+  function prepareSourceForRun() {
+    const replacements = new Map();
+    for (const input of demoInputs) {
+      replacements.set(input.name, panelInputLiteral(input));
+    }
+    return source.value.replace(/\bREADLN\s*\(\s*([A-Za-z_][\w]*)\s*\)/gi, (_, name) => {
+      const literal = replacements.get(name.toUpperCase());
+      if (literal === undefined) {
+        return _;
+      }
+      return `${name} := ${literal}`;
+    });
   }
 
   function syncSourceLineScroll() {
@@ -334,13 +437,18 @@ def run_pascal_demo(source, mode):
   }
 
   resetSample();
-  sample.addEventListener("change", resetSample);
+  sample.addEventListener("change", () => {
+    resetSample();
+  });
   source.addEventListener("input", updateSourceLineNumbers);
+  source.addEventListener("input", renderInputControls);
   source.addEventListener("scroll", syncSourceLineScroll);
   bytecode.addEventListener("scroll", syncBytecodeLineScroll);
   downloadSourceButton.addEventListener("click", downloadSource);
   downloadResultButton.addEventListener("click", downloadResult);
-  resetButton.addEventListener("click", resetSample);
+  resetButton.addEventListener("click", () => {
+    resetSample();
+  });
   runButton.addEventListener("click", runProgram);
   runButton.addEventListener("pointerenter", warmRuntime, { once: true });
   runButton.addEventListener("focus", warmRuntime, { once: true });

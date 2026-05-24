@@ -84,9 +84,14 @@
               <label class="interpreter-field">
                 <span>Sample</span>
                 <select id="interpreter-sample">
-                  <option value="triangle">Pascal triangle</option>
-                  <option value="factorial">Recursive factorial</option>
-                  <option value="strings">String recursion</option>
+                  <option value="triangle.pas">Pascal triangle</option>
+                  <option value="functions.pas">Recursive factorial</option>
+                  <option value="recursion.pas">Recursive procedure</option>
+                  <option value="string_recursion.pas">String recursion</option>
+                  <option value="FeatureShowcase.pas">Feature showcase</option>
+                  <option value="input_triangle.pas">Input triangle</option>
+                  <option value="input_greeting.pas">Input greeting</option>
+                  <option value="input_countdown.pas">Input countdown</option>
                 </select>
               </label>
               <label class="interpreter-field">
@@ -104,6 +109,15 @@
               <button id="interpreter-download-result" class="interpreter-button secondary" type="button">
                 Download result
               </button>
+            </div>
+
+            <div class="interpreter-inputs" id="interpreter-inputs" hidden>
+              <span class="interpreter-panel-title">Inputs</span>
+              <div class="interpreter-input-grid" id="interpreter-input-grid"></div>
+              <datalist id="interpreter-boolean-options">
+                <option value="TRUE"></option>
+                <option value="FALSE"></option>
+              </datalist>
             </div>
 
             <div class="interpreter-grid">
@@ -156,6 +170,11 @@
                   structured JSON, then shown in the Output, Bytecode, and Scope panels.
                 </p>
                 <p>
+                  Demo programs can use <code>READLN(name)</code> for browser inputs. The page detects those calls, builds
+                  the small Inputs panel, and substitutes the entered values before passing the source to the current
+                  Python interpreter.
+                </p>
+                <p>
                   Lazy loading matters because Pyodide is much larger than the rest of this site. Loading it only when the
                   interpreter demo is needed keeps the homepage and normal browsing fast, while still letting the live demo
                   run the actual Python implementation rather than a rewritten imitation.
@@ -163,6 +182,7 @@
               </div>
             </details>
           </section>
+
         </div>
       </div>
     </div>
