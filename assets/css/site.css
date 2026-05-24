@@ -193,6 +193,52 @@ hr {
   z-index: 2;
 }
 
+.steam-trigger {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.steam-trigger:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 0.3rem;
+}
+
+.steam-puff {
+  animation: steam-drift 1.45s ease-out forwards;
+  height: auto;
+  left: var(--steam-x);
+  max-width: 96px;
+  pointer-events: none;
+  position: fixed;
+  top: var(--steam-y);
+  transform: translate(-50%, -50%);
+  width: clamp(48px, 10vw, 86px);
+  z-index: 999;
+}
+
+@keyframes steam-drift {
+  0% {
+    filter: blur(0);
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.72) rotate(var(--steam-rotate));
+  }
+
+  18% {
+    opacity: 0.92;
+  }
+
+  100% {
+    filter: blur(3px);
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--steam-drift-x)),
+        calc(-145% - var(--steam-rise))
+      )
+      scale(1.28)
+      rotate(calc(var(--steam-rotate) * -0.45));
+  }
+}
+
 .page-hero-title {
   position: absolute;
   inset: 0;

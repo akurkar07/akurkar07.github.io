@@ -31,6 +31,47 @@
     };
   }
 
+  function showSteamPuff(x, y) {
+    const puff = document.createElement("img");
+    const driftX = Math.round((Math.random() - 0.5) * 48);
+    const rise = Math.round(24 + Math.random() * 28);
+    const rotation = Math.round((Math.random() - 0.5) * 18);
+
+    puff.src = "image.png";
+    puff.alt = "";
+    puff.className = "steam-puff";
+    puff.setAttribute("aria-hidden", "true");
+    puff.style.setProperty("--steam-x", `${x}px`);
+    puff.style.setProperty("--steam-y", `${y}px`);
+    puff.style.setProperty("--steam-drift-x", `${driftX}px`);
+    puff.style.setProperty("--steam-rise", `${rise}px`);
+    puff.style.setProperty("--steam-rotate", `${rotation}deg`);
+
+    document.body.appendChild(puff);
+    puff.addEventListener("animationend", () => puff.remove(), { once: true });
+  }
+
+  function bindSteamTrigger() {
+    const trigger = document.querySelector(".steam-trigger");
+    if (!trigger) {
+      return;
+    }
+
+    trigger.addEventListener("click", (event) => {
+      showSteamPuff(event.clientX, event.clientY);
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.preventDefault();
+      const rect = trigger.getBoundingClientRect();
+      showSteamPuff(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+  }
+
   function prng(seed) {
     return function random() {
       seed = (seed + 0x6d2b79f5) >>> 0;
@@ -232,6 +273,7 @@
     if (themeToggle) {
       themeToggle.addEventListener("click", toggleTheme);
     }
+    bindSteamTrigger();
 
     drawHero();
     drawTimelineBackgrounds();
