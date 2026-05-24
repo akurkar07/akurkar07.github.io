@@ -81,12 +81,14 @@ END.`,
 
   const source = document.getElementById("interpreter-source");
   const sample = document.getElementById("interpreter-sample");
+  const sourceLines = document.getElementById("interpreter-source-lines");
   const mode = document.getElementById("interpreter-mode");
   const runButton = document.getElementById("interpreter-run");
   const resetButton = document.getElementById("interpreter-reset");
   const status = document.getElementById("interpreter-status");
   const output = document.getElementById("interpreter-output");
   const bytecode = document.getElementById("interpreter-bytecode");
+  const bytecodeLines = document.getElementById("interpreter-bytecode-lines");
   const scope = document.getElementById("interpreter-scope");
   let pyodidePromise = null;
   let runtimeReady = false;
@@ -235,12 +237,12 @@ def run_pascal_demo(source, mode):
       );
       const result = JSON.parse(resultJson);
       output.textContent = result.ok ? result.output || "(no output)" : `${result.output}${result.error}`;
-      bytecode.textContent = result.bytecode || "(bytecode unavailable)";
+      setBytecode(result.bytecode || "(bytecode unavailable)");
       scope.textContent = result.scope || "{}";
       setStatus(result.ok ? "Finished." : "Program stopped with an error.");
     } catch (error) {
       output.textContent = error.message;
-      bytecode.textContent = "(bytecode unavailable)";
+      setBytecode("(bytecode unavailable)");
       scope.textContent = "{}";
       setStatus("Runtime error.");
     } finally {
@@ -251,8 +253,35 @@ def run_pascal_demo(source, mode):
   function resetSample() {
     source.value = samples[sample.value];
     output.textContent = "";
-    bytecode.textContent = "";
+    setBytecode("");
     scope.textContent = "";
+    updateSourceLineNumbers();
+  }
+
+  function setBytecode(text) {
+    bytecode.textContent = text;
+    updateBytecodeLineNumbers(text);
+  }
+
+  function updateBytecodeLineNumbers(text) {
+    const lines = text.split("\n").filter((line, index, allLines) => line || index < allLines.length - 1);
+    const width = String(lines.length).length;
+    bytecodeLines.textContent = lines
+      .map((_, index) => String(index + 1).padStart(width, " "))
+      .join("\n");
+  }
+
+  function updateSourceLineNumbers() {
+    const lineCount = Math.max(1, source.value.split("\n").length);
+    sourceLines.textContent = Array.from({ length: lineCount }, (_, index) => index + 1).join("\n");
+  }
+
+  function syncSourceLineScroll() {
+    sourceLines.scrollTop = source.scrollTop;
+  }
+
+  function syncBytecodeLineScroll() {
+    bytecodeLines.scrollTop = bytecode.scrollTop;
   }
 
   function activatePanel(name) {
@@ -266,6 +295,9 @@ def run_pascal_demo(source, mode):
 
   resetSample();
   sample.addEventListener("change", resetSample);
+  source.addEventListener("input", updateSourceLineNumbers);
+  source.addEventListener("scroll", syncSourceLineScroll);
+  bytecode.addEventListener("scroll", syncBytecodeLineScroll);
   resetButton.addEventListener("click", resetSample);
   runButton.addEventListener("click", runProgram);
   runButton.addEventListener("pointerenter", warmRuntime, { once: true });
