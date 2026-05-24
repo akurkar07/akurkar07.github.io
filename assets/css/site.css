@@ -435,6 +435,386 @@ hr {
   font-weight: 700;
 }
 
+.architecture-page {
+  --arch-page-bg: #1d1008;
+  --arch-paper: #f5d9a6;
+  --arch-ink: #2b1608;
+  --arch-muted: #70441d;
+  --arch-accent: #bd722c;
+  --arch-accent-2: #20706a;
+  --arch-line: rgba(43, 22, 8, 0.24);
+  --arch-shadow: rgba(28, 12, 4, 0.35);
+  --arch-radius: 0;
+  --arch-heading-font: Literata, serif;
+  --arch-ui-font: "Red Hat Mono", monospace;
+  --arch-image-filter: saturate(1.08) contrast(1.08) sepia(0.16);
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--arch-accent) 34%, transparent), transparent 20rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--arch-accent-2) 20%, transparent) 0 12%, transparent 12% 100%),
+    var(--arch-page-bg) !important;
+  color: var(--arch-ink) !important;
+  min-height: 100vh;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.architecture-page main {
+  color: var(--arch-ink) !important;
+}
+
+.architecture-page a {
+  color: var(--arch-accent) !important;
+}
+
+.architecture-page .container {
+  max-width: 980px !important;
+}
+
+.architecture-page .row {
+  margin-top: 2rem !important;
+  padding-top: 2rem !important;
+}
+
+.architecture-page nav {
+  background: color-mix(in srgb, var(--arch-paper) 82%, transparent);
+  border: 2px solid var(--arch-accent);
+  box-shadow: 0.45rem 0.45rem 0 var(--arch-shadow);
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+}
+
+.architecture-page .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--arch-muted) !important;
+}
+
+.architecture-page .page-hero-wrap {
+  height: 9rem;
+  margin: 0 0 1rem;
+}
+
+.architecture-page .page-hero-pcie,
+.architecture-page .page-hero {
+  display: none;
+}
+
+.architecture-page .page-hero-title {
+  background:
+    linear-gradient(90deg, transparent 0 8%, color-mix(in srgb, var(--arch-accent) 22%, transparent) 8% 92%, transparent 92%),
+    var(--arch-paper);
+  border: 2px solid var(--arch-accent);
+  box-shadow: 0.55rem 0.55rem 0 var(--arch-shadow);
+  color: var(--arch-ink);
+  inset: 0;
+}
+
+.architecture-page .chip-title span {
+  color: var(--arch-ink);
+  font-family: var(--arch-heading-font);
+  font-size: clamp(2rem, 7vw, 5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.architecture-page .lead {
+  color: var(--arch-paper);
+  font-family: var(--arch-ui-font);
+  margin-bottom: 1rem;
+}
+
+.architecture-page .underline {
+  background-image: linear-gradient(to right, var(--arch-accent), var(--arch-accent-2));
+}
+
+.architecture-sampler {
+  background:
+    linear-gradient(90deg, var(--arch-line) 1px, transparent 1px),
+    linear-gradient(0deg, var(--arch-line) 1px, transparent 1px),
+    var(--arch-paper);
+  background-size: 2.5rem 2.5rem, 2.5rem 2.5rem, auto;
+  border: 2px solid var(--arch-accent);
+  border-radius: var(--arch-radius);
+  box-shadow: 0.7rem 0.7rem 0 var(--arch-shadow);
+  color: var(--arch-ink);
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 3rem;
+  padding: 1rem;
+  position: relative;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease;
+}
+
+.architecture-sampler::before {
+  border: 1px solid color-mix(in srgb, var(--arch-accent) 70%, transparent);
+  content: "";
+  inset: 0.45rem;
+  pointer-events: none;
+  position: absolute;
+}
+
+.architecture-page[data-style="islamic-seville"] {
+  --arch-page-bg: #1f1208;
+  --arch-paper: #f2c675;
+  --arch-ink: #281305;
+  --arch-muted: #6e3d1a;
+  --arch-accent: #b45f22;
+  --arch-accent-2: #16766d;
+  --arch-line: rgba(61, 26, 7, 0.22);
+  --arch-shadow: rgba(20, 8, 1, 0.48);
+  --arch-image-filter: saturate(1.18) contrast(1.08) sepia(0.24);
+}
+
+.architecture-page[data-style="islamic-seville"] .architecture-sampler {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(22, 118, 109, 0.16) 14px 16px),
+    repeating-linear-gradient(-45deg, transparent 0 14px, rgba(180, 95, 34, 0.16) 14px 16px),
+    var(--arch-paper);
+}
+
+.architecture-page[data-style="islamic-seville"] .architecture-figure img {
+  border-radius: 999px 999px 0 0;
+}
+
+.architecture-page[data-style="renaissance"] {
+  --arch-page-bg: #6b5337;
+  --arch-paper: #efe2c9;
+  --arch-ink: #261d14;
+  --arch-muted: #6a5136;
+  --arch-accent: #8c5b2d;
+  --arch-accent-2: #b89258;
+  --arch-line: rgba(38, 29, 20, 0.18);
+  --arch-shadow: rgba(46, 31, 18, 0.34);
+  --arch-image-filter: saturate(0.86) contrast(1.04) sepia(0.12);
+}
+
+.architecture-page[data-style="renaissance"] .architecture-sampler {
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(140, 91, 45, 0.15) 8% 9%, transparent 9% 91%, rgba(140, 91, 45, 0.15) 91% 92%, transparent 92%),
+    linear-gradient(0deg, rgba(184, 146, 88, 0.18) 0 1px, transparent 1px),
+    var(--arch-paper);
+  background-size: auto, 100% 4rem, auto;
+}
+
+.architecture-page[data-style="baroque"] {
+  --arch-page-bg: #17070f;
+  --arch-paper: #3a1021;
+  --arch-ink: #ffe6c7;
+  --arch-muted: #d7a0a4;
+  --arch-accent: #d2a84b;
+  --arch-accent-2: #b8325f;
+  --arch-line: rgba(255, 230, 199, 0.18);
+  --arch-shadow: rgba(0, 0, 0, 0.58);
+  --arch-radius: 2rem 0.5rem 2rem 0.5rem;
+  --arch-image-filter: saturate(1.2) contrast(1.18) brightness(0.86);
+}
+
+.architecture-page[data-style="baroque"] .architecture-sampler {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(210, 168, 75, 0.34), transparent 13rem),
+    radial-gradient(circle at 88% 18%, rgba(184, 50, 95, 0.28), transparent 12rem),
+    var(--arch-paper);
+  border: 6px double var(--arch-accent);
+}
+
+.architecture-page[data-style="baroque"] .architecture-copy h2 {
+  font-style: italic;
+}
+
+.architecture-page[data-style="neoclassical"] {
+  --arch-page-bg: #cfd6dc;
+  --arch-paper: #f4f1e8;
+  --arch-ink: #222831;
+  --arch-muted: #596675;
+  --arch-accent: #5f7186;
+  --arch-accent-2: #a98f5c;
+  --arch-line: rgba(34, 40, 49, 0.16);
+  --arch-shadow: rgba(71, 81, 93, 0.28);
+  --arch-image-filter: saturate(0.78) contrast(1.08);
+}
+
+.architecture-page[data-style="neoclassical"] .architecture-sampler {
+  background:
+    linear-gradient(90deg, rgba(95, 113, 134, 0.18) 0 0.45rem, transparent 0.45rem 1.7rem),
+    var(--arch-paper);
+  background-size: 3.4rem 100%, auto;
+}
+
+.architecture-page[data-style="romantic"] {
+  --arch-page-bg: #101a24;
+  --arch-paper: #203141;
+  --arch-ink: #ecf1ec;
+  --arch-muted: #b6c4c1;
+  --arch-accent: #97aab4;
+  --arch-accent-2: #6f8d74;
+  --arch-line: rgba(236, 241, 236, 0.16);
+  --arch-shadow: rgba(1, 6, 11, 0.62);
+  --arch-radius: 1.4rem 1.4rem 0.2rem 0.2rem;
+  --arch-image-filter: saturate(0.7) contrast(1.12) brightness(0.86);
+}
+
+.architecture-page[data-style="romantic"] .architecture-sampler {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    repeating-linear-gradient(90deg, transparent 0 2.4rem, rgba(236, 241, 236, 0.1) 2.4rem 2.5rem),
+    var(--arch-paper);
+}
+
+.architecture-page[data-style="romantic"] .architecture-figure img {
+  border-radius: 999px 999px 0 0;
+}
+
+.architecture-page[data-style="brutalism"] {
+  --arch-page-bg: #8a887e;
+  --arch-paper: #d4d0c4;
+  --arch-ink: #111;
+  --arch-muted: #3e3d38;
+  --arch-accent: #111;
+  --arch-accent-2: #777267;
+  --arch-line: rgba(17, 17, 17, 0.18);
+  --arch-shadow: rgba(17, 17, 17, 0.54);
+  --arch-image-filter: grayscale(0.6) contrast(1.35);
+}
+
+.architecture-page[data-style="brutalism"] .architecture-sampler,
+.architecture-page[data-style="brutalism"] nav,
+.architecture-page[data-style="brutalism"] .page-hero-title {
+  box-shadow: 0.9rem 0.9rem 0 #111;
+}
+
+.architecture-page[data-style="brutalism"] .architecture-sampler {
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.16) 0 0.5rem, transparent 0.5rem),
+    repeating-linear-gradient(0deg, transparent 0 1.3rem, rgba(17, 17, 17, 0.12) 1.3rem 1.45rem),
+    var(--arch-paper);
+  border-width: 4px;
+}
+
+.architecture-page[data-style="ecobrutalism"] {
+  --arch-page-bg: #0d2017;
+  --arch-paper: #c9d0bf;
+  --arch-ink: #102116;
+  --arch-muted: #3a5a3f;
+  --arch-accent: #527b3b;
+  --arch-accent-2: #88a95d;
+  --arch-line: rgba(16, 33, 22, 0.18);
+  --arch-shadow: rgba(8, 20, 14, 0.48);
+  --arch-radius: 0 2rem 0 2rem;
+  --arch-image-filter: saturate(1.18) contrast(1.05);
+}
+
+.architecture-page[data-style="ecobrutalism"] .architecture-sampler {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(82, 123, 59, 0.28) 0 0.4rem, transparent 0.45rem),
+    radial-gradient(circle at 82% 18%, rgba(136, 169, 93, 0.24) 0 0.65rem, transparent 0.7rem),
+    linear-gradient(90deg, rgba(16, 33, 22, 0.18) 0 0.4rem, transparent 0.4rem),
+    var(--arch-paper);
+  background-size: 4.5rem 4.5rem, 6rem 6rem, 2.8rem 100%, auto;
+}
+
+.architecture-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.architecture-tab {
+  background: transparent;
+  border: 1px solid var(--arch-line);
+  color: var(--arch-ink);
+  cursor: pointer;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.architecture-tab:hover,
+.architecture-tab[aria-pressed="true"] {
+  background: var(--arch-accent);
+  border-color: var(--arch-accent);
+  color: var(--arch-paper);
+  transform: translateY(-1px);
+}
+
+.architecture-figure {
+  border-top: 1px solid var(--arch-line);
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.architecture-figure img {
+  aspect-ratio: 4 / 3;
+  border: 2px solid var(--arch-accent);
+  display: block;
+  filter: var(--arch-image-filter);
+  object-fit: cover;
+  width: 100%;
+}
+
+.architecture-figure figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  gap: 0.6rem;
+  justify-content: space-between;
+  margin-top: 0.55rem;
+  opacity: 0.82;
+}
+
+.architecture-figure a {
+  color: var(--arch-accent) !important;
+}
+
+.architecture-copy {
+  border-top: 1px solid var(--arch-line);
+  padding-top: 1rem;
+}
+
+.architecture-era {
+  color: var(--arch-accent);
+  display: block;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.architecture-copy h2 {
+  color: var(--arch-ink);
+  font-family: var(--arch-heading-font);
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 0.95;
+  margin-bottom: 0.6rem;
+}
+
+.architecture-copy p {
+  margin-bottom: 0.75rem;
+}
+
+.architecture-note {
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+  .architecture-sampler {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+
+  .architecture-controls,
+  .architecture-copy {
+    grid-column: 1 / -1;
+  }
+}
+
 blockquote {
   padding-left: 3rem !important;
   position: relative;

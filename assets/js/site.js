@@ -72,6 +72,144 @@
     });
   }
 
+  const architectureStyles = [
+    {
+      id: "islamic-seville",
+      label: "Islamic Seville",
+      era: "1184-1198",
+      title: "Islamic architecture in Seville",
+      building: "La Giralda, Seville",
+      image: "./assets/img/architecture/islamic-seville.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:Sevilla_Cathedral_-_Giralda.jpg",
+      description:
+        "Almohad geometry, brick massing, layered ornament, and a strong tower silhouette set the starting point for this sampler.",
+      note: "Introduced here through Seville's late-12th-century mosque minaret, later adapted as the cathedral bell tower.",
+    },
+    {
+      id: "renaissance",
+      label: "Renaissance",
+      era: "c. 1502",
+      title: "Renaissance",
+      building: "Tempietto del Bramante, Rome",
+      image: "./assets/img/architecture/renaissance.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:02_Bramante_Tempietto_Exterior.jpg",
+      description:
+        "Measured proportion, classical columns, symmetry, and controlled geometry drive the visual language.",
+      note: "The Tempietto is a compact reference for High Renaissance balance and antique revival.",
+    },
+    {
+      id: "baroque",
+      label: "Baroque",
+      era: "1638 onward",
+      title: "Baroque",
+      building: "San Carlo alle Quattro Fontane, Rome",
+      image: "./assets/img/architecture/baroque.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:Rome_S._Carlo_alle_Quattro_Fontane_facade.jpg",
+      description:
+        "Curved surfaces, drama, dense shadow, and theatrical movement replace calm classical restraint.",
+      note: "Borromini's church is used for its restless concave-convex facade and spatial tension.",
+    },
+    {
+      id: "neoclassical",
+      label: "Neoclassical",
+      era: "1758 onward",
+      title: "Neoclassical",
+      building: "Panthéon, Paris",
+      image: "./assets/img/architecture/neoclassical.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:F6362_Paris_5e_Pantheon_facade_rwk.jpg",
+      description:
+        "The palette cools down into civic stone, temple-front order, crisp outlines, and rational monumentality.",
+      note: "The Panthéon anchors this style through its Enlightenment-era classical revival.",
+    },
+    {
+      id: "romantic",
+      label: "Romantic",
+      era: "early 19th century",
+      title: "Romantic / Gothic Revival",
+      building: "Palace of Westminster, London",
+      image: "./assets/img/architecture/romantic.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:Palace.of.westminster.arp.jpg",
+      description:
+        "Picturesque verticality, medieval revival, national myth, and emotional atmosphere pull the page into a darker register.",
+      note: "The Palace of Westminster stands in for the Romantic-era return to Gothic language.",
+    },
+    {
+      id: "brutalism",
+      label: "Brutalism",
+      era: "1952",
+      title: "Brutalism",
+      building: "Unité d'Habitation, Marseille",
+      image: "./assets/img/architecture/brutalism.jpg",
+      source: "https://en.wikivoyage.org/wiki/File:Unite_d%27Habitation,_Marseille.jpg",
+      description:
+        "Concrete weight, exposed structure, modular rhythm, and utility-first composition strip the interface down.",
+      note: "Le Corbusier's housing block is used as the mid-century reference point.",
+    },
+    {
+      id: "ecobrutalism",
+      label: "Ecobrutalism",
+      era: "2014",
+      title: "Ecobrutalism",
+      building: "Bosco Verticale, Milan",
+      image: "./assets/img/architecture/ecobrutalism.jpg",
+      source: "https://unsplash.com/photos/low-angle-photography-of-buildings-with-plants-on-it-Y7ufx8R8PM0",
+      description:
+        "The hard frame remains, but vegetation, shade, and ecological texture begin to overtake the mass.",
+      note: "Bosco Verticale is a contemporary reference for dense urban greenery grafted onto high-rise structure.",
+    },
+  ];
+
+  function initArchitectureSampler() {
+    const sampler = document.getElementById("architecture-sampler");
+    if (!sampler) {
+      return;
+    }
+
+    const controls = sampler.querySelector(".architecture-controls");
+    const image = document.getElementById("architecture-image");
+    const building = document.getElementById("architecture-building");
+    const source = document.getElementById("architecture-source");
+    const era = document.getElementById("architecture-era");
+    const title = document.getElementById("architecture-title");
+    const description = document.getElementById("architecture-description");
+    const note = document.getElementById("architecture-note");
+
+    function renderStyle(style) {
+      sampler.dataset.style = style.id;
+      document.body.dataset.style = style.id;
+      image.removeAttribute("data-load-error");
+      image.src = `${style.image}?v=2`;
+      image.alt = style.building;
+      building.textContent = style.building;
+      source.href = style.source;
+      era.textContent = style.era;
+      title.textContent = style.title;
+      description.textContent = style.description;
+      note.textContent = style.note;
+
+      controls.querySelectorAll(".architecture-tab").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.style === style.id));
+      });
+    }
+
+    architectureStyles.forEach((style) => {
+      const button = document.createElement("button");
+      button.className = "architecture-tab";
+      button.dataset.style = style.id;
+      button.type = "button";
+      button.textContent = style.label;
+      button.addEventListener("click", () => renderStyle(style));
+      controls.appendChild(button);
+    });
+
+    image.addEventListener("error", () => {
+      image.dataset.loadError = "true";
+      building.textContent = `${building.textContent} (image failed to load)`;
+    });
+
+    renderStyle(architectureStyles[0]);
+  }
+
   function prng(seed) {
     return function random() {
       seed = (seed + 0x6d2b79f5) >>> 0;
@@ -274,6 +412,7 @@
       themeToggle.addEventListener("click", toggleTheme);
     }
     bindSteamTrigger();
+    initArchitectureSampler();
 
     drawHero();
     drawTimelineBackgrounds();
@@ -294,7 +433,9 @@
     }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
   }
 
-  applyTheme(localStorage.getItem("theme") || "dark");
+  if (!document.body.classList.contains("architecture-page")) {
+    applyTheme(localStorage.getItem("theme") || "dark");
+  }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init, { once: true });
