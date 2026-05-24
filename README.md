@@ -9,6 +9,7 @@ The site presents my Computer Science background, project timeline, hackathon wo
 - `index.html` is the homepage, with a personal introduction and chronological project/hackathon timeline.
 - `about.html` gives a fuller background, current focus, and working style.
 - `architecture.html` is an interactive architecture style sampler with image galleries, style-specific copy, and visual treatments for each architectural period.
+- `Alex_Kurkar_CV.pdf` is linked from the site navigation as a downloadable CV.
 
 ## Project Structure
 
@@ -17,6 +18,7 @@ The site presents my Computer Science background, project timeline, hackathon wo
 +-- index.html
 +-- about.html
 +-- architecture.html
++-- Alex_Kurkar_CV.pdf
 +-- image.png
 +-- assets/
     +-- css/
