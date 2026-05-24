@@ -570,6 +570,36 @@ hr {
   --arch-image-filter: saturate(1.08) contrast(1.04) sepia(0.18);
 }
 
+.architecture-page[data-style="coptic"] {
+  --arch-page-bg: #2a1d13;
+  --arch-page-text: #f2dec0;
+  --arch-paper: #ead4b3;
+  --arch-ink: #25170f;
+  --arch-muted: #6f4a31;
+  --arch-accent: #8b3f2f;
+  --arch-accent-2: #3f5f5a;
+  --arch-line: rgba(37, 23, 15, 0.18);
+  --arch-shadow: rgba(20, 10, 4, 0.34);
+  --arch-radius: 0.35rem;
+  --arch-image-filter: saturate(0.9) contrast(1.04) sepia(0.16);
+}
+
+.architecture-page[data-style="coptic"] .architecture-sampler {
+  grid-template-areas:
+    "controls details"
+    "copy figure"
+    "copy figure";
+  background:
+    linear-gradient(90deg, rgba(139, 63, 47, 0.12) 0 0.28rem, transparent 0.28rem 1.9rem),
+    linear-gradient(0deg, rgba(63, 95, 90, 0.1) 0 1px, transparent 1px),
+    var(--arch-paper);
+  background-size: 2.2rem 100%, 100% 3.4rem, auto;
+}
+
+.architecture-page[data-style="coptic"] .architecture-figure img {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+
 .architecture-page[data-style="islamic-seville"] .architecture-sampler {
   grid-template-areas:
     "controls details"
@@ -786,13 +816,27 @@ hr {
   padding-top: 1rem;
 }
 
+.architecture-image-title {
+  color: var(--arch-ink);
+  font-family: var(--arch-ui-font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
 .architecture-figure img {
   aspect-ratio: 4 / 3;
+  background: color-mix(in srgb, var(--arch-paper) 82%, var(--arch-page-bg));
   border: 2px solid var(--arch-accent);
   display: block;
   filter: var(--arch-image-filter);
   object-fit: cover;
   width: 100%;
+}
+
+.architecture-figure img[data-fit="contain"] {
+  object-fit: contain;
 }
 
 .architecture-figure figcaption {
@@ -807,10 +851,17 @@ hr {
   opacity: 0.82;
 }
 
+.architecture-figure figcaption:not(.architecture-image-title) {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
 .architecture-gallery-controls {
   align-items: center;
   display: inline-flex;
   gap: 0.35rem;
+  grid-column: 2;
+  justify-self: center;
 }
 
 .architecture-gallery-controls button {
@@ -840,6 +891,8 @@ hr {
 
 .architecture-figure a {
   color: var(--arch-accent) !important;
+  grid-column: 3;
+  justify-self: end;
 }
 
 .architecture-copy {
@@ -909,6 +962,7 @@ hr {
 @media (max-width: 767.98px) {
   .architecture-sampler,
   .architecture-page[data-style="islamic-seville"] .architecture-sampler,
+  .architecture-page[data-style="coptic"] .architecture-sampler,
   .architecture-page[data-style="renaissance"] .architecture-sampler,
   .architecture-page[data-style="baroque"] .architecture-sampler,
   .architecture-page[data-style="neoclassical"] .architecture-sampler,

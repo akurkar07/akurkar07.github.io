@@ -74,6 +74,39 @@
 
   const architectureStyles = [
     {
+      id: "coptic",
+      label: "Coptic",
+      era: "3rd century onward",
+      title: "Coptic architecture",
+      building: "Hanging Church, Cairo",
+      image: "./assets/img/architecture/coptic-hanging-church.jpg",
+      source: "https://commons.wikimedia.org/wiki/File:Cairo,_Old_Cairo,_Hanging_Church,_Egypt,_Oct_2004_edit.jpg",
+      description:
+        "Coptic architecture grows out of early Christian Egypt, where basilican planning, monastic enclosure, thick masonry, timber screens, icons, and desert climate all shape the building language. It often feels inward and protective rather than outwardly monumental: courtyards, chapels, screens, and layered thresholds build up a sequence of worship and retreat. The page treatment uses warm plaster, dark timber, narrow divisions, and quiet icon-like framing to suggest that mixture of refuge, liturgy, and material age.",
+      note: "Placed first in the chronology as an early Christian architectural tradition that predates the later medieval and Renaissance references.",
+      details: ["basilican plan", "monastic enclosure", "timber screens", "desert masonry"],
+      images: [
+        {
+          src: "./assets/img/architecture/coptic-hanging-church.jpg",
+          building: "Hanging Church, Cairo",
+          source: "https://commons.wikimedia.org/wiki/File:Cairo,_Old_Cairo,_Hanging_Church,_Egypt,_Oct_2004_edit.jpg",
+        },
+        {
+          src: "./assets/img/architecture/coptic-desert-monastery.jpg",
+          building: "Church of Saint Mark, Monastery of Saint Anthony",
+          source:
+            "https://commons.wikimedia.org/wiki/File:Monastery_of_Saint_Anthony,_Egypt_-_Church_of_Saint_Mark,_exterior_view_-_MSBZ004_A24_-_Dumbarton_Oaks.jpg",
+        },
+        {
+          src: "./assets/img/architecture/coptic-icon.jpg",
+          building: "Coptic icon of Anthony the Great",
+          source:
+            "https://commons.wikimedia.org/wiki/File:Anthony_the_Great_(coptic_icon,_19-20_c.,_priv._coll).jpg",
+          fit: "contain",
+        },
+      ],
+    },
+    {
       id: "islamic-seville",
       label: "Islamic Seville",
       era: "1184-1198",
@@ -312,6 +345,7 @@
       ];
       const activeImage = imageSet[activeImageIndex];
       image.removeAttribute("data-load-error");
+      image.dataset.fit = activeImage.fit || "cover";
       image.src = `${activeImage.src}?v=3`;
       image.alt = activeImage.building;
       building.textContent = activeImage.building;
