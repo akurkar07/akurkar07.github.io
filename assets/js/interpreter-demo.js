@@ -85,6 +85,8 @@ END.`,
   const mode = document.getElementById("interpreter-mode");
   const runButton = document.getElementById("interpreter-run");
   const resetButton = document.getElementById("interpreter-reset");
+  const downloadSourceButton = document.getElementById("interpreter-download-source");
+  const downloadResultButton = document.getElementById("interpreter-download-result");
   const status = document.getElementById("interpreter-status");
   const output = document.getElementById("interpreter-output");
   const bytecode = document.getElementById("interpreter-bytecode");
@@ -92,6 +94,7 @@ END.`,
   const scope = document.getElementById("interpreter-scope");
   let pyodidePromise = null;
   let runtimeReady = false;
+  let activePanel = "output";
 
   function setStatus(message) {
     status.textContent = message;
@@ -284,7 +287,44 @@ def run_pascal_demo(source, mode):
     bytecodeLines.scrollTop = bytecode.scrollTop;
   }
 
+  function downloadText(filename, text) {
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadSource() {
+    downloadText("pascal-source.pas", source.value);
+  }
+
+  function activeResultText() {
+    if (activePanel === "bytecode") {
+      return bytecode.textContent;
+    }
+    if (activePanel === "scope") {
+      return scope.textContent;
+    }
+    return output.textContent;
+  }
+
+  function downloadResult() {
+    const extensions = {
+      output: "txt",
+      bytecode: "pbc",
+      scope: "json",
+    };
+    downloadText(`interpreter-${activePanel}.${extensions[activePanel]}`, activeResultText());
+  }
+
   function activatePanel(name) {
+    activePanel = name;
     document.querySelectorAll(".interpreter-tab").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.panel === name));
     });
@@ -298,6 +338,8 @@ def run_pascal_demo(source, mode):
   source.addEventListener("input", updateSourceLineNumbers);
   source.addEventListener("scroll", syncSourceLineScroll);
   bytecode.addEventListener("scroll", syncBytecodeLineScroll);
+  downloadSourceButton.addEventListener("click", downloadSource);
+  downloadResultButton.addEventListener("click", downloadResult);
   resetButton.addEventListener("click", resetSample);
   runButton.addEventListener("click", runProgram);
   runButton.addEventListener("pointerenter", warmRuntime, { once: true });

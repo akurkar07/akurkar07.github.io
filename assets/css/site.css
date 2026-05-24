@@ -549,6 +549,15 @@ hr {
   gap: 1rem;
 }
 
+.interpreter-grid > *,
+.interpreter-editor-wrap,
+.interpreter-result,
+.interpreter-source-shell,
+.interpreter-bytecode-shell,
+.interpreter-panel {
+  min-width: 0;
+}
+
 .interpreter-editor-wrap {
   display: grid;
   gap: 0.45rem;
@@ -589,22 +598,27 @@ hr {
   background: transparent;
   border: 0;
   color: inherit;
+  display: block;
   font-family: "Red Hat Mono", monospace;
   font-size: 0.78rem;
   line-height: 1.55;
   height: 100%;
   min-height: 0;
   outline: none;
+  overflow: auto;
+  overflow-wrap: normal;
   padding: 0.85rem;
   resize: none;
   width: 100%;
+  white-space: pre;
 }
 
 .interpreter-result {
   display: grid;
   gap: 0.45rem;
   grid-template-rows: auto auto minmax(0, 1fr);
-  min-height: calc(var(--interpreter-editor-height) + 1.6rem);
+  height: calc(var(--interpreter-editor-height) + 1.6rem);
+  min-height: 0;
 }
 
 .interpreter-tab {
@@ -630,29 +644,47 @@ hr {
 
 .interpreter-panel {
   height: 100%;
+  box-sizing: border-box;
   font-family: "Red Hat Mono", monospace;
   font-size: 0.78rem;
   line-height: 1.55;
   margin: 0;
   min-height: 0;
   overflow: auto;
+  overflow-wrap: anywhere;
   padding: 0.85rem;
   white-space: pre-wrap;
 }
 
+.interpreter-bytecode-shell.interpreter-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
 #interpreter-bytecode {
+  box-sizing: border-box;
   color: inherit;
   display: block;
   font-size: 0.72rem;
+  height: 100%;
   line-height: 1.38;
+  min-height: 0;
+  min-width: 0;
   overflow: auto;
   padding: 0.85rem;
   white-space: pre;
 }
 
 .interpreter-bytecode-lines {
+  box-sizing: border-box;
   font-size: 0.72rem;
+  height: 100%;
   line-height: 1.38;
+  min-height: 0;
 }
 
 .interpreter-status {

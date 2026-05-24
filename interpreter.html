@@ -98,12 +98,18 @@
               </label>
               <button id="interpreter-run" class="interpreter-button" type="button">Run</button>
               <button id="interpreter-reset" class="interpreter-button secondary" type="button">Reset</button>
+              <button id="interpreter-download-source" class="interpreter-button secondary" type="button">
+                Download source
+              </button>
+              <button id="interpreter-download-result" class="interpreter-button secondary" type="button">
+                Download result
+              </button>
             </div>
 
             <div class="interpreter-grid">
               <label class="interpreter-editor-wrap">
                 <span class="interpreter-panel-title">Source</span>
-                <span class="interpreter-source-shell">
+                <span class="interpreter-source-shell" role="presentation">
                   <span id="interpreter-source-lines" class="interpreter-source-lines" aria-hidden="true">1</span>
                   <textarea id="interpreter-source" spellcheck="false"></textarea>
                 </span>
@@ -117,7 +123,7 @@
                   <button class="interpreter-tab" type="button" data-panel="scope" aria-pressed="false">Scope</button>
                 </div>
                 <pre id="interpreter-output" class="interpreter-panel" data-panel="output"></pre>
-                <span id="interpreter-bytecode-shell" class="interpreter-bytecode-shell interpreter-panel" data-panel="bytecode" hidden>
+                <span id="interpreter-bytecode-shell" class="interpreter-bytecode-shell interpreter-panel" data-panel="bytecode" hidden role="presentation">
                   <span id="interpreter-bytecode-lines" class="interpreter-bytecode-lines" aria-hidden="true">1</span>
                   <code id="interpreter-bytecode"></code>
                 </span>
