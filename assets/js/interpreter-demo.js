@@ -34,11 +34,27 @@
   const output = document.getElementById("interpreter-output");
   const bytecode = document.getElementById("interpreter-bytecode");
   const bytecodeLines = document.getElementById("interpreter-bytecode-lines");
+  const astVisual = document.getElementById("interpreter-ast-visual");
+  const astCanvas = document.getElementById("interpreter-ast-canvas");
+  const astZoomOut = document.getElementById("interpreter-ast-zoom-out");
+  const astZoomReset = document.getElementById("interpreter-ast-zoom-reset");
+  const astZoomIn = document.getElementById("interpreter-ast-zoom-in");
+  const astFullscreen = document.getElementById("interpreter-ast-fullscreen");
+  const astModal = document.getElementById("interpreter-ast-modal");
+  const astModalCanvas = document.getElementById("interpreter-ast-modal-canvas");
+  const astModalZoomOut = document.getElementById("interpreter-ast-modal-zoom-out");
+  const astModalZoomReset = document.getElementById("interpreter-ast-modal-zoom-reset");
+  const astModalZoomIn = document.getElementById("interpreter-ast-modal-zoom-in");
+  const astModalClose = document.getElementById("interpreter-ast-modal-close");
+  const inspectionTab = document.getElementById("interpreter-inspection-tab");
   const scope = document.getElementById("interpreter-scope");
   let pyodidePromise = null;
   let runtimeReady = false;
   let activePanel = "output";
   let demoInputs = [];
+  let astZoom = 1;
+  let astModalZoom = 1;
+  let currentAstTree = null;
 
   function setStatus(message) {
     status.textContent = message;
@@ -119,6 +135,7 @@ def run_pascal_demo(source, mode):
         "ok": True,
         "output": "",
         "bytecode": "",
+        "ast": "",
         "scope": "{}",
         "error": "",
     }
@@ -128,6 +145,7 @@ def run_pascal_demo(source, mode):
             lexer = Lexer(source)
             parser = Parser(lexer)
             ast = parser.parse()
+            result["ast"] = json.dumps(ast_to_dict(ast), indent=2, default=str)
 
             semantic_analyser = SemanticAnalyser()
             semantic_analyser.visit(ast)
@@ -155,6 +173,23 @@ def run_pascal_demo(source, mode):
         result["output"] = stdout.getvalue()
 
     return json.dumps(result)
+
+def ast_to_dict(node):
+    if isinstance(node, (str, int, float, bool)) or node is None:
+        return node
+
+    if isinstance(node, list):
+        return [ast_to_dict(item) for item in node]
+
+    if hasattr(node, "__dict__"):
+        result = {"node": node.__class__.__name__}
+        for key, value in node.__dict__.items():
+            if key in {"token"}:
+                continue
+            result[key] = ast_to_dict(value)
+        return result
+
+    return str(node)
 `);
 
       runtimeReady = true;
@@ -188,12 +223,16 @@ def run_pascal_demo(source, mode):
       );
       const result = JSON.parse(resultJson);
       output.textContent = result.ok ? result.output || "(no output)" : `${result.output}${result.error}`;
-      setBytecode(result.bytecode || "(bytecode unavailable)");
+      if (mode.value === "tree" && result.ast) {
+        setAstVisual(JSON.parse(result.ast));
+      } else {
+        setInspectionText(result.bytecode || "(bytecode unavailable)");
+      }
       scope.textContent = result.scope || "{}";
       setStatus(result.ok ? "Finished." : "Program stopped with an error.");
     } catch (error) {
       output.textContent = error.message;
-      setBytecode("(bytecode unavailable)");
+      setInspectionText(mode.value === "tree" ? "(AST unavailable)" : "(bytecode unavailable)");
       scope.textContent = "{}";
       setStatus("Runtime error.");
     } finally {
@@ -224,15 +263,208 @@ def run_pascal_demo(source, mode):
       resetButton.disabled = false;
     }
     output.textContent = "";
-    setBytecode("");
+    setInspectionText("");
     scope.textContent = "";
     updateSourceLineNumbers();
     renderInputControls();
   }
 
-  function setBytecode(text) {
+  function setInspectionText(text) {
+    astVisual.hidden = true;
+    bytecode.hidden = false;
+    bytecode.dataset.view = "text";
     bytecode.textContent = text;
     updateBytecodeLineNumbers(text);
+  }
+
+  function setAstVisual(tree) {
+    currentAstTree = tree;
+    bytecode.hidden = true;
+    astVisual.hidden = false;
+    astCanvas.replaceChildren(renderAstSvg(tree));
+    setAstZoom(1);
+    bytecode.textContent = JSON.stringify(tree, null, 2);
+    updateBytecodeLineNumbers("");
+  }
+
+  function setAstZoom(nextZoom) {
+    astZoom = Math.min(2.5, Math.max(0.35, nextZoom));
+    astZoomReset.textContent = `${Math.round(astZoom * 100)}%`;
+    applyAstZoom(astCanvas, astZoom);
+  }
+
+  function setAstModalZoom(nextZoom) {
+    astModalZoom = Math.min(3.5, Math.max(0.25, nextZoom));
+    astModalZoomReset.textContent = `${Math.round(astModalZoom * 100)}%`;
+    applyAstZoom(astModalCanvas, astModalZoom);
+  }
+
+  function applyAstZoom(canvas, zoom) {
+    canvas.style.setProperty("--ast-zoom", String(zoom));
+    const svg = canvas.querySelector("svg");
+    if (svg) {
+      const baseWidth = Number(svg.dataset.baseWidth || svg.getAttribute("width"));
+      const baseHeight = Number(svg.dataset.baseHeight || svg.getAttribute("height"));
+      svg.style.width = `${baseWidth * zoom}px`;
+      svg.style.height = `${baseHeight * zoom}px`;
+    }
+  }
+
+  function zoomAst(delta) {
+    setAstZoom(astZoom + delta);
+  }
+
+  function zoomAstModal(delta) {
+    setAstModalZoom(astModalZoom + delta);
+  }
+
+  function openAstModal() {
+    if (!currentAstTree) {
+      return;
+    }
+    astModal.hidden = false;
+    astModalCanvas.replaceChildren(renderAstSvg(currentAstTree, { xStep: 110, yStep: 120, compact: true }));
+    setAstModalZoom(1);
+  }
+
+  function closeAstModal() {
+    astModal.hidden = true;
+  }
+
+  function nodeLabel(node) {
+    if (node === null) {
+      return "null";
+    }
+    if (typeof node !== "object") {
+      return String(node);
+    }
+    return node.node || "node";
+  }
+
+  function nodeChildren(node) {
+    if (node === null || typeof node !== "object") {
+      return [];
+    }
+    if (Array.isArray(node)) {
+      return node.map((child, index) => ({ edge: String(index), node: child }));
+    }
+    const entries = Object.entries(node)
+      .filter(([key]) => key !== "node")
+      .flatMap(([key, value]) => {
+        if (Array.isArray(value)) {
+          return value.map((child, index) => ({ edge: `${key}[${index}]`, node: child }));
+        }
+        return [{ edge: key, node: value }];
+      });
+    return entries.filter((entry) => {
+      const child = entry.node;
+      return !(child === null || child === "" || (Array.isArray(child) && child.length === 0));
+    });
+  }
+
+  function layoutAst(node, depth = 0, nextLeaf = { value: 0 }) {
+    const children = nodeChildren(node).map((child) => ({
+      edge: child.edge,
+      layout: layoutAst(child.node, depth + 1, nextLeaf),
+    }));
+
+    let x;
+    if (children.length === 0) {
+      x = nextLeaf.value;
+      nextLeaf.value += 1;
+    } else {
+      x = (children[0].layout.x + children[children.length - 1].layout.x) / 2;
+    }
+
+    return {
+      x,
+      y: depth,
+      label: nodeLabel(node),
+      children,
+    };
+  }
+
+  function renderAstSvg(tree, options = {}) {
+    const layout = layoutAst(tree);
+    const nodes = [];
+    const edges = [];
+    const xStep = options.xStep || 120;
+    const yStep = options.yStep || 112;
+    const padding = 44;
+    const leftPadding = options.leftPadding || 72;
+
+    function collect(item) {
+      nodes.push(item);
+      item.children.forEach((child) => {
+        edges.push({ from: item, to: child.layout, label: child.edge });
+        collect(child.layout);
+      });
+    }
+
+    collect(layout);
+
+    const width = Math.max(520, (Math.max(...nodes.map((node) => node.x)) + 1) * xStep + leftPadding + padding);
+    const height = Math.max(320, (Math.max(...nodes.map((node) => node.y)) + 1) * yStep + padding * 2);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("width", String(width));
+    svg.setAttribute("height", String(height));
+    svg.dataset.baseWidth = String(width);
+    svg.dataset.baseHeight = String(height);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Abstract syntax tree");
+
+    edges.forEach((edge) => {
+      const x1 = leftPadding + edge.from.x * xStep;
+      const y1 = padding + edge.from.y * yStep + 18;
+      const x2 = leftPadding + edge.to.x * xStep;
+      const y2 = padding + edge.to.y * yStep - 18;
+      const line = document.createElementNS(svg.namespaceURI, "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+      line.setAttribute("class", "ast-edge");
+      svg.appendChild(line);
+
+      const text = document.createElementNS(svg.namespaceURI, "text");
+      text.setAttribute("x", (x1 + x2) / 2);
+      text.setAttribute("y", (y1 + y2) / 2 - 4);
+      text.setAttribute("class", "ast-edge-label");
+      text.textContent = edge.label;
+      svg.appendChild(text);
+    });
+
+    nodes.forEach((node) => {
+      const x = leftPadding + node.x * xStep;
+      const y = padding + node.y * yStep;
+      const label = node.label.length > 18 ? `${node.label.slice(0, 17)}...` : node.label;
+      const group = document.createElementNS(svg.namespaceURI, "g");
+      group.setAttribute("class", "ast-node");
+
+      const rect = document.createElementNS(svg.namespaceURI, "rect");
+      rect.setAttribute("x", x - 48);
+      rect.setAttribute("y", y - 18);
+      rect.setAttribute("width", 96);
+      rect.setAttribute("height", 36);
+      rect.setAttribute("rx", 2);
+      group.appendChild(rect);
+
+      const text = document.createElementNS(svg.namespaceURI, "text");
+      text.setAttribute("x", x);
+      text.setAttribute("y", y + 4);
+      text.textContent = label;
+      group.appendChild(text);
+      svg.appendChild(group);
+    });
+
+    return svg;
+  }
+
+  function syncInspectionTab() {
+    const isTree = mode.value === "tree";
+    inspectionTab.textContent = isTree ? "AST" : "Bytecode";
+    setInspectionText("");
   }
 
   function updateBytecodeLineNumbers(text) {
@@ -418,12 +650,12 @@ def run_pascal_demo(source, mode):
   }
 
   function downloadResult() {
-    const extensions = {
-      output: "txt",
-      bytecode: "pbc",
-      scope: "json",
+    const resultNames = {
+      output: "interpreter-output.txt",
+      bytecode: mode.value === "tree" ? "interpreter-ast.json" : "interpreter-bytecode.pbc",
+      scope: "interpreter-scope.json",
     };
-    downloadText(`interpreter-${activePanel}.${extensions[activePanel]}`, activeResultText());
+    downloadText(resultNames[activePanel], activeResultText());
   }
 
   function activatePanel(name) {
@@ -437,13 +669,47 @@ def run_pascal_demo(source, mode):
   }
 
   resetSample();
+  syncInspectionTab();
   sample.addEventListener("change", () => {
     resetSample();
   });
+  mode.addEventListener("change", syncInspectionTab);
   source.addEventListener("input", updateSourceLineNumbers);
   source.addEventListener("input", renderInputControls);
   source.addEventListener("scroll", syncSourceLineScroll);
   bytecode.addEventListener("scroll", syncBytecodeLineScroll);
+  astZoomOut.addEventListener("click", () => zoomAst(-0.15));
+  astZoomIn.addEventListener("click", () => zoomAst(0.15));
+  astZoomReset.addEventListener("click", () => setAstZoom(1));
+  astFullscreen.addEventListener("click", openAstModal);
+  astVisual.addEventListener("wheel", (event) => {
+    if (!event.ctrlKey) {
+      return;
+    }
+    event.preventDefault();
+    zoomAst(event.deltaY > 0 ? -0.12 : 0.12);
+  }, { passive: false });
+  astModalZoomOut.addEventListener("click", () => zoomAstModal(-0.15));
+  astModalZoomIn.addEventListener("click", () => zoomAstModal(0.15));
+  astModalZoomReset.addEventListener("click", () => setAstModalZoom(1));
+  astModalClose.addEventListener("click", closeAstModal);
+  astModal.addEventListener("click", (event) => {
+    if (event.target === astModal) {
+      closeAstModal();
+    }
+  });
+  astModal.addEventListener("wheel", (event) => {
+    if (!event.ctrlKey) {
+      return;
+    }
+    event.preventDefault();
+    zoomAstModal(event.deltaY > 0 ? -0.12 : 0.12);
+  }, { passive: false });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !astModal.hidden) {
+      closeAstModal();
+    }
+  });
   downloadSourceButton.addEventListener("click", downloadSource);
   downloadResultButton.addEventListener("click", downloadResult);
   resetButton.addEventListener("click", () => {

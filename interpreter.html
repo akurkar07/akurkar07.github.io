@@ -133,13 +133,22 @@
                 <span class="interpreter-panel-title">Result</span>
                 <div class="interpreter-tabs" role="tablist" aria-label="Interpreter output views">
                   <button class="interpreter-tab" type="button" data-panel="output" aria-pressed="true">Output</button>
-                  <button class="interpreter-tab" type="button" data-panel="bytecode" aria-pressed="false">Bytecode</button>
+                  <button class="interpreter-tab" id="interpreter-inspection-tab" type="button" data-panel="bytecode" aria-pressed="false">Bytecode</button>
                   <button class="interpreter-tab" type="button" data-panel="scope" aria-pressed="false">Scope</button>
                 </div>
                 <pre id="interpreter-output" class="interpreter-panel" data-panel="output"></pre>
                 <span id="interpreter-bytecode-shell" class="interpreter-bytecode-shell interpreter-panel" data-panel="bytecode" hidden role="presentation">
                   <span id="interpreter-bytecode-lines" class="interpreter-bytecode-lines" aria-hidden="true">1</span>
-                  <code id="interpreter-bytecode"></code>
+                  <code id="interpreter-bytecode" data-view="text"></code>
+                  <div id="interpreter-ast-visual" class="interpreter-ast-visual" data-view="ast" hidden>
+                    <div class="interpreter-ast-controls" aria-label="AST zoom controls">
+                      <button class="interpreter-ast-zoom" id="interpreter-ast-zoom-out" type="button" aria-label="Zoom out">-</button>
+                      <button class="interpreter-ast-zoom" id="interpreter-ast-zoom-reset" type="button" aria-label="Reset zoom">100%</button>
+                      <button class="interpreter-ast-zoom" id="interpreter-ast-zoom-in" type="button" aria-label="Zoom in">+</button>
+                      <button class="interpreter-ast-zoom" id="interpreter-ast-fullscreen" type="button" aria-label="Open AST fullscreen">Full</button>
+                    </div>
+                    <div id="interpreter-ast-canvas" class="interpreter-ast-canvas"></div>
+                  </div>
                 </span>
                 <pre id="interpreter-scope" class="interpreter-panel" data-panel="scope" hidden></pre>
               </div>
@@ -167,7 +176,7 @@
                 <p>
                   That bridge sends the editor text into the Python pipeline: lexer, parser, semantic analyser, bytecode
                   emitter, and either the stack VM or the tree-walking interpreter. The result is returned to JavaScript as
-                  structured JSON, then shown in the Output, Bytecode, and Scope panels.
+                  structured JSON, then shown in the Output, AST/Bytecode, and Scope panels.
                 </p>
                 <p>
                   Demo programs can use <code>READLN(name)</code> for browser inputs. The page detects those calls, builds
@@ -182,6 +191,19 @@
               </div>
             </details>
           </section>
+
+          <div class="interpreter-ast-modal" id="interpreter-ast-modal" hidden>
+            <div class="interpreter-ast-modal-bar">
+              <span>AST</span>
+              <div class="interpreter-ast-controls" aria-label="Fullscreen AST controls">
+                <button class="interpreter-ast-zoom" id="interpreter-ast-modal-zoom-out" type="button" aria-label="Zoom out">-</button>
+                <button class="interpreter-ast-zoom" id="interpreter-ast-modal-zoom-reset" type="button" aria-label="Reset zoom">100%</button>
+                <button class="interpreter-ast-zoom" id="interpreter-ast-modal-zoom-in" type="button" aria-label="Zoom in">+</button>
+                <button class="interpreter-ast-zoom" id="interpreter-ast-modal-close" type="button" aria-label="Close fullscreen AST">Close</button>
+              </div>
+            </div>
+            <div id="interpreter-ast-modal-canvas" class="interpreter-ast-canvas interpreter-ast-modal-canvas"></div>
+          </div>
 
         </div>
       </div>

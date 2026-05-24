@@ -711,6 +711,111 @@ hr {
   white-space: pre;
 }
 
+.interpreter-ast-visual {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.interpreter-ast-controls {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.interpreter-ast-zoom {
+  background: color-mix(in srgb, var(--bg-variant) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  color: var(--font-color);
+  cursor: pointer;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-height: 1.8rem;
+  min-width: 2.2rem;
+  padding: 0.25rem 0.45rem;
+}
+
+.interpreter-ast-canvas {
+  --ast-zoom: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.interpreter-ast-canvas svg {
+  display: block;
+  max-width: none;
+  transform: scale(var(--ast-zoom));
+  transform-origin: 0 0;
+}
+
+.interpreter-ast-modal {
+  background: color-mix(in srgb, var(--bg-color) 90%, transparent);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  inset: 0;
+  padding: 1rem;
+  position: fixed;
+  z-index: 1000;
+}
+
+.interpreter-ast-modal[hidden] {
+  display: none;
+}
+
+.interpreter-ast-modal-bar {
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  border-bottom: 0;
+  color: var(--primary);
+  display: flex;
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  justify-content: space-between;
+  padding: 0.55rem 0.75rem;
+  text-transform: uppercase;
+}
+
+.interpreter-ast-modal-canvas {
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  background: color-mix(in srgb, var(--bg-variant) 82%, transparent);
+}
+
+.ast-edge {
+  stroke: color-mix(in srgb, var(--secondary) 45%, transparent);
+  stroke-width: 1.5;
+}
+
+.ast-edge-label {
+  fill: var(--primary);
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.62rem;
+  text-anchor: middle;
+}
+
+.ast-node rect {
+  fill: color-mix(in srgb, var(--bg-color) 88%, transparent);
+  stroke: var(--secondary);
+  stroke-width: 1.5;
+}
+
+.ast-node text {
+  fill: var(--font-color);
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
 .interpreter-bytecode-lines {
   box-sizing: border-box;
   font-size: 0.72rem;
@@ -793,6 +898,7 @@ hr {
   .interpreter-source-lines,
   .interpreter-bytecode-shell,
   .interpreter-bytecode-lines,
+  .interpreter-ast-visual,
   .interpreter-editor-wrap textarea,
   .interpreter-panel,
   .interpreter-tab,
