@@ -52,40 +52,59 @@
     puff.addEventListener("animationend", () => puff.remove(), { once: true });
   }
 
-  function showSteamRain() {
-    const startedAt = Date.now();
-    const spawnDrop = () => {
+  function showSteamBurst(mode) {
+    const poolSize = mode === "rain" ? 220 : 70;
+    const burstPool = [];
+
+    for (let index = 0; index < poolSize; index += 1) {
       const drop = document.createElement("img");
+
+      drop.src = "image.png";
+      drop.alt = "";
+      drop.className = "steam-burst-drop";
+      drop.setAttribute("aria-hidden", "true");
+      document.body.appendChild(drop);
+      burstPool.push(drop);
+    }
+
+    const spawnDrop = (drop) => {
       const size = Math.round(34 + Math.random() * 42);
       const driftX = Math.round((Math.random() - 0.5) * 120);
       const rotation = Math.round((Math.random() - 0.5) * 80);
       const spin = Math.round(220 + Math.random() * 520) * (Math.random() < 0.5 ? -1 : 1);
-      const duration = (0.82 + Math.random() * 0.48).toFixed(2);
+      const duration = mode === "rain" ? (0.82 + Math.random() * 0.48).toFixed(2) : (1.25 + Math.random() * 0.55).toFixed(2);
 
-      drop.src = "image.png";
-      drop.alt = "";
-      drop.className = "steam-rain-drop";
-      drop.setAttribute("aria-hidden", "true");
-      drop.style.setProperty("--rain-x", `${Math.round(Math.random() * 100)}vw`);
-      drop.style.setProperty("--rain-drift-x", `${driftX}px`);
-      drop.style.setProperty("--rain-rotate", `${rotation}deg`);
-      drop.style.setProperty("--rain-spin", `${spin}deg`);
-      drop.style.setProperty("--rain-size", `${size}px`);
-      drop.style.setProperty("--rain-duration", `${duration}s`);
+      drop.classList.remove("is-raining", "is-confetti");
+      drop.style.setProperty("--burst-drift-x", `${driftX}px`);
+      drop.style.setProperty("--burst-rotate", `${rotation}deg`);
+      drop.style.setProperty("--burst-spin", `${spin}deg`);
+      drop.style.setProperty("--burst-size", `${size}px`);
+      drop.style.setProperty("--burst-duration", `${duration}s`);
 
-      document.body.appendChild(drop);
-      drop.addEventListener("animationend", () => drop.remove(), { once: true });
+      if (mode === "rain") {
+        drop.style.setProperty("--burst-x", `${Math.round(Math.random() * 100)}vw`);
+        drop.classList.add("is-raining");
+        return;
+      }
+
+      const fromLeft = Math.random() < 0.5;
+      const travelX = Math.round((window.innerWidth * (0.45 + Math.random() * 0.28)) * (fromLeft ? 1 : -1));
+      const travelY = Math.round((Math.random() - 0.34) * window.innerHeight * 0.32);
+
+      drop.style.setProperty("--burst-x", fromLeft ? "-70px" : "calc(100vw + 70px)");
+      drop.style.setProperty("--burst-y", `${Math.round(18 + Math.random() * 64)}vh`);
+      drop.style.setProperty("--burst-travel-x", `${travelX}px`);
+      drop.style.setProperty("--burst-travel-y", `${travelY}px`);
+      drop.classList.add("is-confetti");
     };
 
-    const rain = window.setInterval(() => {
-      for (let index = 0; index < 18; index += 1) {
-        spawnDrop();
-      }
+    burstPool.forEach((drop) => {
+      window.setTimeout(() => spawnDrop(drop), mode === "rain" ? Math.random() * 1000 : Math.random() * 140);
+    });
 
-      if (Date.now() - startedAt >= 1000) {
-        window.clearInterval(rain);
-      }
-    }, 24);
+    window.setTimeout(() => {
+      burstPool.forEach((drop) => drop.remove());
+    }, 2500);
   }
 
   function bindSteamTrigger() {
@@ -96,9 +115,11 @@
 
     const maxCharge = 10;
     let charge = 0;
+    let nextBurstMode = "rain";
 
     function updateCharge() {
       trigger.style.setProperty("--steam-progress", `${(charge / maxCharge) * 100}%`);
+      trigger.dataset.steamStarted = String(charge > 0);
       trigger.dataset.steamCharged = String(charge >= maxCharge);
       trigger.setAttribute(
         "aria-label",
@@ -110,7 +131,8 @@
 
     function activate(x, y) {
       if (charge >= maxCharge) {
-        showSteamRain();
+        showSteamBurst(nextBurstMode);
+        nextBurstMode = nextBurstMode === "rain" ? "confetti" : "rain";
         charge = 0;
         updateCharge();
         return;
