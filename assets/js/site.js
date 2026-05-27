@@ -52,14 +52,79 @@
     puff.addEventListener("animationend", () => puff.remove(), { once: true });
   }
 
+  function showSteamRain() {
+    const startedAt = Date.now();
+    const spawnDrop = () => {
+      const drop = document.createElement("img");
+      const size = Math.round(34 + Math.random() * 42);
+      const driftX = Math.round((Math.random() - 0.5) * 120);
+      const rotation = Math.round((Math.random() - 0.5) * 80);
+      const spin = Math.round(220 + Math.random() * 520) * (Math.random() < 0.5 ? -1 : 1);
+      const duration = (0.82 + Math.random() * 0.48).toFixed(2);
+
+      drop.src = "image.png";
+      drop.alt = "";
+      drop.className = "steam-rain-drop";
+      drop.setAttribute("aria-hidden", "true");
+      drop.style.setProperty("--rain-x", `${Math.round(Math.random() * 100)}vw`);
+      drop.style.setProperty("--rain-drift-x", `${driftX}px`);
+      drop.style.setProperty("--rain-rotate", `${rotation}deg`);
+      drop.style.setProperty("--rain-spin", `${spin}deg`);
+      drop.style.setProperty("--rain-size", `${size}px`);
+      drop.style.setProperty("--rain-duration", `${duration}s`);
+
+      document.body.appendChild(drop);
+      drop.addEventListener("animationend", () => drop.remove(), { once: true });
+    };
+
+    const rain = window.setInterval(() => {
+      for (let index = 0; index < 18; index += 1) {
+        spawnDrop();
+      }
+
+      if (Date.now() - startedAt >= 1000) {
+        window.clearInterval(rain);
+      }
+    }, 24);
+  }
+
   function bindSteamTrigger() {
     const trigger = document.querySelector(".steam-trigger");
     if (!trigger) {
       return;
     }
 
+    const maxCharge = 10;
+    let charge = 0;
+
+    function updateCharge() {
+      trigger.style.setProperty("--steam-progress", `${(charge / maxCharge) * 100}%`);
+      trigger.dataset.steamCharged = String(charge >= maxCharge);
+      trigger.setAttribute(
+        "aria-label",
+        charge >= maxCharge
+          ? "Activate charged easter egg rain"
+          : `Activate easter egg, charge ${charge} of ${maxCharge}`
+      );
+    }
+
+    function activate(x, y) {
+      if (charge >= maxCharge) {
+        showSteamRain();
+        charge = 0;
+        updateCharge();
+        return;
+      }
+
+      showSteamPuff(x, y);
+      charge += 1;
+      updateCharge();
+    }
+
+    updateCharge();
+
     trigger.addEventListener("click", (event) => {
-      showSteamPuff(event.clientX, event.clientY);
+      activate(event.clientX, event.clientY);
     });
 
     trigger.addEventListener("keydown", (event) => {
@@ -69,7 +134,7 @@
 
       event.preventDefault();
       const rect = trigger.getBoundingClientRect();
-      showSteamPuff(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      activate(rect.left + rect.width / 2, rect.top + rect.height / 2);
     });
   }
 
@@ -409,6 +474,372 @@
     renderStyle(architectureStyles[0]);
   }
 
+  const planetMovements = {
+    mars: {
+      movement: "CHANNEL 001",
+      title: "Runtime Moon",
+      description:
+        "Lexer, parser, AST, bytecode VM, stack. The machinery rendered as a quiet ASCII body.",
+      detail:
+        "Pascal interpreter and custom bytecode VM rendered as a text object: source becomes structure, structure becomes execution.",
+      link: "interpreter.html",
+      linkText: "Open interpreter",
+      coda: "ASCII BODY LOCKED. TEXT TRACE LIVE.",
+      color: "#dbe7f3",
+      color2: "#6aa6ff",
+      orbit: 0.48,
+      radius: 20,
+      speed: 0.00018,
+    },
+    venus: {
+      movement: "CHANNEL 002",
+      title: "Routing Grid",
+      description: "Readable structure. Every route named, every branch accounted for.",
+      detail:
+        "About page, CV material, and the plain-language thread connecting language tools, maths, ML, and systems.",
+      link: "about.html",
+      linkText: "Read about me",
+      coda: "TRACE ROUTES. LABEL NODES.",
+      color: "#dbe7f3",
+      color2: "#9fb7ce",
+      orbit: 0.34,
+      radius: 18,
+      speed: 0.00023,
+    },
+    mercury: {
+      movement: "CHANNEL 003",
+      title: "Runtime Loader",
+      description: "A static page loads Python and returns output through a controlled browser surface.",
+      detail:
+        "The interpreter demo runs Python in a static site through Pyodide, then sends source through the real pipeline.",
+      link: "interpreter.html",
+      linkText: "Try the live demo",
+      coda: "MOUNT PYODIDE. IGNITE SOURCE. RETURN TELEMETRY.",
+      color: "#dbe7f3",
+      color2: "#6aa6ff",
+      orbit: 0.25,
+      radius: 12,
+      speed: 0.00038,
+    },
+    jupiter: {
+      movement: "CHANNEL 004",
+      title: "Mission Wall",
+      description: "Fast-build records from planning tools, procurement agents, payments, and story systems.",
+      detail:
+        "HackLondon, START Hack, BSA EPFL, DurHack, HackNotts, and contest work sit here as the collaborative orbit.",
+      link: "./",
+      linkText: "See the timeline",
+      coda: "STACK THE FEEDS. SHIP BEFORE THE SIGNAL FADES.",
+      color: "#dbe7f3",
+      color2: "#b6c2cf",
+      orbit: 0.6,
+      radius: 32,
+      speed: 0.0001,
+    },
+    saturn: {
+      movement: "CHANNEL 005",
+      title: "Core Scan",
+      description: "Mathematics, testing, architecture, and the bottom-up route through a system.",
+      detail:
+        "The common thread is understanding systems from first principles, then earning each abstraction honestly.",
+      link: "about.html",
+      linkText: "Open about",
+      coda: "DESCEND THROUGH THE LAYERS. DO NOT SKIP THE UNDERLYING FORMAT.",
+      color: "#d8e0ea",
+      color2: "#6aa6ff",
+      orbit: 0.72,
+      radius: 30,
+      speed: 0.000075,
+      rings: true,
+    },
+    uranus: {
+      movement: "CHANNEL 006",
+      title: "Visual Map",
+      description: "Visual systems and static pages that change shape under their own rules.",
+      detail:
+        "Architecture sampler and visual treatments live here: rules, styles, image sets, and interface transformations.",
+      link: "architecture.html",
+      linkText: "Open architecture",
+      coda: "PATCH STYLE_TABLE. ROUTE IMAGE_SET. LET THE PAGE BECOME WEATHER.",
+      color: "#dbe7f3",
+      color2: "#9fb7ce",
+      orbit: 0.82,
+      radius: 23,
+      speed: 0.00006,
+    },
+    neptune: {
+      movement: "CHANNEL 007",
+      title: "The Far Void",
+      description: "Compiler, runtime, applied ML, and tool ideas waiting beyond the visible map.",
+      detail:
+        "Future work points toward compilers, runtimes, applied ML systems, and better tools for thinking with code.",
+      link: "mailto:akurkar07@gmail.com",
+      linkText: "Start a conversation",
+      coda: "HOLD UNKNOWN_WORK. LISTEN FOR RETURNING SIGNAL.",
+      color: "#dbe7f3",
+      color2: "#6aa6ff",
+      orbit: 0.92,
+      radius: 24,
+      speed: 0.000045,
+    },
+  };
+
+  function initPlanetsHome() {
+    const canvas = document.getElementById("planets-canvas");
+    const controls = document.getElementById("planets-controls");
+    if (!canvas || !controls) {
+      return;
+    }
+
+    const movement = document.getElementById("planet-movement");
+    const title = document.getElementById("planet-title");
+    const description = document.getElementById("planet-description");
+    const detail = document.getElementById("planet-detail");
+    const link = document.getElementById("planet-link");
+    const coda = document.getElementById("planet-coda");
+    const ctx = canvas.getContext("2d");
+    const stars = Array.from({ length: 90 }, (_, index) => {
+      const random = prng(index * 97 + 42);
+      return {
+        x: random(),
+        y: random(),
+        size: 0.5 + random() * 1.7,
+        alpha: 0.18 + random() * 0.62,
+      };
+    });
+    let activeKey = "mars";
+    let width = 0;
+    let height = 0;
+    let animationFrame = null;
+    let shouldAnimate = true;
+    let pointerX = 0.52;
+    let pointerY = 0.46;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      width = canvas.offsetWidth || window.innerWidth;
+      height = canvas.offsetHeight || window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function setActive(key) {
+      const planet = planetMovements[key];
+      if (!planet) {
+        return;
+      }
+
+      activeKey = key;
+      document.body.dataset.planet = key;
+      document.body.style.setProperty("--soul-x", `${Math.round(pointerX * 100)}%`);
+      document.body.style.setProperty("--soul-y", `${Math.round(pointerY * 100)}%`);
+      movement.textContent = planet.movement;
+      title.textContent = planet.title;
+      description.textContent = planet.description;
+      detail.textContent = planet.detail;
+      link.href = planet.link;
+      link.textContent = planet.linkText;
+      if (coda) {
+        coda.textContent = planet.coda;
+      }
+
+      controls.querySelectorAll(".planet-tab").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.planet === key));
+      });
+    }
+
+    function drawPlanet(planet, key, cx, cy, scale, time) {
+      const index = Object.keys(planetMovements).indexOf(key);
+      const active = key === activeKey;
+      const panelWidth = Math.min(170 * scale, width * 0.2);
+      const panelHeight = 86 * scale;
+      const columns = 4;
+      const x = width * 0.12 + (index % columns) * (panelWidth + 18 * scale);
+      const y = height * 0.62 + Math.floor(index / columns) * (panelHeight + 18 * scale);
+      const random = prng(index * 811 + 19);
+
+      ctx.strokeStyle = active ? planet.color : "rgba(248, 251, 255, 0.18)";
+      ctx.fillStyle = active ? "rgba(5, 11, 15, 0.9)" : "rgba(0, 0, 0, 0.55)";
+      ctx.lineWidth = active ? 1.8 : 1;
+      ctx.fillRect(x, y, panelWidth, panelHeight);
+      ctx.strokeRect(x, y, panelWidth, panelHeight);
+
+      ctx.font = `${9 * scale}px "Red Hat Mono", monospace`;
+      ctx.fillStyle = active ? planet.color2 : "rgba(248, 251, 255, 0.55)";
+      ctx.fillText(planet.movement, x + 8 * scale, y + 15 * scale);
+
+      ctx.fillStyle = active ? planet.color : "rgba(248, 251, 255, 0.38)";
+      for (let dot = 0; dot < 58; dot += 1) {
+        const px = x + 9 * scale + random() * (panelWidth - 18 * scale);
+        const py = y + 25 * scale + random() * (panelHeight - 33 * scale);
+        const size = active ? 1.45 * scale : 1 * scale;
+        ctx.fillRect(px, py, size, size);
+      }
+
+      if (active) {
+        ctx.strokeStyle = planet.color2;
+        ctx.beginPath();
+        ctx.moveTo(x + panelWidth * 0.15, y + panelHeight * 0.72);
+        for (let point = 1; point < 8; point += 1) {
+          ctx.lineTo(
+            x + panelWidth * (0.15 + point * 0.1),
+            y + panelHeight * (0.72 - Math.sin(point + time * 0.004) * 0.22)
+          );
+        }
+        ctx.stroke();
+      }
+    }
+
+    function draw(time) {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--planet-bg").trim() || "#020304";
+      ctx.fillRect(0, 0, width, height);
+
+      stars.forEach((star) => {
+        ctx.globalAlpha = star.alpha * 0.72;
+        ctx.fillStyle = "#f8fbff";
+        ctx.fillRect(star.x * width, star.y * height, star.size, star.size);
+      });
+      ctx.globalAlpha = 1;
+
+      const cx = width * 0.5;
+      const cy = height * 0.38;
+      const scale = Math.max(0.72, Math.min(width, height) / 900);
+      const activePlanet = planetMovements[activeKey];
+      const radius = Math.min(width, height) * 0.22;
+      const chars = "AKURKAR07/01.-_";
+
+      ctx.strokeStyle = `${activePlanet.color}44`;
+      ctx.lineWidth = 1;
+      for (let ring = 0; ring < 2; ring += 1) {
+        ctx.beginPath();
+        ctx.ellipse(
+          cx,
+          cy + ring * 4 * scale,
+          radius * (1.18 + ring * 0.14),
+          radius * (0.32 + ring * 0.035),
+          -0.22 + ring * 0.08,
+          0,
+          Math.PI * 2
+        );
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = "rgba(219, 231, 243, 0.16)";
+      ctx.beginPath();
+      ctx.moveTo(width * 0.08, height * 0.9);
+      ctx.lineTo(width * 0.92, height * 0.9);
+      ctx.stroke();
+      for (let tick = 0; tick < 18; tick += 1) {
+        const x = width * (0.08 + tick * 0.049);
+        ctx.beginPath();
+        ctx.moveTo(x, height * 0.9);
+        ctx.lineTo(x, height * (tick % 3 === 0 ? 0.875 : 0.888));
+        ctx.stroke();
+      }
+
+      ctx.save();
+      ctx.strokeStyle = activePlanet.color;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.clip();
+
+      ctx.font = `${Math.max(8, 10 * scale)}px "Red Hat Mono", monospace`;
+      ctx.textBaseline = "middle";
+      const stepX = 8 * scale;
+      const stepY = 12 * scale;
+      for (let y = cy - radius; y < cy + radius; y += stepY) {
+        for (let x = cx - radius; x < cx + radius; x += stepX) {
+          const dx = (x - cx) / radius;
+          const dy = (y - cy) / radius;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > 1) {
+            continue;
+          }
+          const wave = Math.sin(dx * 10 + time * 0.0018) + Math.cos(dy * 8 - time * 0.0011);
+          const charIndex = Math.abs(Math.floor((wave + dist * 5 + dx * 2) * 3)) % chars.length;
+          ctx.fillStyle =
+            wave > 0.85
+              ? activePlanet.color2
+              : wave < -0.5
+                ? activePlanet.color
+                : "rgba(248, 251, 255, 0.82)";
+          ctx.fillText(chars[charIndex], x, y);
+        }
+      }
+      ctx.restore();
+
+      const plumeTop = cy + radius * 0.45;
+      const plumeBase = height * 0.96;
+      const plumeGradient = ctx.createLinearGradient(cx, plumeTop, cx, plumeBase);
+      plumeGradient.addColorStop(0, "rgba(248, 251, 255, 0.95)");
+      plumeGradient.addColorStop(0.3, `${activePlanet.color2}44`);
+      plumeGradient.addColorStop(1, `${activePlanet.color}00`);
+      ctx.fillStyle = plumeGradient;
+      ctx.beginPath();
+      ctx.moveTo(cx - 5 * scale, plumeTop);
+      ctx.quadraticCurveTo(cx - radius * 0.5, height * 0.68, cx - radius * 0.75, plumeBase);
+      ctx.quadraticCurveTo(cx, height * 0.82, cx + radius * 0.75, plumeBase);
+      ctx.quadraticCurveTo(cx + radius * 0.36, height * 0.68, cx + 5 * scale, plumeTop);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = `${activePlanet.color}44`;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([7 * scale, 10 * scale]);
+      for (let line = 0; line < 12; line += 1) {
+        const x = width * (0.1 + line * 0.075);
+        ctx.beginPath();
+        ctx.moveTo(x, height * 0.08);
+        ctx.lineTo(x + Math.sin(time * 0.0008 + line) * 18 * scale, height * 0.58);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+
+      Object.entries(planetMovements).forEach(([key, planet]) => {
+        drawPlanet(planet, key, cx, cy, scale, time);
+      });
+
+      if (shouldAnimate) {
+        animationFrame = window.requestAnimationFrame(draw);
+      }
+    }
+
+    controls.addEventListener("click", (event) => {
+      const button = event.target.closest(".planet-tab");
+      if (button) {
+        setActive(button.dataset.planet);
+      }
+    });
+
+    window.addEventListener("pointermove", (event) => {
+      pointerX = event.clientX / Math.max(1, window.innerWidth);
+      pointerY = event.clientY / Math.max(1, window.innerHeight);
+      document.body.style.setProperty("--soul-x", `${Math.round(pointerX * 100)}%`);
+      document.body.style.setProperty("--soul-y", `${Math.round(pointerY * 100)}%`);
+    });
+
+    resize();
+    setActive(activeKey);
+    window.addEventListener("resize", resize);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      shouldAnimate = false;
+      draw(2400);
+      return;
+    }
+
+    animationFrame = window.requestAnimationFrame(draw);
+    window.addEventListener("pagehide", () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+    });
+  }
+
   function prng(seed) {
     return function random() {
       seed = (seed + 0x6d2b79f5) >>> 0;
@@ -612,6 +1043,7 @@
     }
     bindSteamTrigger();
     initArchitectureSampler();
+    initPlanetsHome();
 
     drawHero();
     drawTimelineBackgrounds();

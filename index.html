@@ -72,7 +72,17 @@
           <div class="page-hero-wrap">
             <div class="page-hero-pcie" aria-hidden="true"></div>
             <canvas id="page-hero" class="page-hero" aria-hidden="true"></canvas>
-            <h1 class="page-hero-title chip-title"><span class="steam-trigger" tabindex="0">Alex Kurkar</span></h1>
+            <h1 class="page-hero-title chip-title">
+              <span
+                class="steam-trigger"
+                tabindex="0"
+                role="button"
+                aria-label="Activate easter egg, charge 0 of 10"
+              >
+                <span class="steam-trigger-fill" aria-hidden="true"></span>
+                <span class="steam-trigger-text">Alex Kurkar</span>
+              </span>
+            </h1>
           </div>
 
           <p class="lead pb-2"><span class="underline">Personal projects/interests</span></p>
@@ -304,10 +314,6 @@
                 <code>PyTorch</code>
               </span>
             </p>
-
-            <blockquote>
-              <p><em>"Talk is cheap. Show me the code."</em> &mdash; Linus Torvalds</p>
-            </blockquote>
           </div>
         </div>
       </div>
