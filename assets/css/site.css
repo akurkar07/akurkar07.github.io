@@ -153,6 +153,22 @@ hr {
   }
 }
 
+.lightning-banner {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  margin: 0 0 1rem;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+@media (max-width: 575.98px) {
+  .lightning-banner {
+    max-height: 160px;
+    margin-bottom: 0.75rem;
+  }
+}
+
 .page-hero-pcie {
   position: absolute;
   z-index: 1;
