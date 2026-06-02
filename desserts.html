@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="A practical dessert recipe compendium: cakes, pies, puddings, pastries, frozen desserts, and quick sweets."
+  />
+  <meta property="og:title" content="Dessert Recipes | Alex Kurkar" />
+  <meta property="og:type" content="website" />
+  <title>Dessert Recipes | Alex Kurkar</title>
+  <link rel="icon" type="image/png" href="image.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body class="dark">
+  <main>
+    <div class="container pt-5">
+      <div class="row mt-5 pt-5">
+        <div class="col-md-12">
+          <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg align-items-start">
+            <div class="collapse navbar-collapse mt-3 mt-md-0 align-items-md-start" id="collapsibleMenu">
+              <ol class="breadcrumb fw-bold mb-0">
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="./">home</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="about.html">about</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="interpreter.html">interpreter</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="architecture.html">architecture</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="desserts.html">desserts</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="Alex_Kurkar_CV.pdf" target="_blank" rel="noopener noreferrer">cv</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer">github</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="https://linkedin.com/in/alex-kurkar" target="_blank" rel="noopener noreferrer">linkedin</a>
+                </li>
+                <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+                  <a href="mailto:akurkar07@gmail.com">email</a>
+                </li>
+              </ol>
+              <button
+                class="theme-toggler ms-md-auto mt-2 mt-md-0 align-self-md-start"
+                id="theme-toggle"
+                type="button"
+                aria-label="Toggle theme"
+              >
+                <span id="theme-label">light mode</span>
+              </button>
+            </div>
+          </nav>
+
+          <div class="page-hero-wrap">
+            <div class="page-hero-pcie" aria-hidden="true"></div>
+            <canvas id="page-hero" class="page-hero" aria-hidden="true"></canvas>
+            <h1 class="page-hero-title chip-title"><span>Desserts</span></h1>
+          </div>
+
+          <p class="lead pb-2"><span class="underline">A compact recipe compendium</span></p>
+
+          <div class="lh-lg">
+            <p>
+              A practical sweep through the desserts that come to mind first: baked, chilled, fried, frozen, spooned,
+              sliced, and eaten straight from the tray while pretending it still counts as plating.
+            </p>
+
+            <section class="page-section dessert-index" aria-label="Dessert categories">
+              <a href="#cakes">cakes</a>
+              <a href="#pies">pies</a>
+              <a href="#puddings">puddings</a>
+              <a href="#cookies-bars">cookies &amp; bars</a>
+              <a href="#pastries">pastries</a>
+              <a href="#frozen">frozen</a>
+            </section>
+
+            <hr />
+
+            <section class="page-section" id="cakes">
+              <h2 class="section-title">Cakes</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Chocolate Fudge Cake</h3>
+                  <p><strong>Ingredients:</strong> 200g flour, 200g sugar, 50g cocoa, 1 tsp baking powder, 2 eggs, 120ml oil, 180ml milk, 120ml hot coffee, ganache.</p>
+                  <p><strong>Method:</strong> Whisk dry ingredients, add eggs, oil, and milk, then stir in coffee. Bake at 180C for 30-35 minutes and cover with ganache.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Victoria Sponge</h3>
+                  <p><strong>Ingredients:</strong> 200g butter, 200g sugar, 4 eggs, 200g self-raising flour, vanilla, jam, whipped cream.</p>
+                  <p><strong>Method:</strong> Cream butter and sugar, beat in eggs, fold in flour and vanilla. Bake two tins at 180C for 20 minutes, then sandwich with jam and cream.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Carrot Cake</h3>
+                  <p><strong>Ingredients:</strong> 220g grated carrot, 180g flour, 150g brown sugar, 2 eggs, 120ml oil, cinnamon, walnuts, cream-cheese frosting.</p>
+                  <p><strong>Method:</strong> Mix wet and dry ingredients, fold in carrot and walnuts, bake at 175C for 35 minutes, cool, then frost generously.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Lemon Drizzle Cake</h3>
+                  <p><strong>Ingredients:</strong> 175g butter, 175g sugar, 3 eggs, 175g self-raising flour, 2 lemons, 85g icing sugar.</p>
+                  <p><strong>Method:</strong> Make a basic sponge with lemon zest, bake at 180C for 35 minutes, then pour over lemon juice mixed with icing sugar while warm.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Basque Cheesecake</h3>
+                  <p><strong>Ingredients:</strong> 600g cream cheese, 200g sugar, 4 eggs, 300ml cream, 25g flour, vanilla, salt.</p>
+                  <p><strong>Method:</strong> Beat until smooth, pour into a lined tin, and bake at 220C for 30-35 minutes until deeply browned and still wobbly.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Banana Bread</h3>
+                  <p><strong>Ingredients:</strong> 3 ripe bananas, 100g melted butter, 150g sugar, 1 egg, 190g flour, 1 tsp baking soda, salt.</p>
+                  <p><strong>Method:</strong> Mash bananas, stir in wet ingredients, fold in dry ingredients, and bake in a loaf tin at 175C for 50-60 minutes.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section" id="pies">
+              <h2 class="section-title">Pies</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Apple Pie</h3>
+                  <p><strong>Ingredients:</strong> shortcrust pastry, 6 apples, 90g sugar, cinnamon, lemon juice, 20g flour, butter.</p>
+                  <p><strong>Method:</strong> Toss apples with sugar, cinnamon, lemon, and flour. Fill pastry, dot with butter, top, crimp, and bake at 190C for 45 minutes.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Key Lime Pie</h3>
+                  <p><strong>Ingredients:</strong> biscuit crust, 4 egg yolks, 400g condensed milk, 120ml lime juice, lime zest, whipped cream.</p>
+                  <p><strong>Method:</strong> Whisk yolks, condensed milk, lime juice, and zest, pour into crust, bake at 170C for 15 minutes, chill, and top with cream.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Pecan Pie</h3>
+                  <p><strong>Ingredients:</strong> pie crust, 200g pecans, 3 eggs, 180ml golden syrup, 120g brown sugar, 50g butter, vanilla.</p>
+                  <p><strong>Method:</strong> Whisk filling, stir in pecans, pour into crust, and bake at 180C for 45-50 minutes until just set.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Lemon Meringue Pie</h3>
+                  <p><strong>Ingredients:</strong> baked pastry shell, lemon curd filling, 3 egg whites, 150g sugar, cream of tartar.</p>
+                  <p><strong>Method:</strong> Fill shell with warm lemon filling, whip whites with sugar to glossy peaks, spread on top, and bake at 180C until browned.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section" id="puddings">
+              <h2 class="section-title">Puddings</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Tiramisu</h3>
+                  <p><strong>Ingredients:</strong> ladyfingers, espresso, 3 eggs, 90g sugar, 250g mascarpone, cocoa, optional marsala.</p>
+                  <p><strong>Method:</strong> Whip yolks with sugar, fold in mascarpone and whipped whites. Layer coffee-dipped ladyfingers with cream, chill, and dust with cocoa.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Creme Brulee</h3>
+                  <p><strong>Ingredients:</strong> 500ml cream, 5 egg yolks, 70g sugar, vanilla, extra sugar for topping.</p>
+                  <p><strong>Method:</strong> Make custard, bake in a water bath at 150C until barely set, chill, then torch a thin sugar crust before serving.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Sticky Toffee Pudding</h3>
+                  <p><strong>Ingredients:</strong> dates, hot water, baking soda, butter, brown sugar, eggs, flour, cream, treacle.</p>
+                  <p><strong>Method:</strong> Soften dates, blend into batter, bake at 180C, and serve soaked with hot toffee sauce made from cream, butter, and sugar.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Rice Pudding</h3>
+                  <p><strong>Ingredients:</strong> 100g pudding rice, 700ml milk, 60g sugar, vanilla, nutmeg, butter.</p>
+                  <p><strong>Method:</strong> Combine in a dish, dot with butter, grate nutmeg over the top, and bake at 150C for about 2 hours until creamy.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Panna Cotta</h3>
+                  <p><strong>Ingredients:</strong> 500ml cream, 70g sugar, vanilla, 2.5 tsp gelatine, berries.</p>
+                  <p><strong>Method:</strong> Warm cream with sugar and vanilla, dissolve gelatine, pour into moulds, chill until set, and serve with berries.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Chocolate Mousse</h3>
+                  <p><strong>Ingredients:</strong> 180g dark chocolate, 3 eggs, 30g sugar, 150ml cream, pinch of salt.</p>
+                  <p><strong>Method:</strong> Melt chocolate, fold in yolks, whipped cream, and sugared egg whites. Chill for at least 3 hours.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section" id="cookies-bars">
+              <h2 class="section-title">Cookies &amp; Bars</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Chocolate Chip Cookies</h3>
+                  <p><strong>Ingredients:</strong> 170g butter, 150g brown sugar, 80g white sugar, 1 egg, 250g flour, baking soda, chocolate chips.</p>
+                  <p><strong>Method:</strong> Cream butter and sugars, add egg, fold in dry ingredients and chips, chill, then bake at 180C for 10-12 minutes.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Brownies</h3>
+                  <p><strong>Ingredients:</strong> 180g butter, 200g chocolate, 250g sugar, 3 eggs, 90g flour, 30g cocoa, salt.</p>
+                  <p><strong>Method:</strong> Melt butter and chocolate, whisk in sugar and eggs, fold in dry ingredients, and bake at 170C for 25 minutes.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Blondies</h3>
+                  <p><strong>Ingredients:</strong> 170g butter, 220g brown sugar, 2 eggs, 190g flour, vanilla, white chocolate, salt.</p>
+                  <p><strong>Method:</strong> Stir melted butter with sugar, add eggs and vanilla, fold in flour and chocolate, then bake at 175C for 22-26 minutes.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Millionaire's Shortbread</h3>
+                  <p><strong>Ingredients:</strong> shortbread base, caramel from condensed milk, butter, sugar, golden syrup, and a dark chocolate top.</p>
+                  <p><strong>Method:</strong> Bake shortbread, cook caramel until thick, spread over base, chill, then cover with melted chocolate.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section" id="pastries">
+              <h2 class="section-title">Pastries</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Cinnamon Rolls</h3>
+                  <p><strong>Ingredients:</strong> enriched dough, butter, brown sugar, cinnamon, cream cheese, icing sugar.</p>
+                  <p><strong>Method:</strong> Roll dough with cinnamon sugar, slice, prove, bake at 180C for 20-25 minutes, then glaze while warm.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Profiteroles</h3>
+                  <p><strong>Ingredients:</strong> choux pastry, whipped cream, dark chocolate, cream, butter.</p>
+                  <p><strong>Method:</strong> Pipe and bake choux at 200C until crisp, fill with cream, and pour over warm chocolate sauce.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Baklava</h3>
+                  <p><strong>Ingredients:</strong> filo pastry, melted butter, walnuts or pistachios, cinnamon, honey syrup.</p>
+                  <p><strong>Method:</strong> Layer buttered filo with nuts, cut diamonds, bake until golden, and soak with lemony honey syrup.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Apple Crumble</h3>
+                  <p><strong>Ingredients:</strong> apples, sugar, cinnamon, lemon, 150g flour, 90g butter, 90g brown sugar, oats.</p>
+                  <p><strong>Method:</strong> Bake spiced apples under rubbed-in crumble topping at 180C for 35-40 minutes until bubbling and crisp.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section" id="frozen">
+              <h2 class="section-title">Frozen &amp; Quick</h2>
+              <div class="recipe-grid">
+                <article class="recipe-card">
+                  <h3>Vanilla Ice Cream</h3>
+                  <p><strong>Ingredients:</strong> 500ml cream, 250ml milk, 5 yolks, 120g sugar, vanilla, salt.</p>
+                  <p><strong>Method:</strong> Cook custard until it coats a spoon, chill completely, churn, and freeze until scoopable.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Sorbet</h3>
+                  <p><strong>Ingredients:</strong> 500g fruit puree, 150g sugar syrup, lemon juice, pinch of salt.</p>
+                  <p><strong>Method:</strong> Balance puree with syrup and lemon, chill, churn, then freeze. Mango, raspberry, and lemon all work well.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Affogato</h3>
+                  <p><strong>Ingredients:</strong> vanilla ice cream, hot espresso, shaved chocolate or biscotti.</p>
+                  <p><strong>Method:</strong> Put ice cream in a cold glass, pour over espresso at the table, and finish with chocolate.</p>
+                </article>
+                <article class="recipe-card">
+                  <h3>Eton Mess</h3>
+                  <p><strong>Ingredients:</strong> strawberries, meringues, whipped cream, sugar, lemon juice.</p>
+                  <p><strong>Method:</strong> Macerate berries with sugar and lemon, fold through cream with crushed meringue, and serve immediately.</p>
+                </article>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
