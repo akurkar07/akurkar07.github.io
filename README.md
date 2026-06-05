@@ -12,6 +12,7 @@ The site presents my Computer Science background, project timeline, hackathon wo
 - `about.html` gives a fuller background, current focus, and working style.
 - `interpreter.html` is a live Pascal interpreter demo powered by lazily loaded Pyodide.
 - `architecture.html` is an interactive architecture style sampler with image galleries, style-specific copy, and visual treatments for each architectural period.
+- `desserts.html` is a compact dessert recipe compendium spanning cakes, pies, puddings, cookies, pastries, frozen desserts, and quick sweets.
 - `Alex_Kurkar_CV.pdf` is linked from the site navigation as a downloadable CV.
 - `samples/pascal/` contains the Pascal programs used by the live interpreter demo, including browser-input examples.
 
@@ -23,6 +24,7 @@ The site presents my Computer Science background, project timeline, hackathon wo
 +-- about.html
 +-- interpreter.html
 +-- architecture.html
++-- desserts.html
 +-- Alex_Kurkar_CV.pdf
 +-- image.png
 +-- samples/
