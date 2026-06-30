@@ -1,9 +1,10 @@
 (() => {
   const PYODIDE_VERSION = "0.26.4";
   const PYODIDE_BASE = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
-  const SOURCE_BASE = "https://raw.githubusercontent.com/akurkar07/Interpreter/main/src/";
+  const SOURCE_BASE = "https://raw.githubusercontent.com/akurkar07/Interpreter/main/src/pascal/";
   const SAMPLE_BASE = "samples/pascal/";
   const MODULES = [
+    "__init__.py",
     "tokens.py",
     "nodes.py",
     "visitor.py",
@@ -109,8 +110,9 @@
 
       setStatus("Fetching interpreter modules...");
       const files = await Promise.all(MODULES.map(async (name) => [name, await fetchModule(name)]));
+      pyodide.FS.mkdirTree("/home/pyodide/pascal");
       files.forEach(([name, contents]) => {
-        pyodide.FS.writeFile(`/home/pyodide/${name}`, contents);
+        pyodide.FS.writeFile(`/home/pyodide/pascal/${name}`, contents);
       });
 
       pyodide.runPython(`
@@ -121,12 +123,12 @@ from io import StringIO
 
 sys.path.insert(0, "/home/pyodide")
 
-from Lexer import Lexer
-from Parser import Parser
-from SemanticAnalyser import SemanticAnalyser
-from interpreter import Interpreter
-from bytecode import BytecodeVisitor
-from vm import VirtualMachine
+from pascal.Lexer import Lexer
+from pascal.Parser import Parser
+from pascal.SemanticAnalyser import SemanticAnalyser
+from pascal.interpreter import Interpreter
+from pascal.bytecode import BytecodeVisitor
+from pascal.vm import VirtualMachine
 
 def run_pascal_demo(source, mode):
     stdout = StringIO()
