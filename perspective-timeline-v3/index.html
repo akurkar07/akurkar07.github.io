@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Alex Kurkar — a perspective timeline of hackathons, projects, and milestones."
+  />
+  <title>Alex Kurkar — Perspective Timeline</title>
+  <link rel="icon" type="image/png" href="../image.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/timeline.css" />
+</head>
+<body>
+  <canvas id="ptv3-bg" aria-hidden="true"></canvas>
+  <canvas id="ptv3-scene" aria-hidden="true"></canvas>
+  <div id="ptv3-vignette" aria-hidden="true"></div>
+
+  <div class="ptv3-cards" id="ptv3-cards"></div>
+
+  <aside class="ptv3-expanded" id="ptv3-expanded" aria-live="polite" aria-hidden="true">
+    <span class="ptv3-exp-meta" id="ptv3-exp-meta"></span>
+    <h2 class="ptv3-exp-title" id="ptv3-exp-title"></h2>
+    <p class="ptv3-exp-desc" id="ptv3-exp-desc"></p>
+    <a class="ptv3-exp-link" id="ptv3-exp-link" href="#">Open →</a>
+  </aside>
+
+  <nav class="ptv3-nav" aria-label="Site navigation">
+    <a href="../index.html" aria-label="Back to home">← home</a>
+    <a href="../three-scroll-demo/index.html" aria-label="View the old timeline demo">old demo</a>
+    <a href="https://github.com/akurkar07" target="_blank" rel="noopener" aria-label="GitHub profile (opens in a new tab)">github</a>
+  </nav>
+
+  <div class="ptv3-hud" id="ptv3-hud" aria-hidden="true">—</div>
+
+  <div class="ptv3-controls">
+    <button type="button" id="ptv3-prev" class="ptv3-ctrl" aria-label="Move toward present">↑</button>
+    <button type="button" id="ptv3-next" class="ptv3-ctrl" aria-label="Move toward past">↓</button>
+  </div>
+
+  <script type="module" src="assets/timeline.js"></script>
+</body>
+</html>

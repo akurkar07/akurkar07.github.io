@@ -10,6 +10,9 @@
   --tsd-primary-strong: #c4b5fd;
   --tsd-secondary: #8a3ffc;
   --tsd-accent: #f3e4c8;
+  --tsd-rule: rgba(245, 234, 215, 0.72);
+  --tsd-paper: rgba(247, 241, 229, 0.93);
+  --tsd-paper-ink: #17131f;
   --tsd-max: 1180px;
 }
 
@@ -57,9 +60,21 @@ a {
 .tsd-scene {
   position: absolute;
   inset: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.tsd-hyperspace {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.72;
+  pointer-events: none;
 }
 
 .tsd-nav {
@@ -367,5 +382,395 @@ a {
 
   .tsd-meter div {
     height: 8rem;
+  }
+}
+
+/* One-point perspective timeline */
+.tsd-shell {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.25rem);
+  overflow: hidden;
+}
+
+.tsd-title {
+  text-align: center;
+}
+
+.tsd-title h1 {
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
+}
+
+.tsd-stage {
+  width: min(100% - 2rem, var(--tsd-max));
+  min-height: min(68vh, 46rem);
+  height: min(68vh, 46rem);
+  margin: 0 auto;
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(240, 238, 255, 0.08) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(0deg, transparent calc(50% - 0.5px), rgba(240, 238, 255, 0.08) 50%, transparent calc(50% + 0.5px)),
+    rgba(13, 11, 20, 0.72);
+}
+
+.tsd-vanish {
+  display: none;
+}
+
+.tsd-overlays {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.tsd-card {
+  position: absolute;
+  width: clamp(13.5rem, 24vw, 20rem);
+  min-height: 8.2rem;
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  background: rgba(26, 21, 37, 0.9);
+  color: var(--tsd-ink);
+  padding: 0.85rem;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    border-color 160ms ease,
+    opacity 120ms linear,
+    transform 120ms linear;
+  pointer-events: auto;
+}
+
+.tsd-card-compact {
+  min-height: 0;
+  border-color: rgba(245, 234, 215, 0.42);
+  background: rgba(16, 13, 22, 0.84);
+  padding: 0.62rem 0.72rem 0.62rem 0.9rem;
+  cursor: pointer;
+  transform: translate(0, -50%);
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.2);
+}
+
+.tsd-card-compact:hover,
+.tsd-card-compact:focus-visible {
+  border-color: var(--tsd-accent);
+  outline: 0;
+}
+
+.tsd-card-compact::after {
+  content: "";
+  position: absolute;
+  right: -2.6rem;
+  top: 58%;
+  width: 2.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(245, 234, 215, 0.7), rgba(245, 234, 215, 0));
+  transform: rotate(10deg);
+  transform-origin: left center;
+}
+
+.tsd-card[data-side="left"] {
+  transform: translate(-100%, -50%);
+}
+
+.tsd-card[data-side="right"] {
+  transform: translate(0, -50%);
+}
+
+.tsd-card[data-active="true"] {
+  border-color: var(--tsd-accent);
+  background: rgba(20, 16, 28, 0.94);
+  box-shadow:
+    0 0 0 1px rgba(243, 228, 200, 0.22),
+    0 0.9rem 2rem rgba(0, 0, 0, 0.28);
+}
+
+.tsd-date-marker {
+  position: absolute;
+  left: -0.42rem;
+  top: 0.74rem;
+  width: 0.7rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--tsd-rule);
+  border-radius: 50%;
+  background: var(--tsd-bg);
+  box-shadow: 0 0 0 0.22rem rgba(13, 11, 20, 0.95);
+}
+
+.tsd-card .tsd-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--tsd-accent);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.tsd-card h2 {
+  margin: 0.42rem 0 0;
+  font-size: clamp(1.1rem, 1.6vw, 1.55rem);
+  line-height: 1.04;
+}
+
+.tsd-card-compact h2 {
+  margin: 0.26rem 0 0;
+  font-size: clamp(0.94rem, 1.2vw, 1.12rem);
+  line-height: 1.12;
+}
+
+.tsd-card p {
+  margin: 0.55rem 0 0;
+  color: var(--tsd-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.tsd-card a {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: var(--tsd-primary-strong);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  text-decoration: underline;
+  text-transform: uppercase;
+  text-underline-offset: 0.35em;
+}
+
+.tsd-card a[hidden] {
+  display: none;
+}
+
+.tsd-expanded {
+  position: absolute;
+  min-height: 9rem;
+  border: 1px solid rgba(245, 234, 215, 0.58);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 38%),
+    var(--tsd-paper);
+  color: var(--tsd-paper-ink);
+  padding: 0.95rem 1.05rem 1.05rem;
+  opacity: 0;
+  transform: translate(0, -50%);
+  transition: opacity 140ms linear;
+  pointer-events: none;
+  box-shadow:
+    0 1.1rem 2.4rem rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(23, 19, 31, 0.08);
+}
+
+.tsd-expanded::before {
+  content: "";
+  position: absolute;
+  left: -2.15rem;
+  top: 50%;
+  width: 2.15rem;
+  height: 1px;
+  background: var(--tsd-rule);
+}
+
+.tsd-expanded .tsd-expanded-date {
+  display: inline-block;
+  border-bottom: 1px solid rgba(23, 19, 31, 0.28);
+  color: rgba(23, 19, 31, 0.72);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.tsd-expanded h2 {
+  margin: 0.42rem 0 0;
+  font-size: clamp(1.28rem, 2vw, 1.9rem);
+  line-height: 1;
+}
+
+.tsd-expanded p {
+  margin: 0.6rem 0 0;
+  color: rgba(23, 19, 31, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+.tsd-expanded a {
+  display: inline-block;
+  margin-top: 0.7rem;
+  color: #4f2fb0;
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.7rem;
+  text-decoration: underline;
+  text-transform: uppercase;
+  text-underline-offset: 0.35em;
+}
+
+.tsd-expanded a[hidden] {
+  display: none;
+}
+
+.tsd-year {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 2.7rem auto;
+  gap: 0.5rem;
+  align-items: center;
+  color: rgba(245, 234, 215, 0.86);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.7rem;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  text-shadow: 0 0 0.8rem var(--tsd-bg);
+}
+
+.tsd-year::after {
+  content: "";
+  order: -1;
+  height: 1px;
+  background: currentColor;
+}
+
+.tsd-marker {
+  position: absolute;
+  z-index: 3;
+  width: 0.42rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--tsd-rule);
+  border-radius: 50%;
+  background: var(--tsd-bg);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.tsd-marker[data-active="true"] {
+  width: 0.72rem;
+  border-color: var(--tsd-accent);
+  background: var(--tsd-accent);
+}
+
+.tsd-hud {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 6;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: end;
+  color: var(--tsd-muted);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.tsd-hud div {
+  position: relative;
+  width: 0.35rem;
+  height: min(28vh, 12rem);
+  border: 1px solid var(--tsd-faint);
+  background: rgba(240, 238, 255, 0.08);
+  overflow: hidden;
+}
+
+.tsd-hud div span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: linear-gradient(var(--tsd-accent), var(--tsd-secondary), var(--tsd-primary));
+}
+
+.tsd-controls {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 6;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 880px) {
+  .tsd-shell {
+    overflow: auto;
+  }
+
+  .tsd-stage {
+    width: 100%;
+    height: 68vh;
+    min-height: 35rem;
+  }
+
+  .tsd-card {
+    width: min(16rem, 42vw);
+    min-height: 7.5rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .tsd-stage {
+    min-height: 38rem;
+  }
+
+  .tsd-card {
+    width: min(15rem, 78vw);
+  }
+
+  .tsd-card[data-side="left"],
+  .tsd-card[data-side="right"] {
+    transform: translate(-50%, -50%);
+  }
+
+  .tsd-year {
+    grid-template-columns: 1.8rem auto;
+  }
+}
+
+/* Full-screen demo mode */
+html,
+body {
+  overflow: hidden;
+}
+
+.tsd-shell {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--tsd-bg);
+}
+
+.tsd-stage {
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(240, 238, 255, 0.1) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(0deg, transparent calc(50% - 0.5px), rgba(240, 238, 255, 0.1) 50%, transparent calc(50% + 0.5px)),
+    radial-gradient(circle at 50% 50%, rgba(245, 234, 215, 0.08), transparent 17rem),
+    var(--tsd-bg);
+}
+
+.tsd-hyperspace {
+  opacity: 1;
+}
+
+.tsd-vanish {
+  box-shadow:
+    0 0 0 0.45rem rgba(167, 139, 250, 0.1),
+    0 0 2rem rgba(196, 181, 253, 0.35);
+}
+
+@media (max-width: 880px) {
+  .tsd-stage {
+    width: 100vw;
+    height: 100vh;
+    min-height: 0;
   }
 }

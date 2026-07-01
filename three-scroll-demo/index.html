@@ -20,47 +20,22 @@
 </head>
 <body>
   <main class="tsd-shell" id="tsd-shell">
-    <nav class="tsd-nav" aria-label="Primary">
-      <a href="../index.html">home</a>
-      <a href="../z-axis-timeline-mockup/index.html">2d depth</a>
-      <a href="../interpreter.html">interpreter</a>
-      <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer">github</a>
-    </nav>
-
-    <header class="tsd-title">
-      <p>Three.js present to past</p>
-      <h1>3D Timeline</h1>
-    </header>
-
-    <div class="tsd-workspace">
-      <section class="tsd-stage" id="tsd-stage" tabindex="0" aria-label="3D present-to-past project timeline">
-        <canvas id="tsd-scene" class="tsd-scene" aria-hidden="true"></canvas>
-        <div class="tsd-labels" id="tsd-labels" aria-hidden="true"></div>
-        <div class="tsd-meter" aria-hidden="true">
-          <span id="tsd-depth">2026</span>
-          <div><span id="tsd-fill"></span></div>
-          <span>past</span>
-        </div>
-      </section>
-
-      <aside class="tsd-panel" aria-live="polite">
-        <div class="tsd-panel-top">
-          <span id="tsd-step">Current | University</span>
-          <span id="tsd-index">01 / 12</span>
-        </div>
-        <h2 id="tsd-heading">University of Nottingham</h2>
-        <p id="tsd-copy">
-          BSc Computer Science: compilers, language runtimes, mathematics, competitive programming, and low-level systems.
-        </p>
-        <a id="tsd-link" href="../about.html">Open about</a>
-        <div class="tsd-controls" aria-label="Timeline controls">
-          <button id="tsd-prev" type="button" aria-label="Move toward present">&uarr;</button>
-          <button id="tsd-next" type="button" aria-label="Move toward past">&darr;</button>
-        </div>
-      </aside>
-    </div>
+    <section class="tsd-stage" id="tsd-stage" tabindex="0" aria-label="One-point perspective present-to-past timeline">
+      <canvas id="tsd-scene" class="tsd-scene" aria-hidden="true"></canvas>
+      <canvas id="tsd-hyperspace" class="tsd-hyperspace" aria-hidden="true"></canvas>
+      <div class="tsd-overlays" id="tsd-overlays" aria-live="polite"></div>
+      <div class="tsd-hud" aria-hidden="true">
+        <span id="tsd-depth">2026</span>
+        <div><span id="tsd-fill"></span></div>
+        <span id="tsd-index">01 / 12</span>
+      </div>
+      <div class="tsd-controls" aria-label="Timeline controls">
+        <button id="tsd-prev" type="button" aria-label="Move toward present">&uarr;</button>
+        <button id="tsd-next" type="button" aria-label="Move toward past">&darr;</button>
+      </div>
+    </section>
   </main>
 
-  <script type="module" src="assets/three-scroll-demo.js"></script>
+  <script type="module" src="assets/perspective-timeline-v2.js"></script>
 </body>
 </html>

@@ -1,0 +1,330 @@
+:root {
+  --bg: #080a0f;
+  --surface: #0e1118;
+  --ink: #e8e6e1;
+  --muted: rgba(232, 230, 225, 0.55);
+  --faint: rgba(232, 230, 225, 0.10);
+  --primary: #c8a96e;
+  --ray-col: rgba(200, 169, 110, 0.35);
+  --year-col: rgba(200, 169, 110, 0.60);
+  --text-meta: 0.7rem;
+  --text-body: 1rem;
+  --text-title: clamp(1rem, 1.8vw, 1.4rem);
+  --text-exp: clamp(1.4rem, 2.2vw, 2rem);
+
+  --serif: 'Literata', Georgia, serif;
+  --mono: 'Red Hat Mono', Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  touch-action: none;
+}
+
+#ptv3-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#ptv3-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Atmospheric depth: a faint warm glow at the vanishing point and a soft
+   vignette that darkens the edges to focus the eye on the corridor. */
+#ptv3-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 50% at 50% 30%,
+      rgba(200, 169, 110, 0.07) 0%,
+      transparent 60%),
+    radial-gradient(120% 120% at 50% 48%,
+      transparent 44%,
+      rgba(6, 8, 12, 0.62) 100%);
+}
+
+/* ── Cards layer ─────────────────────────────── */
+.ptv3-cards {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ptv3-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.7rem 0.9rem;
+  background: rgba(14, 17, 24, 0.82);
+  border: 1px solid rgba(232, 230, 225, 0.12);
+  border-radius: 7px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  cursor: pointer;
+  will-change: left, top, opacity;
+  transition: background 160ms ease, box-shadow 220ms ease, border-color 160ms ease;
+}
+
+.ptv3-card:hover,
+.ptv3-card:focus-visible {
+  background: rgba(200, 169, 110, 0.06);
+  outline: none;
+}
+
+/* Focused card: a soft gold glow (not a border) to establish hierarchy. */
+.ptv3-card.is-active {
+  background: rgba(200, 169, 110, 0.12);
+  border-color: rgba(200, 169, 110, 0.35);
+  box-shadow: 0 0 36px rgba(200, 169, 110, 0.22), 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.ptv3-card-meta {
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.ptv3-card-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+/* ── Year labels ─────────────────────────────── */
+.ptv3-year-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--year-col);
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  will-change: left, top, opacity;
+}
+
+/* ── Expanded panel ──────────────────────────── */
+.ptv3-expanded {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(12px);
+  width: 320px;
+  max-width: calc(100vw - 4rem);
+  z-index: 8;
+  padding: 1.5rem;
+  background: rgba(14, 17, 24, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(232, 230, 225, 0.10);
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.ptv3-expanded.is-open {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+
+.ptv3-exp-meta {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--text-meta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.ptv3-exp-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: var(--text-exp);
+  line-height: 1.15;
+  margin: 0 0 0.85rem;
+  color: var(--ink);
+}
+
+.ptv3-exp-desc {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+}
+
+.ptv3-exp-link {
+  display: inline-block;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200, 169, 110, 0.4);
+  padding-bottom: 2px;
+  transition: border-color 160ms ease;
+}
+
+.ptv3-exp-link:hover {
+  border-color: var(--primary);
+}
+
+.ptv3-exp-link.is-hidden {
+  display: none;
+}
+
+/* ── Nav ─────────────────────────────────────── */
+.ptv3-nav {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.ptv3-nav a {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.ptv3-nav a:hover,
+.ptv3-nav a:focus-visible {
+  color: var(--primary);
+  outline: none;
+}
+
+/* ── HUD ─────────────────────────────────────── */
+.ptv3-hud {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Controls ────────────────────────────────── */
+.ptv3-controls {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 2rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ptv3-ctrl {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--ink);
+  background: rgba(14, 17, 24, 0.72);
+  border: 1px solid rgba(232, 230, 225, 0.10);
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.ptv3-ctrl:hover,
+.ptv3-ctrl:focus-visible {
+  background: rgba(200, 169, 110, 0.06);
+  color: var(--primary);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .ptv3-nav {
+    left: 1rem;
+    gap: 0.9rem;
+  }
+  .ptv3-hud {
+    left: 1rem;
+  }
+  .ptv3-controls {
+    right: 1rem;
+  }
+  .ptv3-expanded {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ptv3-card,
+  .ptv3-expanded,
+  .ptv3-year-label {
+    transition: none;
+  }
+}
