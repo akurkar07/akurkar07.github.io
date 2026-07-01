@@ -1,12 +1,15 @@
 :root {
   color-scheme: dark;
-  --tsd-black: #070809;
-  --tsd-ink: #f4f0e8;
-  --tsd-muted: #a8adb8;
-  --tsd-line: rgba(244, 240, 232, 0.2);
-  --tsd-green: #41f0a7;
-  --tsd-red: #f15a48;
-  --tsd-gold: #d8bf6a;
+  --tsd-bg: #0d0b14;
+  --tsd-panel: #1a1525;
+  --tsd-panel-soft: rgba(26, 21, 37, 0.78);
+  --tsd-ink: #f0eeff;
+  --tsd-muted: rgba(240, 238, 255, 0.68);
+  --tsd-faint: rgba(240, 238, 255, 0.12);
+  --tsd-primary: #a78bfa;
+  --tsd-primary-strong: #c4b5fd;
+  --tsd-secondary: #8a3ffc;
+  --tsd-accent: #f3e4c8;
   --tsd-max: 1180px;
 }
 
@@ -18,15 +21,15 @@ html,
 body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background: var(--tsd-black);
+  min-height: 100%;
+  background: var(--tsd-bg);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   color: var(--tsd-ink);
-  font-family: "Red Hat Mono", Consolas, monospace;
+  font-family: Literata, Georgia, serif;
   letter-spacing: 0;
 }
 
@@ -36,16 +39,19 @@ a {
 }
 
 .tsd-shell {
-  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.6rem);
   width: 100%;
-  height: 100vh;
-  min-height: 34rem;
-  overflow: hidden;
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 2.25rem);
   background:
-    radial-gradient(circle at 25% 35%, rgba(65, 240, 167, 0.1), transparent 24rem),
-    radial-gradient(circle at 78% 62%, rgba(241, 90, 72, 0.12), transparent 22rem),
-    #070809;
-  touch-action: none;
+    linear-gradient(rgba(167, 139, 250, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 24% 16%, rgba(138, 63, 252, 0.18), transparent 24rem),
+    radial-gradient(circle at 82% 78%, rgba(243, 228, 200, 0.08), transparent 22rem),
+    var(--tsd-bg);
+  background-size: 2rem 2rem, 2rem 2rem, auto, auto, auto;
 }
 
 .tsd-scene {
@@ -57,86 +63,201 @@ a {
 }
 
 .tsd-nav {
-  position: absolute;
-  top: 1rem;
-  left: 50%;
+  position: relative;
   z-index: 4;
   width: min(100% - 2rem, var(--tsd-max));
-  transform: translateX(-50%);
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
+  font-family: "Red Hat Mono", Consolas, monospace;
 }
 
 .tsd-nav a {
-  border: 1px solid var(--tsd-line);
-  background: rgba(7, 8, 9, 0.58);
-  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--tsd-faint);
+  background: rgba(13, 11, 20, 0.6);
+  padding: 0.48rem 0.68rem;
   color: var(--tsd-muted);
   font-size: 0.72rem;
   text-transform: uppercase;
-  backdrop-filter: blur(14px);
 }
 
 .tsd-nav a:hover,
 .tsd-nav a:focus-visible {
-  border-color: rgba(65, 240, 167, 0.75);
+  border-color: var(--tsd-primary);
   color: var(--tsd-ink);
   outline: 0;
 }
 
 .tsd-title {
-  position: absolute;
-  top: 5.3rem;
-  left: 50%;
+  position: relative;
   z-index: 3;
   width: min(100% - 2rem, var(--tsd-max));
-  transform: translateX(-50%);
-  pointer-events: none;
+  margin: 0 auto;
 }
 
 .tsd-title p {
-  margin: 0 0 0.75rem;
-  color: var(--tsd-green);
+  margin: 0 0 0.45rem;
+  color: var(--tsd-primary);
+  font-family: "Red Hat Mono", Consolas, monospace;
   font-size: 0.76rem;
   text-transform: uppercase;
 }
 
 .tsd-title h1 {
-  max-width: 8ch;
   margin: 0;
   font-family: "Literata", Georgia, serif;
-  font-size: clamp(3.3rem, 8vw, 7.5rem);
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
   font-weight: 800;
-  line-height: 0.9;
+  line-height: 0.94;
   text-transform: uppercase;
-  text-shadow: 0 0 2rem rgba(7, 8, 9, 0.75);
+}
+
+.tsd-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.42fr);
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  width: min(100% - 2rem, var(--tsd-max));
+  min-height: 0;
+  margin: 0 auto;
+}
+
+.tsd-stage {
+  position: relative;
+  min-height: clamp(28rem, 62vh, 42rem);
+  overflow: hidden;
+  border: 2px solid rgba(138, 63, 252, 0.36);
+  background:
+    linear-gradient(90deg, rgba(240, 238, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(240, 238, 255, 0.028) 1px, transparent 1px),
+    rgba(13, 11, 20, 0.68);
+  background-size: 1.25rem 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(240, 238, 255, 0.04);
+  touch-action: none;
+}
+
+.tsd-stage:focus-visible {
+  outline: 2px solid var(--tsd-primary);
+  outline-offset: 0.25rem;
+}
+
+.tsd-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tsd-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: min(12rem, 34vw);
+  color: var(--tsd-muted);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  opacity: 0;
+  text-transform: uppercase;
+  text-shadow: 0 0 1.2rem var(--tsd-bg);
+}
+
+.tsd-label span {
+  display: block;
+  color: var(--tsd-primary);
+}
+
+.tsd-label strong {
+  display: block;
+  color: var(--tsd-ink);
+  font-family: "Literata", Georgia, serif;
+  font-size: 0.98rem;
+  line-height: 1.02;
+  text-transform: none;
+}
+
+.tsd-label[data-active="true"] {
+  color: var(--tsd-ink);
+}
+
+.tsd-label[data-active="true"] strong {
+  color: var(--tsd-accent);
+}
+
+.tsd-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.tsd-controls button {
+  width: 2.35rem;
+  aspect-ratio: 1;
+  border: 1px solid rgba(138, 63, 252, 0.45);
+  background: rgba(13, 11, 20, 0.72);
+  color: var(--tsd-ink);
+  cursor: pointer;
+  font: 700 1rem/1 "Red Hat Mono", Consolas, monospace;
+}
+
+.tsd-controls button:hover,
+.tsd-controls button:focus-visible {
+  background: var(--tsd-secondary);
+  border-color: var(--tsd-secondary);
+  color: #ddd6fe;
+  outline: 0;
 }
 
 .tsd-panel {
-  position: absolute;
-  left: max(1rem, calc((100vw - var(--tsd-max)) / 2));
-  bottom: 2rem;
+  position: relative;
   z-index: 4;
-  width: min(27rem, calc(100vw - 2rem));
-  border-left: 2px solid var(--tsd-green);
-  padding: 0.15rem 0 0.2rem 1rem;
-  background: linear-gradient(90deg, rgba(7, 8, 9, 0.74), transparent);
-  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(28rem, 62vh, 42rem);
+  border: 2px solid rgba(138, 63, 252, 0.36);
+  background:
+    linear-gradient(135deg, rgba(167, 139, 250, 0.08), transparent 42%),
+    var(--tsd-panel-soft);
+  padding: clamp(1rem, 2vw, 1.25rem);
+  overflow: hidden;
+}
+
+.tsd-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0.65rem;
+  border: 1px solid rgba(240, 238, 255, 0.06);
+  pointer-events: none;
+}
+
+.tsd-panel-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .tsd-panel span {
   display: block;
-  margin: 0 0 0.35rem;
-  color: var(--tsd-gold);
+  margin: 0;
+  color: var(--tsd-primary);
+  font-family: "Red Hat Mono", Consolas, monospace;
   font-size: 0.7rem;
   text-transform: uppercase;
+}
+
+#tsd-index {
+  color: var(--tsd-muted);
+  white-space: nowrap;
 }
 
 .tsd-panel h2 {
   margin: 0;
   font-family: "Literata", Georgia, serif;
-  font-size: clamp(1.6rem, 3vw, 2.55rem);
+  font-size: clamp(1.55rem, 2.3vw, 2.35rem);
   line-height: 1;
 }
 
@@ -144,19 +265,35 @@ a {
   max-width: 38rem;
   margin: 0.65rem 0 0;
   color: var(--tsd-muted);
-  font-size: 0.86rem;
-  line-height: 1.65;
+  font-size: clamp(0.9rem, 1.15vw, 1rem);
+  line-height: 1.7;
+}
+
+.tsd-panel a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--tsd-primary-strong);
+  font-family: "Red Hat Mono", Consolas, monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+
+.tsd-panel a[hidden] {
+  display: none;
 }
 
 .tsd-meter {
   position: absolute;
-  right: max(1rem, calc((100vw - var(--tsd-max)) / 2));
-  bottom: 2rem;
+  right: 1rem;
+  bottom: 1rem;
   z-index: 4;
   display: grid;
   gap: 0.6rem;
   justify-items: end;
   color: var(--tsd-muted);
+  font-family: "Red Hat Mono", Consolas, monospace;
   font-size: 0.68rem;
   text-transform: uppercase;
 }
@@ -165,8 +302,8 @@ a {
   position: relative;
   width: 0.45rem;
   height: min(42vh, 20rem);
-  border: 1px solid var(--tsd-line);
-  background: rgba(244, 240, 232, 0.08);
+  border: 1px solid var(--tsd-faint);
+  background: rgba(240, 238, 255, 0.08);
   overflow: hidden;
 }
 
@@ -176,34 +313,59 @@ a {
   right: 0;
   bottom: 0;
   height: 0;
-  background: linear-gradient(var(--tsd-red), var(--tsd-green));
+  background: linear-gradient(var(--tsd-accent), var(--tsd-secondary), var(--tsd-primary));
 }
 
-@media (max-width: 720px) {
+@media (max-width: 880px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
   .tsd-shell {
-    min-height: 38rem;
+    min-height: 100vh;
+    padding: 1rem;
   }
 
-  .tsd-title {
-    top: 5.7rem;
+  .tsd-nav,
+  .tsd-title,
+  .tsd-workspace {
+    width: 100%;
   }
 
-  .tsd-title h1 {
-    font-size: 3.15rem;
+  .tsd-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tsd-stage {
+    min-height: clamp(24rem, 58vh, 32rem);
   }
 
   .tsd-panel {
-    bottom: 1rem;
-    padding-left: 0.8rem;
+    min-height: 0;
   }
 
-  .tsd-meter {
-    top: 5.95rem;
-    right: 1rem;
-    bottom: auto;
+  .tsd-label {
+    max-width: 10rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .tsd-nav a {
+    padding: 0.42rem 0.52rem;
+    font-size: 0.64rem;
+  }
+
+  .tsd-label {
+    display: none;
+  }
+
+  .tsd-panel-top {
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .tsd-meter div {
-    height: 7rem;
+    height: 8rem;
   }
 }

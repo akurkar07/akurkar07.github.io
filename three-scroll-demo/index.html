@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Three.js scroll-depth demo for moving into and out of the screen."
+    content="Three.js 3D present-to-past timeline demo for Alex Kurkar."
   />
-  <meta property="og:title" content="Three Scroll Depth Demo | Alex Kurkar" />
+  <meta property="og:title" content="3D Timeline Demo | Alex Kurkar" />
   <meta property="og:type" content="website" />
-  <title>Three Scroll Depth Demo | Alex Kurkar</title>
+  <title>3D Timeline Demo | Alex Kurkar</title>
   <link rel="icon" type="image/png" href="../image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
@@ -20,8 +20,6 @@
 </head>
 <body>
   <main class="tsd-shell" id="tsd-shell">
-    <canvas id="tsd-scene" class="tsd-scene" aria-hidden="true"></canvas>
-
     <nav class="tsd-nav" aria-label="Primary">
       <a href="../index.html">home</a>
       <a href="../z-axis-timeline-mockup/index.html">2d depth</a>
@@ -30,20 +28,36 @@
     </nav>
 
     <header class="tsd-title">
-      <p>Three.js scroll camera</p>
-      <h1>Move Through Z</h1>
+      <p>Three.js present to past</p>
+      <h1>3D Timeline</h1>
     </header>
 
-    <section class="tsd-panel" aria-live="polite">
-      <span id="tsd-step">Gate 01</span>
-      <h2 id="tsd-heading">Entrance Plane</h2>
-      <p id="tsd-copy">Scroll forward to push the camera into the scene. Scroll back to pull out.</p>
-    </section>
+    <div class="tsd-workspace">
+      <section class="tsd-stage" id="tsd-stage" tabindex="0" aria-label="3D present-to-past project timeline">
+        <canvas id="tsd-scene" class="tsd-scene" aria-hidden="true"></canvas>
+        <div class="tsd-labels" id="tsd-labels" aria-hidden="true"></div>
+        <div class="tsd-meter" aria-hidden="true">
+          <span id="tsd-depth">2026</span>
+          <div><span id="tsd-fill"></span></div>
+          <span>past</span>
+        </div>
+      </section>
 
-    <div class="tsd-meter" aria-hidden="true">
-      <span id="tsd-depth">z 38.0</span>
-      <div><span id="tsd-fill"></span></div>
-      <span>depth</span>
+      <aside class="tsd-panel" aria-live="polite">
+        <div class="tsd-panel-top">
+          <span id="tsd-step">Current | University</span>
+          <span id="tsd-index">01 / 12</span>
+        </div>
+        <h2 id="tsd-heading">University of Nottingham</h2>
+        <p id="tsd-copy">
+          BSc Computer Science: compilers, language runtimes, mathematics, competitive programming, and low-level systems.
+        </p>
+        <a id="tsd-link" href="../about.html">Open about</a>
+        <div class="tsd-controls" aria-label="Timeline controls">
+          <button id="tsd-prev" type="button" aria-label="Move toward present">&uarr;</button>
+          <button id="tsd-next" type="button" aria-label="Move toward past">&darr;</button>
+        </div>
+      </aside>
     </div>
   </main>
 
