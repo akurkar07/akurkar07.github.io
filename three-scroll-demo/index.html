@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Three.js scroll-depth demo for moving into and out of the screen."
+  />
+  <meta property="og:title" content="Three Scroll Depth Demo | Alex Kurkar" />
+  <meta property="og:type" content="website" />
+  <title>Three Scroll Depth Demo | Alex Kurkar</title>
+  <link rel="icon" type="image/png" href="../image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500..800&family=Red+Hat+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/three-scroll-demo.css" />
+</head>
+<body>
+  <main class="tsd-shell" id="tsd-shell">
+    <canvas id="tsd-scene" class="tsd-scene" aria-hidden="true"></canvas>
+
+    <nav class="tsd-nav" aria-label="Primary">
+      <a href="../index.html">home</a>
+      <a href="../z-axis-timeline-mockup/index.html">2d depth</a>
+      <a href="../interpreter.html">interpreter</a>
+      <a href="https://github.com/akurkar07" target="_blank" rel="noopener noreferrer">github</a>
+    </nav>
+
+    <header class="tsd-title">
+      <p>Three.js scroll camera</p>
+      <h1>Move Through Z</h1>
+    </header>
+
+    <section class="tsd-panel" aria-live="polite">
+      <span id="tsd-step">Gate 01</span>
+      <h2 id="tsd-heading">Entrance Plane</h2>
+      <p id="tsd-copy">Scroll forward to push the camera into the scene. Scroll back to pull out.</p>
+    </section>
+
+    <div class="tsd-meter" aria-hidden="true">
+      <span id="tsd-depth">z 38.0</span>
+      <div><span id="tsd-fill"></span></div>
+      <span>depth</span>
+    </div>
+  </main>
+
+  <script type="module" src="assets/three-scroll-demo.js"></script>
+</body>
+</html>
